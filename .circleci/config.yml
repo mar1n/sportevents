@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  build:
+  test:
     docker:
       - image: cimg/node:23.0.0
     steps:
