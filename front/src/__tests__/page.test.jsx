@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
-import { act } from 'react'
-import Home from '../app/page'
+import Home from '../pages/home'
 
 describe('Page', () => {
   it('films list', () => {
