@@ -1,7 +1,9 @@
 # Dependencies and AdonisJS build
 node_modules
 build
-
+coverage
+next-env.d.ts
+front/package-lock.json
 # Secrets
 .env
 .env.local
