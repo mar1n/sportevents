@@ -1,10 +1,20 @@
-import React, { FC, useState } from "react";
-const SignUp: FC = () => {
-    const [message, setMessage] = useState(false)
+import React, { useState } from "react";
+function SignUp  ()  {
+    const [message, setMessage] = useState('')
 
-    const register = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const register = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
-        setMessage(true)
+        try {
+            const response = await fetch(`http://localhost:3001/register`)
+
+        if (response.ok) {
+          const body = await response.json()
+          setMessage(body.message)
+        }
+        } catch(error) {
+            console.log('error', error)
+            setMessage('')
+        }
     }
     return <>
     <div>
@@ -16,7 +26,7 @@ const SignUp: FC = () => {
                 Register
             </button>
         </form>
-        {message && <p>Check your email please.</p>}
+        {message && <p>{message}</p>}
     </div>
     </>
 }
