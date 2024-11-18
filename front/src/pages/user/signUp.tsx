@@ -5,7 +5,7 @@ function SignUp  ()  {
     const register = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         try {
-            const response = await fetch(`http://localhost:3001/register`)
+            const response = await fetch(`http://localhost:3333/users/register`)
 
         if (response.ok) {
           const body = await response.json()
