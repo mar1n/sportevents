@@ -1,6 +1,7 @@
 import { test } from '@japa/runner'
 import testUtils from '@adonisjs/core/services/test_utils'
 import User from '#models/user'
+import hash from '@adonisjs/core/services/hash'
 
 test.group('Users Controller', (group) => {
   group.each.setup(() => testUtils.db().truncate())
@@ -18,6 +19,7 @@ test.group('Users Controller', (group) => {
     })
   })
   test('create user', async ({ client, assert }) => {
+    hash.fake()
     const user = { username: 'Szymon Dawidowicz', email: 'szymon@fastmail.com', password: '666' }
 
     const response = await client.post('/users').json(user)
@@ -25,5 +27,6 @@ test.group('Users Controller', (group) => {
     response.assertBody({ message: 'user created' })
     const findUser = await User.findByOrFail('password', '666')
     assert.equal(findUser.password, user.password)
+    hash.restore()
   })
 })
