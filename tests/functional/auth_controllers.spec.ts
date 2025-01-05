@@ -29,4 +29,21 @@ test.group('Auth Controller', (group) => {
       errors: [{ message: 'The email field must be a valid email address' }],
     })
   })
+  test('Login in authenticated user', async ({ client }) => {
+    const userRegister = {
+      username: 'Szymon Dawidowicz',
+      email: 'szymon@fastmail.com',
+      password: 'qwertyuio',
+    }
+    await client.post('/users/register').json(userRegister)
+    const userLogin = {
+      email: 'szymon@fastmail.com',
+      password: 'qwertyuio',
+    }
+    const response = await client.get('/auth/login').qs(userLogin)
+    response.assertStatus(200)
+    response.assertBodyContains({
+      message: 'Valid credentials',
+    })
+  })
 })
