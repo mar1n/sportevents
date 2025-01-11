@@ -17,9 +17,7 @@ jobs:
           command: mkdir -p tmp && touch tmp/db.sqlite3
       - run:
           name: Run Migrations
-          command: |
-            mv .env.test .env
-            node ace migration:run
+          command: node ace migration:run
 workflows:
   test-deploy:
     jobs:
