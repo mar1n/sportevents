@@ -12,6 +12,14 @@ jobs:
       - run:
           name: Run tests
           command: npm run test
+      - run:
+          name: Create database folder
+          command: mkdir tmp && touch tmp/db.sqlite3
+      - run:
+          name: Run Migrations
+          command: |
+            mv .env.test .env
+            node ace migration:run
 workflows:
   test-deploy:
     jobs:

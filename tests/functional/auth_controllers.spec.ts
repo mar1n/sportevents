@@ -46,4 +46,22 @@ test.group('Auth Controller', (group) => {
       message: 'Valid credentials',
     })
   })
+
+  test('Invalid credentials', async ({ client }) => {
+    const userRegister = {
+      username: 'Szymon Dawidowicz',
+      email: 'szymon@fastmail.com',
+      password: 'qwertyuio',
+    }
+    await client.post('/users/register').json(userRegister)
+    const userLogin = {
+      email: 'szymo@fastmail.com',
+      password: 'qwertyuio',
+    }
+    const response = await client.get('/auth/login').qs(userLogin)
+    response.assertStatus(400)
+    response.assertBodyContains({
+      errors: [{ message: 'Invalid user credentials' }],
+    })
+  })
 })
