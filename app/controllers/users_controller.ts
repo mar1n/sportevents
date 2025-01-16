@@ -7,14 +7,4 @@ export default class UsersController {
 
     return { username: user?.username, email: user?.email }
   }
-  public async store({ request }: HttpContext) {
-    const user = new User()
-    user.username = request.body().username
-    user.email = request.body().email
-    user.password = request.body().password
-    await user.save()
-    return {
-      message: 'user created',
-    }
-  }
 }

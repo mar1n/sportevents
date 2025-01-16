@@ -19,5 +19,4 @@ router.get('/', async () => {
 
 router.get('/users/:username', [UsersController, 'index'])
 router.get('/auth/login', [SessionController, 'store'])
-router.post('/users', [UsersController, 'store'])
 router.post('/auth/register', [AuthController, 'register'])
