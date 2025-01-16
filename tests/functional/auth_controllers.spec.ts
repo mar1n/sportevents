@@ -11,7 +11,7 @@ test.group('Auth Controller', (group) => {
       password: 'qwertyuio',
     }
 
-    const response = await client.post('/users/register').json(user)
+    const response = await client.post('/auth/register').json(user)
     response.assertStatus(201)
     const findUser = await User.findByOrFail('username', 'Szymon Dawidowicz')
     assert.equal(findUser.username, user.username)
@@ -23,7 +23,7 @@ test.group('Auth Controller', (group) => {
       password: '99996f666',
     }
 
-    const response = await client.post('/users/register').json(user)
+    const response = await client.post('/auth/register').json(user)
     response.assertStatus(422)
     response.assertBodyContains({
       errors: [{ message: 'The email field must be a valid email address' }],
@@ -35,7 +35,7 @@ test.group('Auth Controller', (group) => {
       email: 'szymon@fastmail.com',
       password: 'qwertyuio',
     }
-    await client.post('/users/register').json(userRegister)
+    await client.post('/auth/register').json(userRegister)
     const userLogin = {
       email: 'szymon@fastmail.com',
       password: 'qwertyuio',
@@ -53,7 +53,7 @@ test.group('Auth Controller', (group) => {
       email: 'szymon@fastmail.com',
       password: 'qwertyuio',
     }
-    await client.post('/users/register').json(userRegister)
+    await client.post('/auth/register').json(userRegister)
     const userLogin = {
       email: 'szymo@fastmail.com',
       password: 'qwertyuio',
