@@ -16,7 +16,7 @@ test.group('Auth Controller', (group) => {
     const findUser = await User.findByOrFail('username', 'Szymon Dawidowicz')
     assert.equal(findUser.username, user.username)
   })
-  test('Correct email address', async ({ client }) => {
+  test('Invalid email address', async ({ client }) => {
     const user = {
       username: 'Szymon Dawidowicz',
       email: 'szymonfastmail.com',
