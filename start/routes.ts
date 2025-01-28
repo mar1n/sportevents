@@ -6,7 +6,7 @@
 | The routes file is used for defining the HTTP routes.
 |
 */
-
+import { middleware } from './kernel.js'
 const SessionController = () => import('#controllers/session_controller')
 const UsersController = () => import('#controllers/users_controller')
 const AccountController = () => import('#controllers/account_controller')
@@ -20,4 +20,4 @@ router.get('/', async () => {
 router.get('/users/:username', [UsersController, 'index'])
 router.post('/users/register', [UsersController, 'register'])
 router.get('/auth/login', [SessionController, 'store'])
-router.get('/account', [AccountController, 'show'])
+router.get('/account', [AccountController, 'show']).use(middleware.auth())

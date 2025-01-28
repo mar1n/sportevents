@@ -59,8 +59,14 @@ test.group('Users Controller', (group) => {
       message: 'Valid credentials',
     })
 
-    const protectedRoute = await client.get('/account')
+    const cookies = response.headers()['set-cookie']
+
+    const protectedRoute = await client.get('/account').header('Cookie', cookies)
     protectedRoute.assertStatus(200)
+  })
+  test('Non augthtenticate user cannot access protected resource', async ({ client }) => {
+    const protectedRoute = await client.get('/account')
+    protectedRoute.assertStatus(401)
   })
 
   test('Invalid credentials', async ({ client }) => {
