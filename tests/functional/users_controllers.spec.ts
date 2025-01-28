@@ -58,6 +58,9 @@ test.group('Users Controller', (group) => {
     response.assertBodyContains({
       message: 'Valid credentials',
     })
+
+    const protectedRoute = await client.get('/account')
+    protectedRoute.assertStatus(200)
   })
 
   test('Invalid credentials', async ({ client }) => {
