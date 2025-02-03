@@ -9,7 +9,7 @@ const useApi = <T,>(resource: string) => {
       setLoading(true)
       try {
         console.log('resource', resource)
-        const response = await fetch(`${process.env.NEXT_SERVER_DEV}/${resource}`)
+        const response = await fetch(`${process.env.NEXT_SERVER_MOCK}/${resource}`)
 
         if (response.ok) {
           const body = await response.json()
