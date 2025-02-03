@@ -9,7 +9,7 @@
 | command to run this file and monitor file changes.
 |
 */
-
+// @ts-ignore: Suppress specific TypeScript error
 process.env.NODE_ENV = 'test'
 
 import 'reflect-metadata'
