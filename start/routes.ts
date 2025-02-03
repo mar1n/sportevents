@@ -21,3 +21,9 @@ router.get('/users/:username', [UsersController, 'index'])
 router.post('/users/register', [UsersController, 'register'])
 router.get('/auth/login', [SessionController, 'store'])
 router.get('/account', [AccountController, 'show']).use(middleware.auth())
+router
+  .post('/auth/logout', async ({ auth, response }) => {
+    await auth.use('web').logout()
+    return response.redirect('/')
+  })
+  .use(middleware.auth())

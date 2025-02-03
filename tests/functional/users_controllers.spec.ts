@@ -42,7 +42,7 @@ test.group('Users Controller', (group) => {
       errors: [{ message: 'The email field must be a valid email address' }],
     })
   })
-  test('Login in authenticated user', async ({ client }) => {
+  test('Login in authenticated user and logout', async ({ client }) => {
     const userRegister = {
       username: 'Szymon Dawidowicz',
       email: 'szymon@fastmail.com',
@@ -63,6 +63,11 @@ test.group('Users Controller', (group) => {
 
     const protectedRoute = await client.get('/account').header('Cookie', cookies)
     protectedRoute.assertStatus(200)
+
+    await client.post('/auth/logout').header('Cookie', cookies)
+
+    const protectedRouteNewRequest = await client.get('/account')
+    protectedRouteNewRequest.assertStatus(401)
   })
   test('Non augthtenticate user cannot access protected resource', async ({ client }) => {
     const protectedRoute = await client.get('/account')
