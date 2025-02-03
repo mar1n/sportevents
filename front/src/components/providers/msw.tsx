@@ -11,8 +11,6 @@ export default function MSW({
   const [mocksReady, setMocksReady] = useState(false);
 
   useEffect(() => {
-    console.log('hook')
-    console.log('process.env.NEXT_PUBLIC_ENABLE_MOCK_SERVICE_WORKER', process.env.NEXT_PUBLIC_ENABLE_MOCK_SERVICE_WORKER)
     if (mockEnabled && !mocksReady && typeof window !== "undefined") {
       import("../../msw/browser").then(({ worker }) => {
         worker.start().then(() => {
