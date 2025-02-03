@@ -5,6 +5,7 @@ build
 coverage
 next-env.d.ts
 front/package-lock.json
+front/out
 .next
 # Secrets
 .env
