@@ -36,7 +36,7 @@ test.group('Events controller', () => {
     const findEvent = await Events.findByOrFail('title', event.title)
     assert.equal(findEvent.title, event.title)
   })
-  test('Create invalid Event for Login User', async ({ client, assert }) => {
+  test('Create invalid Event for Login User', async ({ client }) => {
     const cookie = await loginHelper(client)
     const event = {
       title: '',
@@ -47,5 +47,13 @@ test.group('Events controller', () => {
     eventRoute.assertBody({
       errors: [{ message: 'The title field must be defined', field: 'title', rule: 'required' }],
     })
+  })
+  test('Non augthtenticate user is not allowed to access events.', async ({ client }) => {
+    const event = {
+      title: 'Even Title',
+      discription: 'My discription of event...',
+    }
+    const eventRoute = await client.post('/events').json(event)
+    eventRoute.assertStatus(401)
   })
 })
