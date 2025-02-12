@@ -9,7 +9,7 @@ export default class Events extends BaseModel {
   declare title: string
 
   @column()
-  declare discription: string
+  declare description: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

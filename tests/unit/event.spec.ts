@@ -8,7 +8,7 @@ test.group('Event', () => {
 
     await Events.create({
       title: title,
-      discription: discription,
+      description: discription,
     })
 
     const findEvent = await Events.findByOrFail('title', 'NBA Game')
