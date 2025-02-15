@@ -9,6 +9,8 @@ export default class extends BaseSchema {
 
       table.string('title').notNullable()
       table.string('description').notNullable()
+      table.timestamp('startEvent')
+      table.timestamp('endEvent')
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })

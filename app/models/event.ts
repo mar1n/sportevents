@@ -11,6 +11,12 @@ export default class Events extends BaseModel {
   @column()
   declare description: string
 
+  @column.dateTime({ columnName: 'startEvent' })
+  declare startEvent: DateTime
+
+  @column.dateTime({ columnName: 'endEvent' })
+  declare endEvent: DateTime
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
