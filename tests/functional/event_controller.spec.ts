@@ -28,6 +28,8 @@ test.group('Events controller', (group) => {
     const event = {
       title: 'Even Title',
       description: 'My discription of event...',
+      startEvent: '2025-02-15 01:00:00',
+      endEvent: '2025-02-16 01:00:00',
     }
     const eventRoute = await client.post('/events').json(event).header('Cookie', cookie)
     eventRoute.assertStatus(201)
@@ -38,11 +40,13 @@ test.group('Events controller', (group) => {
     const findEvent = await Events.findByOrFail('title', event.title)
     assert.equal(findEvent.title, event.title)
   })
-  test('Create invalid Event for Login User with empty title field.', async ({ client }) => {
+  test('Create invalid Event with empty title field.', async ({ client }) => {
     const cookie = await loginHelper(client)
     const event = {
       title: '',
       description: 'My discription of event...',
+      startEvent: '2025-02-15 01:00:00',
+      endEvent: '2025-02-16 01:00:00',
     }
     const eventRoute = await client.post('/events').json(event).header('Cookie', cookie)
     eventRoute.assertStatus(422)
@@ -50,11 +54,13 @@ test.group('Events controller', (group) => {
       errors: [{ message: 'The title field must be defined', field: 'title', rule: 'required' }],
     })
   })
-  test('Create invalid Event for Login User with empty description field.', async ({ client }) => {
+  test('Create invalid Event with empty description field.', async ({ client }) => {
     const cookie = await loginHelper(client)
     const event = {
       title: 'NBA GAME',
       description: '',
+      startEvent: '2025-02-15 01:00:00',
+      endEvent: '2025-02-16 01:00:00',
     }
     const eventRoute = await client.post('/events').json(event).header('Cookie', cookie)
     eventRoute.assertStatus(422)
@@ -68,10 +74,32 @@ test.group('Events controller', (group) => {
       ],
     })
   })
+  test('Create invalid Event with startEvent date after endEvent date and vice versa.', async ({
+    client,
+  }) => {
+    const cookie = await loginHelper(client)
+    const event = {
+      title: 'Even Title',
+      description: 'My discription of event...',
+      startEvent: '2025-02-16 01:00:00',
+      endEvent: '2025-02-15 01:00:00',
+    }
+    const eventRoute = await client.post('/events').json(event).header('Cookie', cookie)
+    eventRoute.assertStatus(422)
+    eventRoute.assertBodyContains({
+      errors: [
+        {
+          message: 'The startEvent field must be a date before endEvent',
+        },
+      ],
+    })
+  })
   test('Non augthtenticate user is not allowed to access events.', async ({ client }) => {
     const event = {
       title: 'Even Title',
       discription: 'My discription of event...',
+      startEvent: '2025-02-15 01:00:00',
+      endEvent: '2025-02-16 01:00:00',
     }
     const eventRoute = await client.post('/events').json(event)
     eventRoute.assertStatus(401)
