@@ -1,8 +1,9 @@
 import { test } from '@japa/runner'
 import testUtils from '@adonisjs/core/services/test_utils'
 import Events from '#models/event'
+import { ApiClient } from '@japa/api-client'
 
-async function loginHelper(client: any) {
+async function loginHelper(client: ApiClient) {
   const userRegister = {
     username: 'Szymon Dawidowicz',
     email: 'szymon@fastmail.com',

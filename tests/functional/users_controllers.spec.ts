@@ -1,10 +1,21 @@
 import { test } from '@japa/runner'
 import testUtils from '@adonisjs/core/services/test_utils'
 import User from '#models/user'
+import { ApiClient } from '@japa/api-client'
 
+async function register(client: ApiClient, email = 'szymon@fastmail.com') {
+  const user = {
+    username: 'Szymon Dawidowicz',
+    email: email,
+    password: 'qwertyuio',
+  }
+
+  const response = await client.post('/users/register').json(user)
+  return response
+}
 test.group('Users Controller', (group) => {
   group.each.setup(() => testUtils.db().truncate())
-  test('get users', async ({ client }) => {
+  test('Get users.', async ({ client }) => {
     const user = new User()
     user.username = 'Szymon'
     user.email = 'cykcykacz@gmail.com'
@@ -17,38 +28,21 @@ test.group('Users Controller', (group) => {
       email: 'cykcykacz@gmail.com',
     })
   })
-  test('Register user', async ({ client, assert }) => {
-    const user = {
-      username: 'Szymon Dawidowicz',
-      email: 'szymon@fastmail.com',
-      password: 'qwertyuio',
-    }
-
-    const response = await client.post('/users/register').json(user)
+  test('Register user.', async ({ client, assert }) => {
+    const response = await register(client)
     response.assertStatus(201)
     const findUser = await User.findByOrFail('username', 'Szymon Dawidowicz')
-    assert.equal(findUser.username, user.username)
+    assert.equal(findUser.username, 'Szymon Dawidowicz')
   })
-  test('Invalid email address', async ({ client }) => {
-    const user = {
-      username: 'Szymon Dawidowicz',
-      email: 'szymonfastmail.com',
-      password: '99996f666',
-    }
-
-    const response = await client.post('/users/register').json(user)
+  test('Invalid email address.', async ({ client }) => {
+    const response = await register(client, 'szymonfastmail.com')
     response.assertStatus(422)
     response.assertBodyContains({
       errors: [{ message: 'The email field must be a valid email address' }],
     })
   })
-  test('Login in authenticated user and logout', async ({ client }) => {
-    const userRegister = {
-      username: 'Szymon Dawidowicz',
-      email: 'szymon@fastmail.com',
-      password: 'qwertyuio',
-    }
-    await client.post('/users/register').json(userRegister)
+  test('Login in authenticated user and logout.', async ({ client }) => {
+    await register(client)
     const userLogin = {
       email: 'szymon@fastmail.com',
       password: 'qwertyuio',
@@ -69,18 +63,13 @@ test.group('Users Controller', (group) => {
     const protectedRouteNewRequest = await client.get('/account')
     protectedRouteNewRequest.assertStatus(401)
   })
-  test('Non augthtenticate user cannot access protected resource', async ({ client }) => {
+  test('Non augthtenticate user cannot access protected resource.', async ({ client }) => {
     const protectedRoute = await client.get('/account')
     protectedRoute.assertStatus(401)
   })
 
-  test('Invalid credentials', async ({ client }) => {
-    const userRegister = {
-      username: 'Szymon Dawidowicz',
-      email: 'szymon@fastmail.com',
-      password: 'qwertyuio',
-    }
-    await client.post('/users/register').json(userRegister)
+  test('Invalid credentials.', async ({ client }) => {
+    await register(client)
     const userLogin = {
       email: 'szymo@fastmail.com',
       password: 'qwertyuio',
