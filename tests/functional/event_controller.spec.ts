@@ -30,6 +30,8 @@ test.group('Events controller', (group) => {
       description: 'My discription of event...',
       startEvent: '2025-02-15 01:00:00',
       endEvent: '2025-02-16 01:00:00',
+      location: 'London',
+      address: 'Queen Elizabeth Road',
     }
     const eventRoute = await client.post('/events').json(event).header('Cookie', cookie)
     eventRoute.assertStatus(201)
@@ -47,6 +49,8 @@ test.group('Events controller', (group) => {
       description: 'My discription of event...',
       startEvent: '2025-02-15 01:00:00',
       endEvent: '2025-02-16 01:00:00',
+      location: 'London',
+      address: 'Queen Elizabeth Road',
     }
     const eventRoute = await client.post('/events').json(event).header('Cookie', cookie)
     eventRoute.assertStatus(422)
@@ -61,6 +65,8 @@ test.group('Events controller', (group) => {
       description: '',
       startEvent: '2025-02-15 01:00:00',
       endEvent: '2025-02-16 01:00:00',
+      location: 'London',
+      address: 'Queen Elizabeth Road',
     }
     const eventRoute = await client.post('/events').json(event).header('Cookie', cookie)
     eventRoute.assertStatus(422)
@@ -83,6 +89,8 @@ test.group('Events controller', (group) => {
       description: 'My discription of event...',
       startEvent: '2025-02-16 01:00:00',
       endEvent: '2025-02-15 01:00:00',
+      location: 'London',
+      address: 'Queen Elizabeth Road',
     }
     const eventRoute = await client.post('/events').json(event).header('Cookie', cookie)
     eventRoute.assertStatus(422)
@@ -94,12 +102,58 @@ test.group('Events controller', (group) => {
       ],
     })
   })
+  test('Create invalid Event with empty location field.', async ({ client }) => {
+    const cookie = await loginHelper(client)
+    const event = {
+      title: 'Even Title',
+      description: 'My discription of event...',
+      startEvent: '2025-02-15 01:00:00',
+      endEvent: '2025-02-16 01:00:00',
+      location: '',
+      address: 'Queen Elizabeth Road',
+    }
+    const eventRoute = await client.post('/events').json(event).header('Cookie', cookie)
+    eventRoute.assertStatus(422)
+    eventRoute.assertBody({
+      errors: [
+        {
+          message: 'The location field must be defined',
+          field: 'location',
+          rule: 'required',
+        },
+      ],
+    })
+  })
+  test('Create invalid Event with empty address field.', async ({ client }) => {
+    const cookie = await loginHelper(client)
+    const event = {
+      title: 'Even Title',
+      description: 'My discription of event...',
+      startEvent: '2025-02-15 01:00:00',
+      endEvent: '2025-02-16 01:00:00',
+      location: 'London',
+      address: '',
+    }
+    const eventRoute = await client.post('/events').json(event).header('Cookie', cookie)
+    eventRoute.assertStatus(422)
+    eventRoute.assertBody({
+      errors: [
+        {
+          message: 'The address field must be defined',
+          field: 'address',
+          rule: 'required',
+        },
+      ],
+    })
+  })
   test('Non augthtenticate user is not allowed to access events.', async ({ client }) => {
     const event = {
       title: 'Even Title',
       discription: 'My discription of event...',
       startEvent: '2025-02-15 01:00:00',
       endEvent: '2025-02-16 01:00:00',
+      location: 'London',
+      address: 'Queen Elizabeth Road',
     }
     const eventRoute = await client.post('/events').json(event)
     eventRoute.assertStatus(401)

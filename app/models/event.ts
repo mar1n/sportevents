@@ -11,6 +11,12 @@ export default class Events extends BaseModel {
   @column()
   declare description: string
 
+  @column()
+  declare location: string
+
+  @column()
+  declare address: string
+
   @column.dateTime({ columnName: 'startEvent' })
   declare startEvent: DateTime
 
