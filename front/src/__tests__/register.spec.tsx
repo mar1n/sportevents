@@ -7,6 +7,7 @@ describe('Register', () => {
         render(<Register />)
 
         expect(screen.getByText('Register User')).toBeInTheDocument()
+        expect(screen.getByLabelText('RegisterForm')).toBeInTheDocument()
         expect(screen.getByPlaceholderText('UserName')).toBeInTheDocument()
     })
 })
