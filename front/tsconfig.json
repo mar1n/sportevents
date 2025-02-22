@@ -2,9 +2,8 @@
   "compilerOptions": {
     "baseUrl": "src/",
     "paths": {
-      "@/providers/*": [
-        "./components/providers/*"
-      ]
+      "@/providers/*": ["./components/providers/*"],
+      "@/components/*": ["components/*"]
     },
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -23,7 +22,7 @@
       {
         "name": "next"
       }
-    ],
+    ]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
