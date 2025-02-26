@@ -18,35 +18,39 @@ export default function Register() {
           </h2>
         </div>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <Form formName="RegisterForm" onClick={() => {}}>
+          <Form formName="RegisterForm" className='space-y-6' onClick={() => {}}>
             <>
-              <Label
-                name="userName"
-                title="UserName"
-                className="block text-sm/6 font-medium text-gray-900"
-              />
-              <div className="mt-2">
-                <Input
+              <div>
+                <Label
                   name="userName"
-                  className="block w-full border border-gray-300 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  placeholder="UserName"
-                  value=""
-                  onChange={() => {}}
+                  title="UserName"
+                  className="block text-sm/6 font-medium text-gray-900"
                 />
+                <div className="mt-2">
+                  <Input
+                    name="userName"
+                    className="block w-full border border-gray-300 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    placeholder="UserName"
+                    value=""
+                    onChange={() => {}}
+                  />
+                </div>
               </div>
-              <Label
-                name="password"
-                title="Password"
-                className="block text-sm/6 font-medium text-gray-900"
-              />
-              <div className="mt-2">
-                <Input
+              <div>
+                <Label
                   name="password"
-                  className="block w-full border border-gray-300 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  placeholder="Password"
-                  value=""
-                  onChange={() => {}}
+                  title="Password"
+                  className="block text-sm/6 font-medium text-gray-900"
                 />
+                <div className="mt-2">
+                  <Input
+                    name="password"
+                    className="block w-full border border-gray-300 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    placeholder="Password"
+                    value=""
+                    onChange={() => {}}
+                  />
+                </div>
               </div>
               <div>
                 <Button
