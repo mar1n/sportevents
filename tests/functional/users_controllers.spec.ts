@@ -3,11 +3,16 @@ import testUtils from '@adonisjs/core/services/test_utils'
 import User from '#models/user'
 import { ApiClient } from '@japa/api-client'
 
-async function register(client: ApiClient, email = 'szymon@fastmail.com') {
+async function register(
+  client: ApiClient,
+  username: string | undefined = 'Szymon Dawidowicz',
+  email: string | undefined = 'szymon@fastmail.com',
+  password: string | undefined = 'qwertyuio'
+) {
   const user = {
-    username: 'Szymon Dawidowicz',
-    email: email,
-    password: 'qwertyuio',
+    username,
+    email,
+    password,
   }
 
   const response = await client.post('/users/register').json(user)
@@ -34,8 +39,36 @@ test.group('Users Controller', (group) => {
     const findUser = await User.findByOrFail('username', 'Szymon Dawidowicz')
     assert.equal(findUser.username, 'Szymon Dawidowicz')
   })
+  test('User name is empty.', async ({ client }) => {
+    const response = await register(client, '')
+    response.assertStatus(422)
+    response.assertBodyContains({
+      errors: [{ message: 'The username field must be defined' }],
+    })
+  })
+  test('Email is empty.', async ({ client }) => {
+    const response = await register(client, '')
+    response.assertStatus(422)
+    response.assertBodyContains({
+      errors: [{ message: 'The email field must be defined' }],
+    })
+  })
+  test('Password is empty.', async ({ client }) => {
+    const response = await register(client, 'Szymon Dawidowicz', 'szymon@fastmail.com', '')
+    response.assertStatus(422)
+    response.assertBodyContains({
+      errors: [{ message: 'The password field must be defined' }],
+    })
+  })
+  test('The password field must have at least 8 characters.', async ({ client }) => {
+    const response = await register(client, 'Szymon Dawidowicz', 'szymon@fastmail.com', 'asd')
+    response.assertStatus(422)
+    response.assertBodyContains({
+      errors: [{ message: 'The password field must have at least 8 characters' }],
+    })
+  })
   test('Invalid email address.', async ({ client }) => {
-    const response = await register(client, 'szymonfastmail.com')
+    const response = await register(client, 'Szymon Dawidowicz', 'szymonfastmail.com')
     response.assertStatus(422)
     response.assertBodyContains({
       errors: [{ message: 'The email field must be a valid email address' }],
