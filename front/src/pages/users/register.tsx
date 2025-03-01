@@ -3,14 +3,16 @@ import Label from '@/components/label/label'
 import Input from '@/components/input/input'
 import Button from '@/components/button/button'
 import React, { useState } from 'react'
-
+import axios from 'axios'
+import { isArray } from 'util'
 type user = {
-  userName: string
+  username: string
+  email: string
   password: string
 }
 export default function Register() {
-  const [user, setUser] = useState<user>({ userName: '', password: '' })
-  const [error, setError] = useState<string>('')
+  const [user, setUser] = useState<user>({ username: '', email: '', password: '' })
+  const [error, setError] = useState<user>({ username: '', email: '', password: '' })
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser((user) => ({
       ...user,
@@ -19,9 +21,25 @@ export default function Register() {
   }
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    user ? setError('Field user name is empty.') : setError('')
+    try {
+      const respons = await axios.post(`http://localhost:3333/users/register`, {
+        username,
+        email,
+        password,
+      })
+    } catch (errors: any) {
+      console.log('errror', errors)
+      // errors.response.data.errors.forEach((errorMessage: any) => {
+      //   console.log('error', errorMessage)
+      //   setError((error) => ({
+      //     ...error,
+      //     [errorMessage.field]: `${errorMessage.message}`,
+      //   }))
+      // })
+    }
   }
-  const { userName, password } = user
+
+  const { username, email, password } = user
   return (
     <>
       <div>
@@ -41,19 +59,36 @@ export default function Register() {
               <div>
                 <Label
                   name="userName"
-                  title="UserName"
+                  title="User Name"
                   className="block text-sm/6 font-medium text-gray-900"
                 />
                 <div className="mt-2">
                   <Input
                     name="userName"
                     className="block w-full border border-gray-300 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    placeholder="UserName"
-                    value={userName}
+                    placeholder="User Name"
+                    value={username}
                     onChange={(e) => handleChange(e)}
                   />
                 </div>
-                <span>{error}</span>
+                <span>{error.username}</span>
+              </div>
+              <div>
+                <Label
+                  name="email"
+                  title="Email"
+                  className="block text-sm/6 font-medium text-gray-900"
+                />
+                <div className="mt-2">
+                  <Input
+                    name="email"
+                    className="block w-full border border-gray-300 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </div>
+                <span>{error.email}</span>
               </div>
               <div>
                 <Label
@@ -70,6 +105,7 @@ export default function Register() {
                     onChange={(e) => handleChange(e)}
                   />
                 </div>
+                <span>{error.password}</span>
               </div>
               <div>
                 <Button
