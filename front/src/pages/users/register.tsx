@@ -4,7 +4,6 @@ import Input from '@/components/input/input'
 import Button from '@/components/button/button'
 import React, { useState } from 'react'
 import axios from 'axios'
-import { isArray } from 'util'
 type user = {
   username: string
   email: string
@@ -28,14 +27,12 @@ export default function Register() {
         password,
       })
     } catch (errors: any) {
-      console.log('errror', errors)
-      // errors.response.data.errors.forEach((errorMessage: any) => {
-      //   console.log('error', errorMessage)
-      //   setError((error) => ({
-      //     ...error,
-      //     [errorMessage.field]: `${errorMessage.message}`,
-      //   }))
-      // })
+      errors.response.data.errors.forEach((errorMessage: any) => {
+        setError((error) => ({
+          ...error,
+          [errorMessage.field]: `${errorMessage.message}`,
+        }))
+      })
     }
   }
 

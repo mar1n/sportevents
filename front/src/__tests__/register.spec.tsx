@@ -1,5 +1,5 @@
 import '@testing-library/dom'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { fireEvent } from '@testing-library/react'
 import Register from '../pages/users/register'
 import { server } from '../msw/node'
@@ -17,12 +17,17 @@ describe('Register', () => {
         expect(screen.getByPlaceholderText('Password')).toBeInTheDocument()
         expect(screen.getByRole('button')).toBeInTheDocument()
     })
-    test('The username field must be defined.', async () => {
+    test('Empty fields.', async () => {
         server.events.on('request:start', ({request}) => {
             console.log('MSW intercepted', request.method)
         })
         render(<Register/>)
-        await fireEvent.click(screen.getByRole('button'))
-        expect(screen.getByText('The username field must be defined.'))
+        fireEvent.click(screen.getByRole('button'))
+        await waitFor(() => {
+            expect(screen.getByText('The username field must be defined'))
+            expect(screen.getByText('The email field must be defined'))
+            expect(screen.getByText('The password field must be defined'))
+        })
+        
     })
 })

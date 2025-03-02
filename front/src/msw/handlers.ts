@@ -19,8 +19,29 @@ export const handlers = [
   }),
   http.post('http://localhost:3333/users/register', async ({ request }) => {
     const user: any = await request.json()
-    if (!user.username.length) {
-      throw HttpResponse.json({ errors: [{ message: 'test message' }] }, { status: 422 })
+    if (!user.username.length && !user.email.length && !user.password.length) {
+      throw HttpResponse.json(
+        {
+          errors: [
+            {
+              message: 'The username field must be defined',
+              rule: 'required',
+              field: 'username',
+            },
+            {
+              message: 'The email field must be defined',
+              rule: 'required',
+              field: 'email',
+            },
+            {
+              message: 'The password field must be defined',
+              rule: 'required',
+              field: 'password',
+            },
+          ],
+        },
+        { status: 422 }
+      )
     }
     return HttpResponse.json({
       message: 'User registered successfully',
