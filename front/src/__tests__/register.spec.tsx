@@ -39,4 +39,14 @@ describe('Register', () => {
             expect(screen.getByText('The email field must be a valid email address'))
         })
     })
+    test('Password has invalid length of characters.', async () => {
+        render(<Register/>)
+        await userEvent.type(screen.getByPlaceholderText('User Name'), 'Szymon')
+        await userEvent.type(screen.getByPlaceholderText('Email'), 'szymondawidowicz@fastmail.com')
+        await userEvent.type(screen.getByPlaceholderText('Password'), '124')
+        await userEvent.click(screen.getByRole('button'))
+        await waitFor(() => {
+            expect(screen.getByText('The password field must have at least 8 characters'))
+        })
+    })
 })

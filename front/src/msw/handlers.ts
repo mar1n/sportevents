@@ -57,6 +57,20 @@ export const handlers = [
         { status: 422 }
       )
     }
+    if (user.username && user.email && user.password.length < 8) {
+      throw HttpResponse.json(
+        {
+          errors: [
+            {
+              message: 'The password field must have at least 8 characters',
+              rule: 'required',
+              field: 'password',
+            },
+          ],
+        },
+        { status: 422 }
+      )
+    }
     return HttpResponse.json({
       message: 'User registered successfully',
     })
