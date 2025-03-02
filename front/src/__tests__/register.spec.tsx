@@ -1,6 +1,6 @@
 import '@testing-library/dom'
 import { render, screen, waitFor } from '@testing-library/react'
-import { fireEvent } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import Register from '../pages/users/register'
 import { server } from '../msw/node'
 describe('Register', () => {
@@ -22,12 +22,21 @@ describe('Register', () => {
             console.log('MSW intercepted', request.method)
         })
         render(<Register/>)
-        fireEvent.click(screen.getByRole('button'))
+        await userEvent.click(screen.getByRole('button'))
         await waitFor(() => {
             expect(screen.getByText('The username field must be defined'))
             expect(screen.getByText('The email field must be defined'))
             expect(screen.getByText('The password field must be defined'))
         })
-        
+    })
+    test('Invalid email address', async () => {
+        render(<Register/>)
+        await userEvent.type(screen.getByPlaceholderText('User Name'), 'Szymon')
+        await userEvent.type(screen.getByPlaceholderText('Email'), 'szymondawidowiczfastmail.com')
+        await userEvent.type(screen.getByPlaceholderText('Password'), '1234567')
+        await userEvent.click(screen.getByRole('button'))
+        await waitFor(() => {
+            expect(screen.getByText('The email field must be a valid email address'))
+        })
     })
 })

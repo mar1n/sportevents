@@ -43,6 +43,20 @@ export const handlers = [
         { status: 422 }
       )
     }
+    if (user.username && user.email === 'szymondawidowiczfastmail.com' && user.password) {
+      throw HttpResponse.json(
+        {
+          errors: [
+            {
+              message: 'The email field must be a valid email address',
+              rule: 'required',
+              field: 'email',
+            },
+          ],
+        },
+        { status: 422 }
+      )
+    }
     return HttpResponse.json({
       message: 'User registered successfully',
     })
