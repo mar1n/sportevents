@@ -17,7 +17,7 @@ export const handlers = [
   http.post('http://localhost:3000/user/register', () => {
     HttpResponse.json({ message: 'User created' })
   }),
-  http.post('http://localhost:3333/users/register', async ({ request }) => {
+  http.post('http://localhost:6666/users/register', async ({ request }) => {
     const user: any = await request.json()
     if (!user.username.length && !user.email.length && !user.password.length) {
       throw HttpResponse.json(

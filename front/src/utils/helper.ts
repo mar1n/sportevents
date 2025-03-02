@@ -1,7 +1,7 @@
 const setUrl = {
-  production: 'UnKnown',
-  mockSerever: 'http://localhost:6666',
-  development: 'http://localhost:3001',
+  production: process.env.NEXT_PUBLIC_SERVER_PROD,
+  mockSerever: process.env.NEXT_PUBLIC_SERVER_MOCK,
+  development: process.env.NEXT_PUBLIC_SERVER_DEV,
   selectDomainName: function (domainName: string) {
     if (domainName === 'production') {
       return this.production

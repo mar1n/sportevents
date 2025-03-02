@@ -4,6 +4,7 @@ import Input from '@/components/input/input'
 import Button from '@/components/button/button'
 import React, { useState } from 'react'
 import axios from 'axios'
+import { setUrl } from '../../utils/helper'
 type user = {
   username: string
   email: string
@@ -21,7 +22,7 @@ export default function Register() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const respons = await axios.post(`http://localhost:3333/users/register`, {
+      const respons = await axios.post(`${setUrl.mockSerever}/users/register`, {
         username,
         email,
         password,
