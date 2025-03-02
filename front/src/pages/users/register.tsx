@@ -5,14 +5,14 @@ import Button from '@/components/button/button'
 import React, { useState } from 'react'
 import axios from 'axios'
 import { setUrl } from '../../utils/helper'
-type user = {
+export type User = {
   username: string
   email: string
   password: string
 }
 export default function Register() {
-  const [user, setUser] = useState<user>({ username: '', email: '', password: '' })
-  const [error, setError] = useState<user>({ username: '', email: '', password: '' })
+  const [user, setUser] = useState<User>({ username: '', email: '', password: '' })
+  const [error, setError] = useState<User>({ username: '', email: '', password: '' })
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser((user) => ({
       ...user,
