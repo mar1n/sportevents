@@ -3,6 +3,8 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Register from '../pages/users/register'
 import { server } from '../msw/node'
+import { registerResponses } from "../msw/helper"
+import { http } from 'msw'
 describe('Register', () => {
     test('User elements.', async () => {
         render(<Register />)
@@ -18,9 +20,9 @@ describe('Register', () => {
         expect(screen.getByRole('button')).toBeInTheDocument()
     })
     test('Empty fields.', async () => {
-        server.events.on('request:start', ({request}) => {
-            console.log('MSW intercepted', request.method)
-        })
+        server.use(http.post('http://localhost:6666/users/register', async ({request}) => {
+            registerResponses.allValidationFails()
+        }))
         render(<Register/>)
         await userEvent.click(screen.getByRole('button'))
         await waitFor(() => {
@@ -30,6 +32,9 @@ describe('Register', () => {
         })
     })
     test('Invalid email address', async () => {
+        server.use(http.post('http://localhost:6666/users/register', async ({request}) => {
+            registerResponses.invalidEmail()
+        }))
         render(<Register/>)
         await userEvent.type(screen.getByPlaceholderText('User Name'), 'Szymon')
         await userEvent.type(screen.getByPlaceholderText('Email'), 'szymondawidowiczfastmail.com')
@@ -40,6 +45,9 @@ describe('Register', () => {
         })
     })
     test('Password has invalid length of characters.', async () => {
+        server.use(http.post('http://localhost:6666/users/register', async ({request}) => {
+            registerResponses.invalidPasswordLength()
+        }))
         render(<Register/>)
         await userEvent.type(screen.getByPlaceholderText('User Name'), 'Szymon')
         await userEvent.type(screen.getByPlaceholderText('Email'), 'szymondawidowicz@fastmail.com')

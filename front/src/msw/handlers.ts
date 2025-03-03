@@ -1,5 +1,4 @@
 import { http, HttpResponse } from 'msw'
-import { registerValidation } from './helper'
 import { User } from '../pages/users/register'
 export const handlers = [
   http.post('http://localhost:3001/users/register', () =>
@@ -20,7 +19,6 @@ export const handlers = [
   }),
   http.post('http://localhost:6666/users/register', async ({ request }) => {
     const user = (await request.json()) as User
-    registerValidation(user)
     return HttpResponse.json({
       message: 'User registered successfully',
     })

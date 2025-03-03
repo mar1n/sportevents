@@ -1,7 +1,7 @@
 import { HttpResponse } from 'msw'
 import { User } from '../pages/users/register'
-function registerValidation(user: User) {
-  if (!user.username.length && !user.email.length && !user.password.length) {
+const registerResponses = {
+  allValidationFails: () => {
     throw HttpResponse.json(
       {
         errors: [
@@ -24,8 +24,8 @@ function registerValidation(user: User) {
       },
       { status: 422 }
     )
-  }
-  if (user.username && user.email === 'szymondawidowiczfastmail.com' && user.password) {
+  },
+  invalidEmail: () => {
     throw HttpResponse.json(
       {
         errors: [
@@ -38,8 +38,8 @@ function registerValidation(user: User) {
       },
       { status: 422 }
     )
-  }
-  if (user.username && user.email && user.password.length < 8) {
+  },
+  invalidPasswordLength: () => {
     throw HttpResponse.json(
       {
         errors: [
@@ -52,7 +52,7 @@ function registerValidation(user: User) {
       },
       { status: 422 }
     )
-  }
+  },
 }
 
-export { registerValidation }
+export { registerResponses }
