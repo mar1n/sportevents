@@ -27,6 +27,7 @@
     "whatwg-fetch": "^3.6.20"
   },
   "devDependencies": {
+    "@playwright/test": "^1.50.1",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "^20",
     "@types/react": "^18",

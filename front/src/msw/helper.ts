@@ -1,5 +1,4 @@
 import { HttpResponse } from 'msw'
-import { User } from '../pages/users/register'
 const registerResponses = {
   allValidationFails: () => {
     throw HttpResponse.json(
