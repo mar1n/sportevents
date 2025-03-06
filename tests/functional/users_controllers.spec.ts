@@ -47,7 +47,7 @@ test.group('Users Controller', (group) => {
     })
   })
   test('Email is empty.', async ({ client }) => {
-    const response = await register(client, '')
+    const response = await register(client, 'Szymon Dawidowicz', '')
     response.assertStatus(422)
     response.assertBodyContains({
       errors: [{ message: 'The email field must be defined' }],
