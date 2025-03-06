@@ -19,8 +19,12 @@ export const handlers = [
   }),
   http.post('http://localhost:6666/users/register', async ({ request }) => {
     const user = (await request.json()) as User
-    return HttpResponse.json({
-      message: 'User registered successfully',
-    })
+    console.log('user', user)
+    return HttpResponse.json(
+      {
+        message: `We've sent you email, please read.`,
+      },
+      { status: 201 }
+    )
   }),
 ]

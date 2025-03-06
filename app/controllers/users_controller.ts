@@ -14,7 +14,7 @@ export default class UsersController {
     const user = await User.create(payload)
 
     return response.status(201).json({
-      message: 'User registered successfully',
+      message: 'We send you email, please read.',
       user: user,
     })
   }
