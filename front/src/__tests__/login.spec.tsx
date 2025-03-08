@@ -6,5 +6,11 @@ describe('Login', () => {
         render(<Login/>)
 
         expect(screen.getByText('Login')).toBeInTheDocument()
+        expect(screen.getByLabelText('Login Form')).toBeInTheDocument()
+        expect(screen.getByText('User Name')).toBeInTheDocument()
+        expect(screen.getByPlaceholderText('User Name')).toBeInTheDocument()
+        expect(screen.getByText('Password')).toBeInTheDocument()
+        expect(screen.getByPlaceholderText('Password')).toBeInTheDocument()
+        expect(screen.getByRole('button')).toBeInTheDocument()
     })
 })

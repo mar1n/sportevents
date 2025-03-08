@@ -10,7 +10,7 @@ describe('Register', () => {
         render(<Register />)
 
         expect(screen.getByText('Register User')).toBeInTheDocument()
-        expect(screen.getByLabelText('RegisterForm')).toBeInTheDocument()
+        expect(screen.getByLabelText('Register Form')).toBeInTheDocument()
         expect(screen.getByText('User Name')).toBeInTheDocument()
         expect(screen.getByText('Email')).toBeInTheDocument()
         expect(screen.getByText('Password')).toBeInTheDocument()

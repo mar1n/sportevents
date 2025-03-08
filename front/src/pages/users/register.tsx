@@ -59,7 +59,7 @@ export default function Register() {
           </div>
         ) : (
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <Form formName="RegisterForm" className="space-y-6" onSubmit={(e) => onSubmit(e)}>
+            <Form formName="Register Form" className="space-y-6" onSubmit={(e) => onSubmit(e)}>
               <>
                 <div>
                   <Label
