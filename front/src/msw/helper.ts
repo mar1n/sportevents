@@ -54,4 +54,25 @@ const registerResponses = {
   },
 }
 
-export { registerResponses }
+const loginResponses = {
+  allValidationFails: () => {
+    throw HttpResponse.json(
+      {
+        errors: [
+          {
+            message: 'The username field must be defined',
+            rule: 'required',
+            field: 'username',
+          },
+          {
+            message: 'The password field must be defined',
+            rule: 'required',
+            field: 'password',
+          },
+        ],
+      },
+      { status: 422 }
+    )
+  },
+}
+export { registerResponses, loginResponses }
