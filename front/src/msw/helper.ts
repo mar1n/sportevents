@@ -74,5 +74,17 @@ const loginResponses = {
       { status: 422 }
     )
   },
+  invaldiCredentials: () => {
+    throw HttpResponse.json(
+      {
+        errors: [
+          {
+            message: 'Invalid user credentials',
+          },
+        ],
+      },
+      { status: 400 }
+    )
+  },
 }
 export { registerResponses, loginResponses }

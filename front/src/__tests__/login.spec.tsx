@@ -17,7 +17,7 @@ describe('Login', () => {
         expect(screen.getByRole('button')).toBeInTheDocument()
     })
     test('Empty Fields.', async () => {
-        server.use(http.post('http://localhost:6666/users/login', async ({request}) => {
+        server.use(http.get('http://localhost:6666/users/login', async ({request}) => {
             loginResponses.allValidationFails()
         }))
         render(<Login />)
@@ -25,6 +25,18 @@ describe('Login', () => {
         await waitFor(() => {
             expect(screen.getByText('The username field must be defined'))
             expect(screen.getByText('The password field must be defined'))
+        })
+    })
+    test('Invalid credentials', async() => {
+        server.use(http.get('http://localhost:6666/users/login', async () => {
+            loginResponses.invaldiCredentials()
+        }))
+        render(<Login/>)
+        await userEvent.type(screen.getByPlaceholderText('User Name'), 'Unknown')
+        await userEvent.type(screen.getByPlaceholderText('Password'), 'randomPassword')
+        await userEvent.click(screen.getByRole('button'))
+        await waitFor(() => {
+            expect(screen.getByText('Invalid user credentials'))
         })
     })
 })

@@ -9,32 +9,42 @@ export type User = {
   username: string
   password: string
 }
+
 export default function Login() {
-  const [user, setUser] = useState<User>({username: '', password: ''})
-  const [error, setError] = useState<User>({username: '', password: ''})
+  const [user, setUser] = useState<User>({ username: '', password: '' })
+  const [error, setError] = useState<User & { invalidCredentials: string }>({
+    username: '',
+    password: '',
+    invalidCredentials: '',
+  })
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser((user) => ({
       ...user,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }))
   }
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const respons = await axios.post(`${setUrl.mockSerever}/users/login`, {
-        username,
-        password
+      const respons = await axios.get(`${setUrl.mockSerever}/users/login`, {
+        params: {
+          username,
+          password,
+        },
       })
     } catch (errors: any) {
       errors.response.data.errors.forEach((errorMessage: any) => {
-        setError((error) => ({
-          ...error,
-          [errorMessage.field]: `${errorMessage.message}`,
-        }))
+        setError((error) => {
+          if (errorMessage.field in error) {
+            return { ...error, [errorMessage.field]: `${errorMessage.message}` }
+          } else {
+            return { ...error, ['invalidCredentials']: `${errorMessage.message}` }
+          }
+        })
       })
     }
   }
-  const { username, password } = user;
+  const { username, password } = user
   return (
     <>
       <div>
@@ -84,6 +94,7 @@ export default function Login() {
                   />
                 </div>
                 <span>{error.password}</span>
+                <span>{error.invalidCredentials}</span>
               </div>
               <div>
                 <Button
