@@ -8,7 +8,7 @@ describe('Login', () => {
     test('Login elements.', async () => {
         render(<Login/>)
 
-        expect(screen.getByText('Login')).toBeInTheDocument()
+        expect(screen.getByText('Login User')).toBeInTheDocument()
         expect(screen.getByLabelText('Login Form')).toBeInTheDocument()
         expect(screen.getByText('User Name')).toBeInTheDocument()
         expect(screen.getByPlaceholderText('User Name')).toBeInTheDocument()

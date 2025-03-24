@@ -55,7 +55,7 @@ export default function Login() {
             className="mx-auto h-10 w-auto"
           />
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-            Login{' '}
+            Login User{' '}
           </h2>
         </div>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
