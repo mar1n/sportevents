@@ -20,7 +20,7 @@ router.get('/', async () => {
 
 router.get('/users/:username', [UsersController, 'index'])
 router.post('/users/register', [UsersController, 'register'])
-router.get('/auth/login', [SessionController, 'store'])
+router.post('/auth/login', [SessionController, 'store'])
 router.get('/account', [AccountController, 'show']).use(middleware.auth())
 router.post('/events', [EventsController, 'createEvent']).use(middleware.auth())
 router

@@ -26,4 +26,12 @@ export const handlers = [
       { status: 201 }
     )
   }),
+  http.get('http://localhost:6666/auth/login', async ({ request }) => {
+    return HttpResponse.json(
+      {
+        message: `Successful Login.`,
+      },
+      { status: 200 }
+    )
+  }),
 ]

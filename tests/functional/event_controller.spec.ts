@@ -14,7 +14,7 @@ async function loginHelper(client: ApiClient) {
     email: 'szymon@fastmail.com',
     password: 'qwertyuio',
   }
-  const response = await client.get('/auth/login').qs(userLogin)
+  const response = await client.post('/auth/login').json(userLogin)
   response.assertStatus(200)
   response.assertBodyContains({
     message: 'Valid credentials',
