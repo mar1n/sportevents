@@ -34,4 +34,12 @@ export const handlers = [
       { status: 200 }
     )
   }),
+  http.get('http://localhost:6666/users/account', async ({ request }) => {
+    return HttpResponse.json(
+      {
+        user: `Szymon Dawidowicz`,
+      },
+      { status: 200, headers: { 'Set-Cookie': 'mySecret=abc-123' } }
+    )
+  }),
 ]
