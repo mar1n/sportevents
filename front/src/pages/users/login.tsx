@@ -3,6 +3,7 @@ import Label from '@/components/label/label'
 import Input from '@/components/input/input'
 import Button from '@/components/button/button'
 import React, { useState } from 'react'
+import { redirect, useRouter } from 'next/navigation'
 import { setUrl } from '../../utils/helper'
 import axios from 'axios'
 export type User = {
@@ -17,6 +18,7 @@ export default function Login() {
     password: '',
     invalidCredentials: '',
   })
+  const router = useRouter()
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUser((user) => ({
       ...user,
@@ -26,13 +28,13 @@ export default function Login() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const respons = await axios.get(`${setUrl.mockSerever}/users/login`, {
+      const respons = await axios.get(`${setUrl.mockSerever}/auth/login`, {
         params: {
           username,
           password,
         },
       })
-      
+      router.push('/users/account')
     } catch (errors: any) {
       errors.response.data.errors.forEach((errorMessage: any) => {
         setError((error) => {

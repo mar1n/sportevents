@@ -17,7 +17,7 @@ describe('Login', () => {
         expect(screen.getByRole('button')).toBeInTheDocument()
     })
     test('Empty Fields.', async () => {
-        server.use(http.get('http://localhost:6666/users/login', async ({request}) => {
+        server.use(http.get('http://localhost:6666/auth/login', async ({request}) => {
             loginResponses.allValidationFails()
         }))
         render(<Login />)
@@ -28,7 +28,7 @@ describe('Login', () => {
         })
     })
     test('Invalid credentials', async() => {
-        server.use(http.get('http://localhost:6666/users/login', async () => {
+        server.use(http.get('http://localhost:6666/auth/login', async () => {
             loginResponses.invaldiCredentials()
         }))
         render(<Login/>)
