@@ -34,7 +34,7 @@ export default function Login() {
           password,
         },
       })
-      router.push('/users/account')
+       router.push('/users/account')
     } catch (errors: any) {
       errors.response.data.errors.forEach((errorMessage: any) => {
         setError((error) => {
