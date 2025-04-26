@@ -20,7 +20,6 @@ describe('Login', () => {
     expect(screen.getByRole('button')).toBeInTheDocument()
   })
   test('Empty Fields.', async () => {
-    // mockRouter.push('/users/account')
     server.use(
       http.get('http://localhost:6666/auth/login', async ({ request }) => {
         loginResponses.allValidationFails()

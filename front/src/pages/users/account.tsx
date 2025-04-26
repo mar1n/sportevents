@@ -1,7 +1,10 @@
 import axios from 'axios'
+import PageWithAuth from '../../components/providers/pageWithAuth'
 import { useState, useEffect } from 'react'
 import { setUrl } from '../../utils/helper'
-export default function Account() {
+import { NextPage } from 'next'
+
+const Account: NextPage =()=> {
   const [user, setUser] = useState('')
   const [error, setError] = useState('')
   useEffect(() => {
@@ -22,3 +25,5 @@ export default function Account() {
     </>
   )
 }
+
+export default PageWithAuth(Account)

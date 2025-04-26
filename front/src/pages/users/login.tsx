@@ -3,7 +3,7 @@ import Label from '@/components/label/label'
 import Input from '@/components/input/input'
 import Button from '@/components/button/button'
 import React, { useState } from 'react'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { setUrl } from '../../utils/helper'
 import axios from 'axios'
 export type User = {
