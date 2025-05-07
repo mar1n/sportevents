@@ -31,7 +31,7 @@ export const handlers = [
       {
         message: `Successful Login.`,
       },
-      { status: 200 }
+      { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
     )
   }),
   http.get('http://localhost:6666/users/account', async ({ request }) => {
@@ -39,7 +39,7 @@ export const handlers = [
       {
         user: `Szymon Dawidowicz`,
       },
-      { status: 200, headers: { 'Set-Cookie': 'mySecret=abc-123' } }
+      { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
     )
   }),
 ]

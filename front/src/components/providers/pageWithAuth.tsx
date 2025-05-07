@@ -16,7 +16,6 @@ const PageWithAuth = (Component: NextPage) => {
       const getUser = async () => {
         if (!isAuthenticated) {
           router.push('/login')
-          console.log('Not authenticated')
         } else {
           setIsAuth(true)
         }
