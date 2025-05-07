@@ -24,7 +24,7 @@ const PageWithAuth = (Component: NextPage) => {
       getUser()
     }, [isAuthenticated])
 
-    return !!isAuth ? <Component /> : null // Render whatever you want while the authentication occurs
+    return !!isAuth ? <Component /> : <div> Please login to have access to page. </div> // Render whatever you want while the authentication occurs
   }
 
   return AuthenticatedComponent
