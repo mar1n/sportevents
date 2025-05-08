@@ -15,7 +15,7 @@ const PageWithAuth = (Component: NextPage) => {
     useEffect(() => {
       const getUser = async () => {
         if (!isAuthenticated) {
-          router.push('/login')
+          setIsAuth(false)
         } else {
           setIsAuth(true)
         }
