@@ -2,7 +2,7 @@ import { test } from '@japa/runner'
 import Events from '#models/event'
 
 import { DateTime } from 'luxon'
-test.group('Events', () => {
+test.group('Event', () => {
   test('Create event', async ({ assert }) => {
     const title = 'NBA Game'
     const discription = 'Chicago Bulls and Phonix Suns will play game at Paris Stadium.'
