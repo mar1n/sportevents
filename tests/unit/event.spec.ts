@@ -10,6 +10,7 @@ test.group('Event', () => {
     const endDate = DateTime.now()
     const location = 'London'
     const address = 'Queen Elizabeth Road'
+    const userName = 'Szymon'
 
     await Events.create({
       title: title,
@@ -18,6 +19,7 @@ test.group('Event', () => {
       endEvent: endDate,
       location: location,
       address: address,
+      userName: userName,
     })
 
     const findEvent = await Events.findByOrFail('title', 'NBA Game')

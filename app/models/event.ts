@@ -17,6 +17,9 @@ export default class Events extends BaseModel {
   @column()
   declare address: string
 
+  @column({ columnName: 'userName' })
+  declare userName: string
+
   @column.dateTime({ columnName: 'startEvent' })
   declare startEvent: DateTime
 

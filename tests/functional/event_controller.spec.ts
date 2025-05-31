@@ -33,6 +33,7 @@ test.group('Events controller', (group) => {
       endEvent: '2025-02-16 01:00:00',
       location: 'London',
       address: 'Queen Elizabeth Road',
+      userName: 'Szymon',
     }
     const eventRoute = await client.post('/events').json(event).header('Cookie', cookie)
     eventRoute.assertStatus(201)
@@ -52,6 +53,7 @@ test.group('Events controller', (group) => {
       endEvent: '2025-02-16 01:00:00',
       location: 'London',
       address: 'Queen Elizabeth Road',
+      userName: 'Szymon',
     }
     const eventRoute = await client.post('/events').json(event).header('Cookie', cookie)
     eventRoute.assertStatus(422)
@@ -68,6 +70,7 @@ test.group('Events controller', (group) => {
       endEvent: '2025-02-16 01:00:00',
       location: 'London',
       address: 'Queen Elizabeth Road',
+      userName: 'Szymon',
     }
     const eventRoute = await client.post('/events').json(event).header('Cookie', cookie)
     eventRoute.assertStatus(422)
@@ -92,6 +95,7 @@ test.group('Events controller', (group) => {
       endEvent: '2025-02-15 01:00:00',
       location: 'London',
       address: 'Queen Elizabeth Road',
+      userName: 'Szymon',
     }
     const eventRoute = await client.post('/events').json(event).header('Cookie', cookie)
     eventRoute.assertStatus(422)
@@ -112,6 +116,7 @@ test.group('Events controller', (group) => {
       endEvent: '2025-02-16 01:00:00',
       location: '',
       address: 'Queen Elizabeth Road',
+      userName: 'Szymon',
     }
     const eventRoute = await client.post('/events').json(event).header('Cookie', cookie)
     eventRoute.assertStatus(422)
@@ -134,6 +139,7 @@ test.group('Events controller', (group) => {
       endEvent: '2025-02-16 01:00:00',
       location: 'London',
       address: '',
+      userName: 'Szymon',
     }
     const eventRoute = await client.post('/events').json(event).header('Cookie', cookie)
     eventRoute.assertStatus(422)
@@ -155,6 +161,7 @@ test.group('Events controller', (group) => {
       endEvent: '2025-02-16 01:00:00',
       location: 'London',
       address: 'Queen Elizabeth Road',
+      userName: 'Szymon',
     }
     const eventRoute = await client.post('/events').json(event)
     eventRoute.assertStatus(401)

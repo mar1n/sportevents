@@ -7,6 +7,7 @@ export const createEventValidator = vine.compile(
     description: vine.string().minLength(5),
     location: vine.string().minLength(5),
     address: vine.string().minLength(5),
+    userName: vine.string().minLength(5),
     startEvent: vine
       .date({ formats: { utc: true } })
       .beforeField('endEvent')
