@@ -23,6 +23,7 @@ router.post('/users/register', [UsersController, 'register'])
 router.post('/auth/login', [SessionController, 'store'])
 router.get('/account', [AccountController, 'show']).use(middleware.auth())
 router.post('/events', [EventsController, 'createEvent']).use(middleware.auth())
+router.post('/events/display', [EventsController, 'display']).use(middleware.auth())
 router
   .post('/auth/logout', async ({ auth, response }) => {
     await auth.use('web').logout()

@@ -43,6 +43,32 @@ test.group('Events controller', (group) => {
     const findEvent = await Events.findByOrFail('userName', 'Szymon Dawidowicz')
     assert.equal(findEvent.title, event.title)
   })
+  test('Display Events for Login user.', async ({ client }) => {
+    const cookie = await loginHelper(client)
+    const event = {
+      title: 'Even Title',
+      description: 'My discription of event...',
+      startEvent: '2025-02-15 01:00:00',
+      endEvent: '2025-02-16 01:00:00',
+      location: 'London',
+      address: 'Queen Elizabeth Road',
+    }
+    await client.post('/events').json(event).header('Cookie', cookie)
+    const eventDisplayRoute = await client.post('/events/display').header('Cookie', cookie)
+    eventDisplayRoute.assertStatus(201)
+    eventDisplayRoute.assertBodyContains({
+      message: 'Events of Szymon Dawidowicz',
+      events: [
+        {
+          title: 'Even Title',
+          description: 'My discription of event...',
+          location: 'London',
+          address: 'Queen Elizabeth Road',
+          userName: 'Szymon Dawidowicz',
+        },
+      ],
+    })
+  })
   test('Create invalid Event with empty title field.', async ({ client }) => {
     const cookie = await loginHelper(client)
     const event = {

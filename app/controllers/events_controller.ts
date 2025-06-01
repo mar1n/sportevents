@@ -13,4 +13,13 @@ export default class EventsController {
       message: 'Event created successfully',
     })
   }
+  public async display({ auth, response }: HttpContext) {
+    const user = auth.user?.username
+    const events = await Events.findManyBy('username', user)
+
+    return response.status(201).json({
+      message: `Events of ${user}`,
+      events: events,
+    })
+  }
 }
