@@ -73,7 +73,7 @@ test.group('Events controller', (group) => {
       ],
     })
   })
-  test('Only display events for login user.', async ({ client }) => {
+  test('Only display events belonging to user.', async ({ client }) => {
     // setting up events for first user
     const cookie = await loginHelper(client)
     const event = {
