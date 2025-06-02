@@ -3,15 +3,19 @@ import testUtils from '@adonisjs/core/services/test_utils'
 import Events from '#models/event'
 import { ApiClient } from '@japa/api-client'
 
-async function loginHelper(client: ApiClient) {
+async function loginHelper(
+  client: ApiClient,
+  userName = 'Szymon Dawidowicz',
+  email = 'szymon@fastmail.com'
+) {
   const userRegister = {
-    username: 'Szymon Dawidowicz',
-    email: 'szymon@fastmail.com',
+    username: userName,
+    email: email,
     password: 'qwertyuio',
   }
   await client.post('/users/register').json(userRegister)
   const userLogin = {
-    email: 'szymon@fastmail.com',
+    email: email,
     password: 'qwertyuio',
   }
   const response = await client.post('/auth/login').json(userLogin)
@@ -67,6 +71,29 @@ test.group('Events controller', (group) => {
           userName: 'Szymon Dawidowicz',
         },
       ],
+    })
+  })
+  test('Only display events for login user.', async ({ client }) => {
+    // setting up events for first user
+    const cookie = await loginHelper(client)
+    const event = {
+      title: 'Even Title',
+      description: 'My discription of event...',
+      startEvent: '2025-02-15 01:00:00',
+      endEvent: '2025-02-16 01:00:00',
+      location: 'London',
+      address: 'Queen Elizabeth Road',
+    }
+    await client.post('/events').json(event).header('Cookie', cookie)
+    await client.post('/auth/logout')
+
+    // setting up events for second user
+    const newCookie = await loginHelper(client, 'Alfredo', 'alfredo@somemail.com')
+    const eventDisplayRoute = await client.post('/events/display').header('Cookie', newCookie)
+    eventDisplayRoute.assertStatus(201)
+    eventDisplayRoute.assertBodyContains({
+      message: 'Events of Alfredo',
+      events: [],
     })
   })
   test('Create invalid Event with empty title field.', async ({ client }) => {
