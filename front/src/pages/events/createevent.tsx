@@ -22,6 +22,66 @@ function CreateEvent() {
                 onChange={() => console.log()}
               />
             </div>
+            <div>
+              <Label name="Description" title="Description" className="descriptionLabel" />
+            </div>
+            <div>
+              <Input
+                name="Description"
+                className="eventDescription"
+                placeholder="Description"
+                value=""
+                onChange={() => console.log()}
+              />
+            </div>
+            <div>
+              <Label name="Location" title="Location" className="locationLabel" />
+            </div>
+            <div>
+              <Input
+                name="Location"
+                className="eventLocation"
+                placeholder="Location"
+                value=""
+                onChange={() => console.log()}
+              />
+            </div>
+            <div>
+              <Label name="Address" title="Address" className="addressLabel" />
+            </div>
+            <div>
+              <Input
+                name="Address"
+                className="eventAddress"
+                placeholder="Address"
+                value=""
+                onChange={() => console.log()}
+              />
+            </div>
+            <div>
+              <Label name="StartEvent" title="StartEvent" className="startEventLabel" />
+            </div>
+            <div>
+              <Input
+                name="StartEvent"
+                className="eventStartEvent"
+                placeholder="StartEvent"
+                value=""
+                onChange={() => console.log()}
+              />
+            </div>
+            <div>
+              <Label name="EndEvent" title="EndEvent" className="endEventLabel" />
+            </div>
+            <div>
+              <Input
+                name="endEvent"
+                className="eventEndEvent"
+                placeholder="EndEvent"
+                value=""
+                onChange={() => console.log()}
+              />
+            </div>
             <Button name="Create event" className="eventButton" disabled={false} />
           </>
         </Form>
