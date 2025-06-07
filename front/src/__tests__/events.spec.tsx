@@ -1,7 +1,10 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import CreateEvent from "../pages/events/createevent"
 import { server } from "../msw/node"
 import { eventsResponses } from "../msw/helper"
+import { http } from 'msw'
+import { execPath } from 'process'
 describe('Events', () => {
     test('Elements.', async() => {
         render(<CreateEvent />)
@@ -23,7 +26,19 @@ describe('Events', () => {
         expect(screen.getByRole('button')).toBeInTheDocument()
 
     })
-    test.skip('Empty Fields.', async () => {
-
+    test('Empty Fields.', async () => {
+        server.use(http.post('http://localhost:6666/events', async ({request}) => {
+            eventsResponses.allInputsFieldsAreEmpty()
+        }))
+        render(<CreateEvent />)
+        await userEvent.click(screen.getByRole('button'))
+        await waitFor(() => {
+            expect(screen.getByText('The title field must be defined'))
+            expect(screen.getByText('The description field must be defined'))
+            expect(screen.getByText('The location field must be defined'))
+            expect(screen.getByText('The address field must be defined'))
+            expect(screen.getByText('The stratEvent field must be defined'))
+            expect(screen.getByText('The endEvent field must be defined'))
+        })
     })
 })

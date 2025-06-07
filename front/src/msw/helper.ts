@@ -1,7 +1,43 @@
 import { HttpResponse } from 'msw'
 const eventsResponses = {
   allInputsFieldsAreEmpty: () => {
-    throw HttpResponse.json({})
+    throw HttpResponse.json(
+      {
+        errors: [
+          {
+            message: 'The title field must be defined',
+            rule: 'required',
+            field: 'title',
+          },
+          {
+            message: 'The description field must be defined',
+            rule: 'required',
+            field: 'description',
+          },
+          {
+            message: 'The location field must be defined',
+            rule: 'required',
+            field: 'location',
+          },
+          {
+            message: 'The address field must be defined',
+            rule: 'required',
+            field: 'address',
+          },
+          {
+            message: 'The startEvent field must be defined',
+            rule: 'required',
+            field: 'startEvent',
+          },
+          {
+            message: 'The endEvent field must be defined',
+            rule: 'required',
+            field: 'endEvent',
+          },
+        ],
+      },
+      { status: 422 }
+    )
   },
 }
 const registerResponses = {
@@ -92,4 +128,4 @@ const loginResponses = {
     )
   },
 }
-export { registerResponses, loginResponses }
+export { registerResponses, loginResponses, eventsResponses }
