@@ -22,7 +22,7 @@ describe('Login', () => {
   test('Empty Fields.', async () => {
     server.use(
       http.get('http://localhost:6666/auth/login', async ({ request }) => {
-        loginResponses.allValidationFails()
+        loginResponses.allInputsFieldsAreEmpty()
       })
     )
     render(<Login />)

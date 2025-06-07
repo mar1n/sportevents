@@ -1,6 +1,11 @@
 import { HttpResponse } from 'msw'
+const eventsResponses = {
+  allInputsFieldsAreEmpty: () => {
+    throw HttpResponse.json({})
+  },
+}
 const registerResponses = {
-  allValidationFails: () => {
+  allInputsFieldsAreEmpty: () => {
     throw HttpResponse.json(
       {
         errors: [
@@ -55,7 +60,7 @@ const registerResponses = {
 }
 
 const loginResponses = {
-  allValidationFails: () => {
+  allInputsFieldsAreEmpty: () => {
     throw HttpResponse.json(
       {
         errors: [

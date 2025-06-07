@@ -21,7 +21,7 @@ describe('Register', () => {
     })
     test('Empty fields.', async () => {
         server.use(http.post('http://localhost:6666/users/register', async ({request}) => {
-            registerResponses.allValidationFails()
+            registerResponses.allInputsFieldsAreEmpty()
         }))
         render(<Register/>)
         await userEvent.click(screen.getByRole('button'))

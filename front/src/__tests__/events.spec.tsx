@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react'
 import CreateEvent from "../pages/events/createevent"
-
+import { server } from "../msw/node"
+import { eventsResponses } from "../msw/helper"
 describe('Events', () => {
-    test('Events Elements', async() => {
+    test('Elements.', async() => {
         render(<CreateEvent />)
 
         expect(screen.getByText('Create Event')).toBeInTheDocument()
@@ -20,6 +21,9 @@ describe('Events', () => {
         expect(screen.getByPlaceholderText('StartEvent')).toBeInTheDocument()
         expect(screen.getByPlaceholderText('EndEvent')).toBeInTheDocument()
         expect(screen.getByRole('button')).toBeInTheDocument()
+
+    })
+    test.skip('Empty Fields.', async () => {
 
     })
 })
