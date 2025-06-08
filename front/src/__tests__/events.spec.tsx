@@ -4,7 +4,6 @@ import CreateEvent from "../pages/events/createevent"
 import { server } from "../msw/node"
 import { eventsResponses } from "../msw/helper"
 import { http } from 'msw'
-import { execPath } from 'process'
 describe('Events', () => {
     test('Elements.', async() => {
         render(<CreateEvent />)
@@ -37,7 +36,7 @@ describe('Events', () => {
             expect(screen.getByText('The description field must be defined'))
             expect(screen.getByText('The location field must be defined'))
             expect(screen.getByText('The address field must be defined'))
-            expect(screen.getByText('The stratEvent field must be defined'))
+            expect(screen.getByText('The startEvent field must be defined'))
             expect(screen.getByText('The endEvent field must be defined'))
         })
     })

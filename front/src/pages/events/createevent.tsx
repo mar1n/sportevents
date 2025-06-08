@@ -63,7 +63,7 @@ function CreateEvent() {
     <>
       <div>Create Event</div>
       <div>
-        <Form formName="Event Form" className="eventForm" onSubmit={() => 666}>
+        <Form formName="Event Form" className="eventForm" onSubmit={(e) => onSubmit(e)}>
           <>
             <div>
               <Label name="Title" title="Title" className="eventLabel" />
@@ -77,6 +77,7 @@ function CreateEvent() {
                 onChange={() => console.log()}
               />
             </div>
+            <span>{error.title}</span>
             <div>
               <Label name="Description" title="Description" className="descriptionLabel" />
             </div>
@@ -89,6 +90,7 @@ function CreateEvent() {
                 onChange={() => console.log()}
               />
             </div>
+            <span>{error.description}</span>
             <div>
               <Label name="Location" title="Location" className="locationLabel" />
             </div>
@@ -101,6 +103,7 @@ function CreateEvent() {
                 onChange={() => console.log()}
               />
             </div>
+            <span>{error.location}</span>
             <div>
               <Label name="Address" title="Address" className="addressLabel" />
             </div>
@@ -113,6 +116,7 @@ function CreateEvent() {
                 onChange={() => console.log()}
               />
             </div>
+            <span>{error.address}</span>
             <div>
               <Label name="StartEvent" title="StartEvent" className="startEventLabel" />
             </div>
@@ -125,6 +129,7 @@ function CreateEvent() {
                 onChange={() => console.log()}
               />
             </div>
+            <span>{error.startEvent}</span>
             <div>
               <Label name="EndEvent" title="EndEvent" className="endEventLabel" />
             </div>
@@ -137,6 +142,7 @@ function CreateEvent() {
                 onChange={() => console.log()}
               />
             </div>
+            <span>{error.endEvent}</span>
             <Button name="Create event" className="eventButton" disabled={false} />
           </>
         </Form>
