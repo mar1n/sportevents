@@ -34,4 +34,22 @@ export const handlers = [
       { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
     )
   }),
+  http.post('http://localhost:6666/events/displayevents', async ({ request }) => {
+    return HttpResponse.json(
+      {
+        message: `Events of Szymon Dawidowicz`,
+        events: [
+          {
+            title: 'Even Title',
+            description: 'My discription of event...',
+            location: 'London',
+            address: 'Queen Elizabeth Road',
+            startEvent: '2025-02-15 01:00:00',
+            endEvent: '2025-02-16 01:00:00',
+          },
+        ],
+      },
+      { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
+    )
+  }),
 ]

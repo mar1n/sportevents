@@ -54,5 +54,12 @@ test.describe('Display events', () => {
     await expect(page.getByText('Szymon')).toBeVisible()
 
     await page.click('text=DisplayEvent')
+
+    await expect(page.getByText('Even Title')).toBeVisible()
+    await expect(page.getByText('My discription of event...')).toBeVisible()
+    await expect(page.getByText('London')).toBeVisible()
+    await expect(page.getByText('Queen Elizabeth Road')).toBeVisible()
+    await expect(page.getByText('2025-02-15 01:00:00')).toBeVisible()
+    await expect(page.getByText('2025-02-16 01:00:00')).toBeVisible()
   })
 })

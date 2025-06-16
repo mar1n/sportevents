@@ -13,6 +13,8 @@ describe('Account', () => {
   test('Account elements.', async () => {
     render(<Account />)
     screen.getByText('Account Page')
+    screen.getByText('CreateEvent')
+    screen.getByText('DisplayEvents')
   })
   test('Show details of user', async () => {
     render(<Account />)
