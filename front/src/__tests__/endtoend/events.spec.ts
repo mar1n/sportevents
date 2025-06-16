@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test'
-
+import { setUrl } from '../../utils/helper'
 test.describe('Create Events', () => {
   test('Has heading Create Event', async ({ page }) => {
-    await page.goto('http://localhost:3000/users/login')
+    await page.goto(`${setUrl.development}/users/login`)
     await page.getByPlaceholder('User Name').fill('Szymon')
     await page.getByPlaceholder('Password').fill('somepassword')
 
@@ -16,7 +16,7 @@ test.describe('Create Events', () => {
   })
 
   test('Create Event', async ({ page }) => {
-    await page.goto('http://localhost:3000/users/login')
+    await page.goto(`${setUrl.development}/users/login`)
     await page.getByPlaceholder('User Name').fill('Szymon')
     await page.getByPlaceholder('Password').fill('somepassword')
 
@@ -45,7 +45,7 @@ test.describe('Create Events', () => {
 
 test.describe('Display events', () => {
   test('Display events', async ({ page }) => {
-    await page.goto('http://localhost:3000/users/login')
+    await page.goto(`${setUrl.development}/users/login`)
     await page.getByPlaceholder('User Name').fill('Szymon')
     await page.getByPlaceholder('Password').fill('somepassword')
 

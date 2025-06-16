@@ -1,7 +1,8 @@
 import { http, HttpResponse } from 'msw'
 import { User } from '../pages/users/register'
+import { setUrl } from '../utils/helper'
 export const handlers = [
-  http.post('http://localhost:6666/users/register', async ({ request }) => {
+  http.post(`${setUrl.mockSerever}/users/register`, async ({ request }) => {
     const user = (await request.json()) as User
     return HttpResponse.json(
       {
@@ -10,7 +11,7 @@ export const handlers = [
       { status: 201 }
     )
   }),
-  http.get('http://localhost:6666/auth/login', async ({ request }) => {
+  http.get(`${setUrl.mockSerever}/auth/login`, async ({ request }) => {
     return HttpResponse.json(
       {
         message: `Successful Login.`,
@@ -18,7 +19,7 @@ export const handlers = [
       { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
     )
   }),
-  http.get('http://localhost:6666/users/account', async ({ request }) => {
+  http.get(`${setUrl.mockSerever}/users/account`, async ({ request }) => {
     return HttpResponse.json(
       {
         user: `Szymon Dawidowicz`,
@@ -26,7 +27,7 @@ export const handlers = [
       { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
     )
   }),
-  http.post('http://localhost:6666/events', async ({ request }) => {
+  http.post(`${setUrl.mockSerever}/events`, async ({ request }) => {
     return HttpResponse.json(
       {
         message: `Event created successfully`,
@@ -34,7 +35,7 @@ export const handlers = [
       { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
     )
   }),
-  http.post('http://localhost:6666/events/displayevents', async ({ request }) => {
+  http.post(`${setUrl.mockSerever}/events/displayevents`, async ({ request }) => {
     return HttpResponse.json(
       {
         message: `Events of Szymon Dawidowicz`,
