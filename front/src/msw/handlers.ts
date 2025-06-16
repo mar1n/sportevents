@@ -26,4 +26,12 @@ export const handlers = [
       { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
     )
   }),
+  http.post('http://localhost:6666/events', async ({ request }) => {
+    return HttpResponse.json(
+      {
+        message: `Event created successfully`,
+      },
+      { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
+    )
+  }),
 ]

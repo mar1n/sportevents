@@ -4,6 +4,7 @@ import Label from '@/components/label/label'
 import Input from '@/components/input/input'
 import Button from '@/components/button/button'
 import axios from 'axios'
+import PageWithAuth from '../../components/providers/pageWithAuth'
 import { setUrl } from '../../utils/helper'
 export type Event = {
   title: string
@@ -47,7 +48,7 @@ function CreateEvent() {
         location,
         address,
         startEvent,
-        endEvent
+        endEvent,
       })
       setConfirmationMessage(respons.data.message)
     } catch (errors: any) {
@@ -61,94 +62,100 @@ function CreateEvent() {
   }
   return (
     <>
-      <div>Create Event</div>
       <div>
-        <Form formName="Event Form" className="eventForm" onSubmit={(e) => onSubmit(e)}>
-          <>
-            <div>
-              <Label name="Title" title="Title" className="eventLabel" />
-            </div>
-            <div>
-              <Input
-                name="Title"
-                className="eventTitle"
-                placeholder="Title"
-                value={title}
-                onChange={() => console.log()}
-              />
-            </div>
-            <span>{error.title}</span>
-            <div>
-              <Label name="Description" title="Description" className="descriptionLabel" />
-            </div>
-            <div>
-              <Input
-                name="Description"
-                className="eventDescription"
-                placeholder="Description"
-                value={description}
-                onChange={() => console.log()}
-              />
-            </div>
-            <span>{error.description}</span>
-            <div>
-              <Label name="Location" title="Location" className="locationLabel" />
-            </div>
-            <div>
-              <Input
-                name="Location"
-                className="eventLocation"
-                placeholder="Location"
-                value={location}
-                onChange={() => console.log()}
-              />
-            </div>
-            <span>{error.location}</span>
-            <div>
-              <Label name="Address" title="Address" className="addressLabel" />
-            </div>
-            <div>
-              <Input
-                name="Address"
-                className="eventAddress"
-                placeholder="Address"
-                value={address}
-                onChange={() => console.log()}
-              />
-            </div>
-            <span>{error.address}</span>
-            <div>
-              <Label name="StartEvent" title="StartEvent" className="startEventLabel" />
-            </div>
-            <div>
-              <Input
-                name="StartEvent"
-                className="eventStartEvent"
-                placeholder="StartEvent"
-                value={startEvent}
-                onChange={() => console.log()}
-              />
-            </div>
-            <span>{error.startEvent}</span>
-            <div>
-              <Label name="EndEvent" title="EndEvent" className="endEventLabel" />
-            </div>
-            <div>
-              <Input
-                name="endEvent"
-                className="eventEndEvent"
-                placeholder="EndEvent"
-                value={endEvent}
-                onChange={() => console.log()}
-              />
-            </div>
-            <span>{error.endEvent}</span>
-            <Button name="Create event" className="eventButton" disabled={false} />
-          </>
-        </Form>
+        <h1>Create Event</h1>
       </div>
+      {confimationMessage ? (
+        <div>{confimationMessage}</div>
+      ) : (
+        <div>
+          <Form formName="Event Form" className="eventForm" onSubmit={(e) => onSubmit(e)}>
+            <>
+              <div>
+                <Label name="Title" title="Title" className="eventLabel" />
+              </div>
+              <div>
+                <Input
+                  name="title"
+                  className="eventTitle"
+                  placeholder="Title"
+                  value={title}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+              <span>{error.title}</span>
+              <div>
+                <Label name="Description" title="Description" className="descriptionLabel" />
+              </div>
+              <div>
+                <Input
+                  name="description"
+                  className="eventDescription"
+                  placeholder="Description"
+                  value={description}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+              <span>{error.description}</span>
+              <div>
+                <Label name="Location" title="Location" className="locationLabel" />
+              </div>
+              <div>
+                <Input
+                  name="location"
+                  className="eventLocation"
+                  placeholder="Location"
+                  value={location}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+              <span>{error.location}</span>
+              <div>
+                <Label name="Address" title="Address" className="addressLabel" />
+              </div>
+              <div>
+                <Input
+                  name="address"
+                  className="eventAddress"
+                  placeholder="Address"
+                  value={address}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+              <span>{error.address}</span>
+              <div>
+                <Label name="StartEvent" title="StartEvent" className="startEventLabel" />
+              </div>
+              <div>
+                <Input
+                  name="startEvent"
+                  className="eventStartEvent"
+                  placeholder="StartEvent"
+                  value={startEvent}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+              <span>{error.startEvent}</span>
+              <div>
+                <Label name="EndEvent" title="EndEvent" className="endEventLabel" />
+              </div>
+              <div>
+                <Input
+                  name="endEvent"
+                  className="eventEndEvent"
+                  placeholder="EndEvent"
+                  value={endEvent}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+              <span>{error.endEvent}</span>
+              <Button name="Create event" className="eventButton" disabled={false} />
+            </>
+          </Form>
+        </div>
+      )}
     </>
   )
 }
 
-export default CreateEvent
+export default PageWithAuth(CreateEvent)
