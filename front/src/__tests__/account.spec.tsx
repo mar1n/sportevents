@@ -3,10 +3,6 @@ import Account from '../pages/users/account'
 import * as nookies from 'nookies'
 jest.mock('next/router', () => require('next-router-mock'))
 jest.mock('nookies')
-// Object.defineProperty(window.document, 'cookie', {
-//   writable: true,
-//   value: 'isAuthenticated=omnomnom',
-// });
 const mockedNookies = jest.mocked(nookies)
 
 describe('Account', () => {
