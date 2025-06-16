@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import CreateEvent from '../pages/events/createevent'
 import { server } from '../msw/node'
 import { eventsResponses } from '../msw/helper'
+import { setUrl } from '../utils/helper'
 import { http } from 'msw'
 import * as nookies from 'nookies'
 jest.mock('next/router', () => require('next-router-mock'))
@@ -32,9 +33,9 @@ describe('Events', () => {
     expect(screen.getByPlaceholderText('EndEvent')).toBeInTheDocument()
     expect(screen.getByRole('button')).toBeInTheDocument()
   })
-  test('Empty Fields.', async () => {
+  test('Empty fields validation.', async () => {
     server.use(
-      http.post('http://localhost:6666/events', async ({ request }) => {
+      http.post(`${setUrl.mockSerever}/events`, async ({ request }) => {
         eventsResponses.allInputsFieldsAreEmpty()
       })
     )
