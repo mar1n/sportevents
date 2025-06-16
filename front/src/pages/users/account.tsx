@@ -3,6 +3,7 @@ import PageWithAuth from '../../components/providers/pageWithAuth'
 import { useState, useEffect } from 'react'
 import { setUrl } from '../../utils/helper'
 import { NextPage } from 'next'
+import Link from 'next/link'
 
 const Account: NextPage =()=> {
   const [user, setUser] = useState('')
@@ -21,6 +22,9 @@ const Account: NextPage =()=> {
       <div>
         <h1>Account Page</h1>
         <h2>Name: {user}</h2>
+      </div>
+      <div>
+        <Link href="/events/createevent">CreateEvent</Link>
       </div>
     </>
   )
