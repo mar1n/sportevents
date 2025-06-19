@@ -28,7 +28,7 @@ export default function Login() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const respons = await axios.get(`${setUrl.mockSerever}/auth/login`, {
+      const respons = await axios.post(`${setUrl.mockSerever}/auth/login`, {
         params: {
           username,
           password,

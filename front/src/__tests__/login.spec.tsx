@@ -22,7 +22,7 @@ describe('Login', () => {
   })
   test('Empty Fields.', async () => {
     server.use(
-      http.get(`${setUrl.mockSerever}/auth/login`, async ({ request }) => {
+      http.post(`${setUrl.mockSerever}/auth/login`, async ({ request }) => {
         loginResponses.allInputsFieldsAreEmpty()
       })
     )
@@ -35,7 +35,7 @@ describe('Login', () => {
   })
   test('Invalid credentials', async () => {
     server.use(
-      http.get(`${setUrl.mockSerever}/auth/login`, async () => {
+      http.post(`${setUrl.mockSerever}/auth/login`, async () => {
         loginResponses.invaldiCredentials()
       })
     )

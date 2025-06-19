@@ -11,7 +11,7 @@ export const handlers = [
       { status: 201 }
     )
   }),
-  http.get(`${setUrl.mockSerever}/auth/login`, async ({ request }) => {
+  http.post(`${setUrl.mockSerever}/auth/login`, async ({ request }) => {
     return HttpResponse.json(
       {
         message: `Successful Login.`,
