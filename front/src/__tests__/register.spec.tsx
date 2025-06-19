@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import Register from '../pages/users/register'
 import { server } from '../msw/node'
 import { registerResponses } from "../msw/helper"
+import { setUrl } from '../utils/helper'
 import { http } from 'msw'
 describe('Register', () => {
     test('User elements.', async () => {
@@ -20,7 +21,7 @@ describe('Register', () => {
         expect(screen.getByRole('button')).toBeInTheDocument()
     })
     test('Empty fields.', async () => {
-        server.use(http.post('http://localhost:6666/users/register', async ({request}) => {
+        server.use(http.post(`${setUrl.mockSerever}/users/register`, async ({request}) => {
             registerResponses.allInputsFieldsAreEmpty()
         }))
         render(<Register/>)
@@ -32,7 +33,7 @@ describe('Register', () => {
         })
     })
     test('Invalid email address', async () => {
-        server.use(http.post('http://localhost:6666/users/register', async ({request}) => {
+        server.use(http.post(`${setUrl.mockSerever}/users/register`, async ({request}) => {
             registerResponses.invalidEmail()
         }))
         render(<Register/>)
@@ -45,7 +46,7 @@ describe('Register', () => {
         })
     })
     test('Password has invalid length of characters.', async () => {
-        server.use(http.post('http://localhost:6666/users/register', async ({request}) => {
+        server.use(http.post(`${setUrl.mockSerever}/users/register`, async ({request}) => {
             registerResponses.invalidPasswordLength()
         }))
         render(<Register/>)

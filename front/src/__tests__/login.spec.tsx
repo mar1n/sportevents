@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { server } from '../msw/node'
 import { http } from 'msw'
 import { loginResponses } from '../msw/helper'
+import { setUrl } from '../utils/helper'
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }))
@@ -21,7 +22,7 @@ describe('Login', () => {
   })
   test('Empty Fields.', async () => {
     server.use(
-      http.get('http://localhost:6666/auth/login', async ({ request }) => {
+      http.get(`${setUrl.mockSerever}/auth/login`, async ({ request }) => {
         loginResponses.allInputsFieldsAreEmpty()
       })
     )
@@ -34,7 +35,7 @@ describe('Login', () => {
   })
   test('Invalid credentials', async () => {
     server.use(
-      http.get('http://localhost:6666/auth/login', async () => {
+      http.get(`${setUrl.mockSerever}/auth/login`, async () => {
         loginResponses.invaldiCredentials()
       })
     )
