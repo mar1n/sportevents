@@ -10,14 +10,14 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
-          name: Run tests
-          command: npm run test
-      - run:
           name: Create database folder
           command: mkdir -p tmp && touch tmp/db.sqlite3
       - run:
           name: Run Migrations
           command: node ace migration:run
+      - run:
+          name: Run tests
+          command: npm run test
 workflows:
   test-deploy:
     jobs:
