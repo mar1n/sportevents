@@ -101,9 +101,9 @@ const loginResponses = {
       {
         errors: [
           {
-            message: 'The username field must be defined',
+            message: 'The email field must be defined',
             rule: 'required',
-            field: 'username',
+            field: 'email',
           },
           {
             message: 'The password field must be defined',
