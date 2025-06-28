@@ -7,3 +7,10 @@ export const createPostValidator = vine.compile(
     password: vine.string().minLength(8).maxLength(24),
   })
 )
+
+export const createLoginValidator = vine.compile(
+  vine.object({
+    email: vine.string().minLength(5),
+    password: vine.string().minLength(8),
+  })
+)

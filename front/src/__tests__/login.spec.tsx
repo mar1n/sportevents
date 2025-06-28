@@ -14,8 +14,8 @@ describe('Login', () => {
 
     expect(screen.getByText('Login User')).toBeInTheDocument()
     expect(screen.getByLabelText('Login Form')).toBeInTheDocument()
-    expect(screen.getByText('User Name')).toBeInTheDocument()
-    expect(screen.getByPlaceholderText('User Name')).toBeInTheDocument()
+    expect(screen.getByText('Email')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument()
     expect(screen.getByText('Password')).toBeInTheDocument()
     expect(screen.getByPlaceholderText('Password')).toBeInTheDocument()
     expect(screen.getByRole('button')).toBeInTheDocument()
@@ -29,7 +29,7 @@ describe('Login', () => {
     render(<Login />)
     await userEvent.click(screen.getByRole('button'))
     await waitFor(() => {
-      expect(screen.getByText('The username field must be defined'))
+      expect(screen.getByText('The email field must be defined'))
       expect(screen.getByText('The password field must be defined'))
     })
   })
@@ -40,7 +40,7 @@ describe('Login', () => {
       })
     )
     render(<Login />)
-    await userEvent.type(screen.getByPlaceholderText('User Name'), 'Unknown')
+    await userEvent.type(screen.getByPlaceholderText('Email'), 'Unknown')
     await userEvent.type(screen.getByPlaceholderText('Password'), 'randomPassword')
     await userEvent.click(screen.getByRole('button'))
     await waitFor(() => {

@@ -7,14 +7,14 @@ import { useRouter } from 'next/navigation'
 import { setUrl } from '../../utils/helper'
 import axios from 'axios'
 export type User = {
-  username: string
+  email: string
   password: string
 }
 
 export default function Login() {
-  const [user, setUser] = useState<User>({ username: '', password: '' })
+  const [user, setUser] = useState<User>({ email: '', password: '' })
   const [error, setError] = useState<User & { invalidCredentials: string }>({
-    username: '',
+    email: '',
     password: '',
     invalidCredentials: '',
   })
@@ -28,11 +28,9 @@ export default function Login() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const respons = await axios.post(`${setUrl.mockSerever}/auth/login`, {
-        params: {
-          username,
+      const respons = await axios.post(`${setUrl.development}/auth/login`, {
+          email,
           password,
-        },
       })
        router.push('/users/account')
     } catch (errors: any) {
@@ -47,7 +45,7 @@ export default function Login() {
       })
     }
   }
-  const { username, password } = user
+  const { email, password } = user
   return (
     <>
       <div>
@@ -66,20 +64,20 @@ export default function Login() {
             <>
               <div>
                 <Label
-                  name="username"
-                  title="User Name"
+                  name="email"
+                  title="Email"
                   className="block text-sm/6 font-medium text-gray-900"
                 />
                 <div className="mt-2">
                   <Input
-                    name="username"
+                    name="email"
                     className="block w-full border border-gray-300 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                    placeholder="User Name"
-                    value={username}
+                    placeholder="Email"
+                    value={email}
                     onChange={(e) => handleChange(e)}
                   />
                 </div>
-                <span>{error.username}</span>
+                <span>{error.email}</span>
               </div>
               <div>
                 <Label

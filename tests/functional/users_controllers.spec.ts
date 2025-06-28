@@ -101,6 +101,21 @@ test.group('Users Controller', (group) => {
     protectedRoute.assertStatus(401)
   })
 
+  test('Login Empty fields.', async ({ client }) => {
+    await register(client)
+    const userLogin = {
+      email: '',
+      password: '',
+    }
+    const response = await client.post('/auth/login').json(userLogin)
+    response.assertStatus(422)
+    response.assertBodyContains({
+      errors: [
+        { message: 'The email field must be defined' },
+        { message: 'The password field must be defined' },
+      ],
+    })
+  })
   test('Invalid credentials.', async ({ client }) => {
     await register(client)
     const userLogin = {
