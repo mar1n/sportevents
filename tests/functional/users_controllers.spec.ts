@@ -128,4 +128,17 @@ test.group('Users Controller', (group) => {
       errors: [{ message: 'Invalid user credentials' }],
     })
   })
+  test('Email already exist in database.', async ({ client }) => {
+    await register(client)
+    const user = {
+      username: 'random',
+      email: 'szymon@fastmail.com',
+      password: 'qwertyuio',
+    }
+    const response = await client.post('/users/register').json(user)
+    response.assertStatus(400)
+    response.assertBodyContains({
+      errors: [{ message: 'User with this email already exist' }],
+    })
+  })
 })

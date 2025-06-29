@@ -10,8 +10,26 @@ export default class UsersController {
   }
   public async register({ request, response }: HttpContext) {
     const data = request.all()
-    const payload = await createPostValidator.validate(data)
+    const payload = await createRegisterValidator.validate(data)
+    const userExist = await User.findBy('email', payload.email)
+    if (userExist) {
+      return response.status(400).send({
+        errors: [
+          {
+            message: 'User with this email already exist',
+          },
+        ],
+      })
+    }
     const user = await User.create(payload)
+
+    // await mail.send((message) => {
+    //   message
+    //     .to('cykcykacz@gmail.com')
+    //     .from('szymondawidowicz@fastmail.com')
+    //     .subject('Verify your email address')
+    //     .html('<h1>Hello</h1>')
+    // })
 
     return response.status(201).json({
       message: 'We send you email, please read.',
