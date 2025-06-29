@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { createPostValidator } from '#validators/auth'
+import { createRegisterValidator } from '#validators/auth'
 import User from '#models/user'
+//import mail from '@adonisjs/mail/services/main'
 
 export default class UsersController {
   public async index({ request }: HttpContext) {
