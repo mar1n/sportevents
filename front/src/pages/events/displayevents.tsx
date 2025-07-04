@@ -9,7 +9,7 @@ function DisplayEvents() {
     useEffect(() => {
         async function getEvents() {
             try {
-                const respons = await axios.post(`${setUrl.mockSerever}/events/displayevents`)
+                const respons = await axios.post(`${setUrl.getURL()}/events/displayevents`)
                 setEvents(respons.data.events)
             } catch(error) {
 

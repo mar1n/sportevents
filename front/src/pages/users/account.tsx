@@ -11,7 +11,7 @@ const Account: NextPage =()=> {
   useEffect(() => {
     async function getUser() {
       try {
-        const respons = await axios.get(`${setUrl.mockSerever}/users/account`)
+        const respons = await axios.get(`${setUrl.getURL()}/users/account`)
         setUser(respons.data.user)
       } catch (err) {}
     }

@@ -23,7 +23,7 @@ export default function Register() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const respons = await axios.post(`${setUrl.mockSerever}/users/register`, {
+      const respons = await axios.post(`${setUrl.getURL()}/users/register`, {
         username,
         email,
         password,

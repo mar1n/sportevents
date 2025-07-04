@@ -42,7 +42,7 @@ function CreateEvent() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const respons = await axios.post(`${setUrl.mockSerever}/events`, {
+      const respons = await axios.post(`${setUrl.getURL()}/events`, {
         title,
         description,
         location,

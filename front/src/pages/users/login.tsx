@@ -28,11 +28,15 @@ export default function Login() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const respons = await axios.post(`${setUrl.development}/auth/login`, {
+      const respons = await axios.post(
+        `${setUrl.getURL()}/auth/login`,
+        {
           email,
           password,
-      })
-       router.push('/users/account')
+        },
+        { withCredentials: true }
+      )
+      router.push('/users/account')
     } catch (errors: any) {
       errors.response.data.errors.forEach((errorMessage: any) => {
         setError((error) => {
