@@ -33,14 +33,14 @@ test.group('Authetication.', (group) => {
     })
 
     const cookies = response.headers()['set-cookie']
-    const authenticated = await client.post('/auth').header('Cookie', cookies)
+    const authenticated = await client.get('/auth').header('Cookie', cookies)
     authenticated.assertStatus(200)
     authenticated.assertBodyContains({
       message: 'User is logged in.',
     })
   })
   test('User is not authenticated.', async ({ client }) => {
-    const authenticated = await client.post('/auth')
+    const authenticated = await client.get('/auth')
     authenticated.assertStatus(401)
   })
 })

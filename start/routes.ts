@@ -25,7 +25,7 @@ router.get('/account', [AccountController, 'show']).use(middleware.auth())
 router.post('/events', [EventsController, 'createEvent']).use(middleware.auth())
 router.post('/events/display', [EventsController, 'display']).use(middleware.auth())
 router
-  .post('/auth', async ({ auth, response }) => {
+  .get('/auth', async ({ auth, response }) => {
     if (!auth.isAuthenticated) {
       return response.unauthorized({ message: 'Not logged in' })
     }
