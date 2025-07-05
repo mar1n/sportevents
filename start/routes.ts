@@ -12,11 +12,6 @@ const UsersController = () => import('#controllers/users_controller')
 const AccountController = () => import('#controllers/account_controller')
 const EventsController = () => import('#controllers/events_controller')
 import router from '@adonisjs/core/services/router'
-router.get('/', async () => {
-  return {
-    hello: 'world',
-  }
-})
 
 router.get('/users/:username', [UsersController, 'index'])
 router.post('/users/register', [UsersController, 'register'])
