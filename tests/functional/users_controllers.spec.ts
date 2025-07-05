@@ -2,6 +2,8 @@ import { test } from '@japa/runner'
 import testUtils from '@adonisjs/core/services/test_utils'
 import User from '#models/user'
 import { ApiClient } from '@japa/api-client'
+import mail from '@adonisjs/mail/services/main'
+import VerifyEmail from '#tests/helpers'
 
 async function register(
   client: ApiClient,
@@ -9,6 +11,7 @@ async function register(
   email: string | undefined = 'szymon@fastmail.com',
   password: string | undefined = 'qwertyuio'
 ) {
+  const { mails } = mail.fake()
   const user = {
     username,
     email,
@@ -16,6 +19,9 @@ async function register(
   }
 
   const response = await client.post('/users/register').json(user)
+  mails.assertSent(VerifyEmail, ({ message }) => {
+    return message.hasTo('szymon@fastmail.com') && message.hasSubject('Verify your email')
+  })
   return response
 }
 test.group('Users Controller', (group) => {

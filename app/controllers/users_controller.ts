@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import { createRegisterValidator } from '#validators/auth'
 import User from '#models/user'
 import mail from '@adonisjs/mail/services/main'
+import VerifyEmail from '#tests/helpers'
 
 export default class UsersController {
   public async index({ request }: HttpContext) {
@@ -24,13 +25,7 @@ export default class UsersController {
     }
     const user = await User.create(payload)
 
-    await mail.send((message) => {
-      message
-        .to('cykcykacz@gmail.com')
-        .from('szymondawidowicz@fastmail.com')
-        .subject('Verify your email address')
-        .html('<h1>Hello</h1>')
-    })
+    await mail.send(new VerifyEmail(payload))
 
     return response.status(201).json({
       message: 'We send you email, please read.',
