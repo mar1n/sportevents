@@ -5,19 +5,12 @@ import { server } from '../msw/node'
 import { eventsResponses } from '../msw/helper'
 import { setUrl } from '../utils/helper'
 import { http } from 'msw'
-import * as nookies from 'nookies'
 jest.mock('next/router', () => require('next-router-mock'))
-jest.mock('nookies')
-const mockedNookies = jest.mocked(nookies)
+
 describe('Events', () => {
-  beforeEach(() => {
-    jest.resetAllMocks()
-    mockedNookies.parseCookies.mockReturnValue({ isAuthenticated: 'mocked-token' })
-  })
   test('Elements.', async () => {
     render(<CreateEvent />)
-
-    expect(screen.getByText('Create Event')).toBeInTheDocument()
+    expect(await screen.findByText('Create Event')).toBeInTheDocument()
     expect(screen.getByLabelText('Event Form')).toBeInTheDocument()
     expect(screen.getByText('Title')).toBeInTheDocument()
     expect(screen.getByText('Description')).toBeInTheDocument()
@@ -40,7 +33,7 @@ describe('Events', () => {
       })
     )
     render(<CreateEvent />)
-    await userEvent.click(screen.getByRole('button'))
+    await userEvent.click(await screen.findByRole('button'))
     await waitFor(() => {
       expect(screen.getByText('The title field must be defined'))
       expect(screen.getByText('The description field must be defined'))

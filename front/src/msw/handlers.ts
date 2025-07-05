@@ -19,6 +19,9 @@ export const handlers = [
       { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
     )
   }),
+  http.get(`${setUrl.mockSerever}/auth`, async ({}) => {
+    return HttpResponse.json({ message: 'User is logged in.' })
+  }),
   http.get(`${setUrl.mockSerever}/users/account`, async ({ request }) => {
     return HttpResponse.json(
       {
