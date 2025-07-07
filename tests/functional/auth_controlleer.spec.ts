@@ -1,11 +1,13 @@
 import { test } from '@japa/runner'
 import testUtils from '@adonisjs/core/services/test_utils'
 import { ApiClient } from '@japa/api-client'
+import mail from '@adonisjs/mail/services/main'
+import VerifyEmail from '#tests/helpers'
 
 async function register(
   client: ApiClient,
   username: string | undefined = 'Szymon Dawidowicz',
-  email: string | undefined = 'szymon@fastmail.com',
+  email: string | undefined = 'szymondawidowicz@fastmail.com',
   password: string | undefined = 'qwertyuio'
 ) {
   const user = {
@@ -21,9 +23,15 @@ test.group('Authetication.', (group) => {
   group.each.setup(() => testUtils.db().truncate())
 
   test('User is autheticated.', async ({ client }) => {
+    const { mails } = mail.fake()
     await register(client)
+    mails.assertSent(VerifyEmail, ({ message }) => {
+      return (
+        message.hasTo('szymondawidowicz@fastmail.com') && message.hasSubject('Verify your email')
+      )
+    })
     const userLogin = {
-      email: 'szymon@fastmail.com',
+      email: 'szymondawidowicz@fastmail.com',
       password: 'qwertyuio',
     }
     const response = await client.post('/auth/login').json(userLogin)

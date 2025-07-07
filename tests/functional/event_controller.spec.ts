@@ -2,18 +2,32 @@ import { test } from '@japa/runner'
 import testUtils from '@adonisjs/core/services/test_utils'
 import Events from '#models/event'
 import { ApiClient } from '@japa/api-client'
+import mail from '@adonisjs/mail/services/main'
+import VerifyEmail from '#tests/helpers'
 
 async function loginHelper(
   client: ApiClient,
   userName = 'Szymon Dawidowicz',
-  email = 'szymon@fastmail.com'
+  email = 'szymondawidowicz@fastmail.com'
 ) {
+  const { mails } = mail.fake()
   const userRegister = {
     username: userName,
     email: email,
     password: 'qwertyuio',
   }
   await client.post('/users/register').json(userRegister)
+  if (email !== 'szymondawidowicz@fastmail.com') {
+    mails.assertSent(VerifyEmail, ({ message }) => {
+      return message.hasTo(`${email}`) && message.hasSubject('Verify your email')
+    })
+  } else {
+    mails.assertSent(VerifyEmail, ({ message }) => {
+      return (
+        message.hasTo('szymondawidowicz@fastmail.com') && message.hasSubject('Verify your email')
+      )
+    })
+  }
   const userLogin = {
     email: email,
     password: 'qwertyuio',
@@ -88,7 +102,7 @@ test.group('Events controller', (group) => {
     await client.post('/auth/logout')
 
     // setting up events for second user
-    const newCookie = await loginHelper(client, 'Alfredo', 'alfredo@somemail.com')
+    const newCookie = await loginHelper(client, 'Alfredo', 'cykcykacz@gmail.com')
     const eventDisplayRoute = await client.post('/events/display').header('Cookie', newCookie)
     eventDisplayRoute.assertStatus(201)
     eventDisplayRoute.assertBodyContains({

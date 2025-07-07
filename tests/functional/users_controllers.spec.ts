@@ -8,10 +8,9 @@ import VerifyEmail from '#tests/helpers'
 async function register(
   client: ApiClient,
   username: string | undefined = 'Szymon Dawidowicz',
-  email: string | undefined = 'szymon@fastmail.com',
+  email: string | undefined = 'szymondawidowicz@fastmail.com',
   password: string | undefined = 'qwertyuio'
 ) {
-  const { mails } = mail.fake()
   const user = {
     username,
     email,
@@ -19,9 +18,7 @@ async function register(
   }
 
   const response = await client.post('/users/register').json(user)
-  mails.assertSent(VerifyEmail, ({ message }) => {
-    return message.hasTo('szymon@fastmail.com') && message.hasSubject('Verify your email')
-  })
+
   return response
 }
 test.group('Users Controller', (group) => {
@@ -40,7 +37,14 @@ test.group('Users Controller', (group) => {
     })
   })
   test('Register user.', async ({ client, assert }) => {
+    const { mails } = mail.fake()
+
     const response = await register(client)
+    mails.assertSent(VerifyEmail, ({ message }) => {
+      return (
+        message.hasTo('szymondawidowicz@fastmail.com') && message.hasSubject('Verify your email')
+      )
+    })
     response.assertStatus(201)
     const findUser = await User.findByOrFail('username', 'Szymon Dawidowicz')
     assert.equal(findUser.username, 'Szymon Dawidowicz')
@@ -81,9 +85,15 @@ test.group('Users Controller', (group) => {
     })
   })
   test('Login in authenticated user and logout.', async ({ client }) => {
+    const { mails } = mail.fake()
     await register(client)
+    mails.assertSent(VerifyEmail, ({ message }) => {
+      return (
+        message.hasTo('szymondawidowicz@fastmail.com') && message.hasSubject('Verify your email')
+      )
+    })
     const userLogin = {
-      email: 'szymon@fastmail.com',
+      email: 'szymondawidowicz@fastmail.com',
       password: 'qwertyuio',
     }
     const response = await client.post('/auth/login').json(userLogin)
@@ -108,7 +118,13 @@ test.group('Users Controller', (group) => {
   })
 
   test('Login Empty fields.', async ({ client }) => {
+    const { mails } = mail.fake()
     await register(client)
+    mails.assertSent(VerifyEmail, ({ message }) => {
+      return (
+        message.hasTo('szymondawidowicz@fastmail.com') && message.hasSubject('Verify your email')
+      )
+    })
     const userLogin = {
       email: '',
       password: '',
@@ -123,9 +139,15 @@ test.group('Users Controller', (group) => {
     })
   })
   test('Invalid credentials.', async ({ client }) => {
+    const { mails } = mail.fake()
     await register(client)
+    mails.assertSent(VerifyEmail, ({ message }) => {
+      return (
+        message.hasTo('szymondawidowicz@fastmail.com') && message.hasSubject('Verify your email')
+      )
+    })
     const userLogin = {
-      email: 'szymo@fastmail.com',
+      email: 'szymon@fastmail.com',
       password: 'qwertyuio',
     }
     const response = await client.post('/auth/login').json(userLogin)
@@ -135,10 +157,16 @@ test.group('Users Controller', (group) => {
     })
   })
   test('Email already exist in database.', async ({ client }) => {
+    const { mails } = mail.fake()
     await register(client)
+    mails.assertSent(VerifyEmail, ({ message }) => {
+      return (
+        message.hasTo('szymondawidowicz@fastmail.com') && message.hasSubject('Verify your email')
+      )
+    })
     const user = {
       username: 'random',
-      email: 'szymon@fastmail.com',
+      email: 'szymondawidowicz@fastmail.com',
       password: 'qwertyuio',
     }
     const response = await client.post('/users/register').json(user)
