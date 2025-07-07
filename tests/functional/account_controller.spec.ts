@@ -5,12 +5,12 @@ import mail from '@adonisjs/mail/services/main'
 import VerifyEmail from '#tests/helpers'
 
 async function loginHelper(client: ApiClient) {
+  const { mails } = mail.fake()
   const userRegister = {
     username: 'Szymon Dawidowicz',
     email: 'szymondawidowicz@fastmail.com',
     password: 'qwertyuio',
   }
-  const { mails } = mail.fake()
   await client.post('/users/register').json(userRegister)
   mails.assertSent(VerifyEmail, ({ message }) => {
     return message.hasTo('szymondawidowicz@fastmail.com') && message.hasSubject('Verify your email')

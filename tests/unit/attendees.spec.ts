@@ -1,10 +1,12 @@
 import { test } from '@japa/runner'
+import testUtils from '@adonisjs/core/services/test_utils'
 import Events from '#models/event'
 import User from '#models/user'
 import Attendee from '#models/attendee'
 import { DateTime } from 'luxon'
 
-test.group('Attendees', () => {
+test.group('Attendees', (group) => {
+  group.each.setup(() => testUtils.db().truncate())
   test('Create attendees', async ({ assert }) => {
     const username = 'Szymon'
     const email = 'szymondawidowicz@fastmail.com'
@@ -45,8 +47,10 @@ test.group('Attendees', () => {
     })
     const attendees = await Attendee.query().preload('user').preload('event')
 
-    attendees.forEach((attendee) => {
-      console.log(`${attendee.user.username} is attending ${attendee.event.title}`)
-    })
+    const attendee = attendees[0]
+
+    assert.equal(attendee.user.username, 'Szymon')
+    assert.equal(attendee.user.email, 'szymondawidowicz@fastmail.com')
+    assert.equal(attendee.event.title, 'NBA Game')
   })
 })
