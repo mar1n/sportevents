@@ -1,6 +1,7 @@
 import { test } from '@japa/runner'
 import testUtils from '@adonisjs/core/services/test_utils'
 import Events from '#models/event'
+import Attendee from '#models/attendee'
 import { ApiClient } from '@japa/api-client'
 import mail from '@adonisjs/mail/services/main'
 import VerifyEmail from '#tests/helpers'
@@ -86,6 +87,34 @@ test.group('Events controller', (group) => {
         },
       ],
     })
+  })
+  test('Join to event.', async ({ client, assert }) => {
+    const cookie = await loginHelper(client)
+    const event = {
+      title: 'Prodigy',
+      description: 'My discription of event...',
+      startEvent: '2025-02-15 01:00:00',
+      endEvent: '2025-02-16 01:00:00',
+      location: 'London',
+      address: 'Queen Elizabeth Road',
+    }
+    await client.post('/events').json(event).header('Cookie', cookie)
+    const jointEvent = await client
+      .post('/events/join')
+      .json({ eventId: 1 })
+      .header('Cookie', cookie)
+    jointEvent.assertStatus(201)
+    jointEvent.assertBody({
+      message: 'Szymon Dawidowicz joined to event',
+    })
+
+    const attendees = await Attendee.query().preload('user').preload('event')
+
+    const attendee = attendees[0]
+
+    assert.equal(attendee.user.username, 'Szymon Dawidowicz')
+    assert.equal(attendee.user.email, 'szymondawidowicz@fastmail.com')
+    assert.equal(attendee.event.title, 'Prodigy')
   })
   test('Only display events belonging to user.', async ({ client }) => {
     // setting up events for first user
