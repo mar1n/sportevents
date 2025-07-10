@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import { createEventValidator } from '#validators/event'
 import Events from '#models/event'
 import User from '#models/user'
+import Attendee from '#models/attendee'
 
 export default class EventsController {
   public async createEvent({ request, auth, response }: HttpContext) {
@@ -34,6 +35,20 @@ export default class EventsController {
     })
     return response.status(201).json({
       message: `${userName} joined to event`,
+    })
+  }
+  public async leave({ request, auth, response }: HttpContext) {
+    const eventId = request.input('eventId')
+    const userEmail = auth.user?.email
+    const userName = auth.user?.username
+
+    const findUser = await User.findByOrFail('email', userEmail)
+    const findEvent = await Events.findByOrFail('id', eventId)
+    const attendee = await Attendee.findManyBy({ eventsId: eventId, userId: findUser.id })
+    await attendee[0].delete()
+
+    return response.status(201).json({
+      message: `${userName} leave ${findEvent.title} event`,
     })
   }
 }

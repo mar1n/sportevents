@@ -20,6 +20,7 @@ router.get('/account', [AccountController, 'show']).use(middleware.auth())
 router.post('/events', [EventsController, 'createEvent']).use(middleware.auth())
 router.post('/events/display', [EventsController, 'display']).use(middleware.auth())
 router.post('/events/join', [EventsController, 'join']).use(middleware.auth())
+router.post('/events/leave', [EventsController, 'leave']).use(middleware.auth())
 router
   .get('/auth', async ({ auth, response }) => {
     if (!auth.isAuthenticated) {

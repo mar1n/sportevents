@@ -116,6 +116,36 @@ test.group('Events controller', (group) => {
     assert.equal(attendee.user.email, 'szymondawidowicz@fastmail.com')
     assert.equal(attendee.event.title, 'Prodigy')
   })
+  test('Leave event.', async ({ client, assert }) => {
+    const cookie = await loginHelper(client)
+    const event = {
+      title: 'Prodigy',
+      description: 'My discription of event...',
+      startEvent: '2025-02-15 01:00:00',
+      endEvent: '2025-02-16 01:00:00',
+      location: 'London',
+      address: 'Queen Elizabeth Road',
+    }
+    await client.post('/events').json(event).header('Cookie', cookie)
+    await client.post('/events/join').json({ eventId: 1 }).header('Cookie', cookie)
+
+    const attendees = await Attendee.query().preload('user').preload('event')
+
+    const attendee = attendees[0]
+
+    assert.equal(attendee.user.username, 'Szymon Dawidowicz')
+    assert.equal(attendee.user.email, 'szymondawidowicz@fastmail.com')
+    assert.equal(attendee.event.title, 'Prodigy')
+
+    const leaveEvent = await client
+      .post('/events/leave')
+      .json({ eventId: 1 })
+      .header('Cookie', cookie)
+    leaveEvent.assertStatus(201)
+    leaveEvent.assertBody({ message: 'Szymon Dawidowicz leave Prodigy event' })
+    const attendeesLeave = await Attendee.query().preload('user').preload('event')
+    assert.empty(attendeesLeave)
+  })
   test('Only display events belonging to user.', async ({ client }) => {
     // setting up events for first user
     const cookie = await loginHelper(client)
