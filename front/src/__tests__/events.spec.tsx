@@ -74,8 +74,10 @@ describe('Events', () => {
       endEvent.forEach(endEvent => {
         expect(endEvent).toBeInTheDocument()
       })
-
-      // expect(screen.getByRole('button')).toBeInTheDocument()
+      const joinEventButton = await screen.findAllByRole('button')
+      joinEventButton.forEach(button => {
+        expect(button).toBeInTheDocument()
+      })
     })
   })
 })

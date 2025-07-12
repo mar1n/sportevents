@@ -3,7 +3,7 @@ import axios from 'axios'
 import { setUrl } from '../../utils/helper'
 import PageWithAuth from '../../components/providers/pageWithAuth'
 import { Event } from './createevent'
-
+import Button from '@/components/button/button'
 function DisplayEvents() {
   const [events, setEvents] = useState<Event[] | null>(null)
   useEffect(() => {
@@ -20,9 +20,9 @@ function DisplayEvents() {
     <>
       <div>
         <h1>Events</h1>
-        {events?.map((event) => {
+        {events?.map((event, index) => {
           return (
-            <div>
+            <div key={index}>
               <div>
                 <h3>Title</h3>
                 <p>{event.title}</p>
@@ -46,6 +46,9 @@ function DisplayEvents() {
               <div>
                 <h3>End Event</h3>
                 <p>{event.endEvent}</p>
+              </div>
+              <div>
+                <Button name={`Join ${event.title} Event`} className='joinEvent'/>
               </div>
             </div>
           )
