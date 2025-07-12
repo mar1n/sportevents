@@ -51,6 +51,14 @@ export const handlers = [
             startEvent: '2025-02-15 01:00:00',
             endEvent: '2025-02-16 01:00:00',
           },
+          {
+            title: 'Wimbledon',
+            description: 'Teenis Event',
+            location: 'London',
+            address: 'Wimbledon Road',
+            startEvent: '2025-02-15 01:00:00',
+            endEvent: '2025-02-16 01:00:00',
+          },
         ],
       },
       { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }

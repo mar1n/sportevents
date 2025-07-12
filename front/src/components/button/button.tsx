@@ -4,11 +4,12 @@ interface buttonProps {
   name: string
   className: string
   disabled?: boolean
+  onClick?: () => void
 }
 
-const Button: FC<buttonProps> = ({ name, className, disabled }) => {
+const Button: FC<buttonProps> = ({ name, className, disabled, onClick }) => {
   return (
-    <button className={className} disabled={disabled}>
+    <button className={className} disabled={disabled} onClick={onClick}>
       {name}
     </button>
   )
