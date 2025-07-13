@@ -17,11 +17,14 @@ export default class EventsController {
   }
   public async display({ auth, response }: HttpContext) {
     const user = auth.user?.username
-    const events = await Events.findManyBy('username', user)
+    const events = await Events.query().preload('users', (query) => {
+      query.select(['id', 'username', 'email']).pivotColumns(['status'])
+    })
 
     return response.status(201).json({
       message: `Events of ${user}`,
       events: events,
+      currentUserId: auth.user?.id,
     })
   }
   public async join({ request, auth, response }: HttpContext) {

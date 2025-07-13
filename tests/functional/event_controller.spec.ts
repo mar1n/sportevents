@@ -86,6 +86,7 @@ test.group('Events controller', (group) => {
           userName: 'Szymon Dawidowicz',
         },
       ],
+      currentUserId: 1,
     })
   })
   test('Join to event.', async ({ client, assert }) => {
