@@ -8,6 +8,7 @@ export default class extends BaseSchema {
       table.increments('id')
       table.integer('user_id').unsigned().references('users.id').onDelete('CASCADE')
       table.integer('events_id').unsigned().references('events.id').onDelete('CASCADE')
+      table.string('status').defaultTo('pending')
       table.unique(['user_id', 'events_id'])
       table.timestamp('created_at')
       table.timestamp('updated_at')

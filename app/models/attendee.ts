@@ -12,6 +12,8 @@ export default class Attendee extends BaseModel {
 
   @column({ columnName: 'events_id' })
   declare eventsId: number
+  @column()
+  declare status: string
 
   @belongsTo(() => User)
   public user!: BelongsTo<typeof User>
