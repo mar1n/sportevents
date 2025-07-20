@@ -4,7 +4,7 @@ import CreateEvent from '../pages/events/createevent'
 import { server } from '../msw/node'
 import { eventsResponses } from '../msw/helper'
 import { setUrl } from '../utils/helper'
-import { http } from 'msw'
+import { http, HttpResponse } from 'msw'
 import Displayevents from '../pages/events/displayevents'
 jest.mock('next/router', () => require('next-router-mock'))
 
@@ -50,34 +50,92 @@ describe('Events', () => {
     test('Elements', async () => {
       render(<Displayevents />)
       expect(await screen.findByText('Events')).toBeInTheDocument()
-      const title = await screen.findAllByText('Title')
-      title.forEach(title => {
+      const titles = await screen.findAllByText('Title')
+      titles.forEach((title) => {
         expect(title).toBeInTheDocument()
       })
-      const description = await screen.findAllByText('Description')
-      description.forEach(description => {
+      const descriptions = await screen.findAllByText('Description')
+      descriptions.forEach((description) => {
         expect(description).toBeInTheDocument()
       })
-      const location = await screen.findAllByText('Location')
-      location.forEach(location => {
+      const locations = await screen.findAllByText('Location')
+      locations.forEach((location) => {
         expect(location).toBeInTheDocument()
       })
-      const address = await screen.findAllByText('Address')
-      address.forEach(address => {
+      const addresses = await screen.findAllByText('Address')
+      addresses.forEach((address) => {
         expect(address).toBeInTheDocument()
       })
-      const startEvent = await screen.findAllByText('Start Event')
-      startEvent.forEach(startEvent => {
+      const startEvents = await screen.findAllByText('Start Event')
+      startEvents.forEach((startEvent) => {
         expect(startEvent).toBeInTheDocument()
       })
-      const endEvent = await screen.findAllByText('End Event')
-      endEvent.forEach(endEvent => {
+      const endEvents = await screen.findAllByText('End Event')
+      endEvents.forEach((endEvent) => {
         expect(endEvent).toBeInTheDocument()
       })
-      const joinEventButton = await screen.findAllByRole('button')
-      joinEventButton.forEach(button => {
+      const joinEventButtons = await screen.findAllByRole('button')
+      joinEventButtons.forEach((button) => {
         expect(button).toBeInTheDocument()
       })
+    })
+    test('Join to Event', async () => {
+      const { unmount } = render(<Displayevents />)
+      const joinEventButtons = await screen.findAllByRole('button')
+      joinEventButtons.forEach((button) => {
+        expect(button).toBeInTheDocument()
+      })
+
+      expect(screen.queryByText('Yes')).not.toBeInTheDocument()
+      expect(screen.queryByText('No')).not.toBeInTheDocument()
+      await userEvent.click(screen.getByText('Join Wimbledon Event'))
+      expect(screen.getByText('Yes')).toBeInTheDocument()
+      expect(screen.getByText('No')).toBeInTheDocument()
+      await userEvent.click(screen.getByText('Yes'))
+      expect(screen.getByText('You joined to Wimbledon Event'))
+      await userEvent.click(screen.getByText('Close'))
+      expect(screen.queryByText('You joined to Wimbledon Event')).not.toBeInTheDocument()
+      server.use(
+        http.post(`${setUrl.mockSerever}/events/displayevents`, async ({ request }) => {
+          return HttpResponse.json(
+            {
+              message: `Events of Szymon Dawidowicz`,
+              events: [
+                {
+                  title: 'Even Title',
+                  description: 'My discription of event...',
+                  location: 'London',
+                  address: 'Queen Elizabeth Road',
+                  startEvent: '2025-02-15 01:00:00',
+                  endEvent: '2025-02-16 01:00:00',
+                  users: [],
+                },
+                {
+                  title: 'Wimbledon',
+                  description: 'Teenis Event',
+                  location: 'London',
+                  address: 'Wimbledon Road',
+                  startEvent: '2025-02-15 01:00:00',
+                  endEvent: '2025-02-16 01:00:00',
+                  users: [
+                    {
+                      id: 1,
+                      username: 'Szymon Dawidowicz',
+                      email: 'szymondawidowicz@fastmail.com',
+                    },
+                  ],
+                },
+              ],
+              currentUserId: 1,
+            },
+            { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
+          )
+        })
+      )
+      unmount()
+      render(<Displayevents />)
+      await screen.findByText('Leave Wimbledon Event')
+      expect(screen.getByText('Leave Wimbledon Event')).toBeInTheDocument()
     })
   })
 })

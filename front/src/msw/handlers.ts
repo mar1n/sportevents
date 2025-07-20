@@ -50,6 +50,7 @@ export const handlers = [
             address: 'Queen Elizabeth Road',
             startEvent: '2025-02-15 01:00:00',
             endEvent: '2025-02-16 01:00:00',
+            users: [],
           },
           {
             title: 'Wimbledon',
@@ -58,8 +59,10 @@ export const handlers = [
             address: 'Wimbledon Road',
             startEvent: '2025-02-15 01:00:00',
             endEvent: '2025-02-16 01:00:00',
+            users: [],
           },
         ],
+        currentUserId: 1,
       },
       { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
     )

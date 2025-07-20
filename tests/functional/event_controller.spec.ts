@@ -100,9 +100,10 @@ test.group('Events controller', (group) => {
       address: 'Queen Elizabeth Road',
     }
     await client.post('/events').json(event).header('Cookie', cookie)
+    const eventId = await Events.findByOrFail('title', event.title)
     const jointEvent = await client
       .post('/events/join')
-      .json({ eventId: 1 })
+      .json({ eventId: eventId.id })
       .header('Cookie', cookie)
     jointEvent.assertStatus(201)
     jointEvent.assertBody({
