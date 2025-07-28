@@ -1,5 +1,40 @@
 import { HttpResponse } from 'msw'
 const eventsResponses = {
+  listOfEventsWithParticipants: () => {
+    return HttpResponse.json(
+      {
+        message: `Events of Szymon Dawidowicz`,
+        events: [
+          {
+            title: 'Even Title',
+            description: 'My discription of event...',
+            location: 'London',
+            address: 'Queen Elizabeth Road',
+            startEvent: '2025-02-15 01:00:00',
+            endEvent: '2025-02-16 01:00:00',
+            users: [],
+          },
+          {
+            title: 'Wimbledon',
+            description: 'Teenis Event',
+            location: 'London',
+            address: 'Wimbledon Road',
+            startEvent: '2025-02-15 01:00:00',
+            endEvent: '2025-02-16 01:00:00',
+            users: [
+              {
+                id: 1,
+                username: 'Szymon Dawidowicz',
+                email: 'szymondawidowicz@fastmail.com',
+              },
+            ],
+          },
+        ],
+        currentUserId: 1,
+      },
+      { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
+    )
+  },
   allInputsFieldsAreEmpty: () => {
     throw HttpResponse.json(
       {
