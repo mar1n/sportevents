@@ -17,8 +17,9 @@ import Button from '@/components/button/button'
 function DisplayEvents() {
   const [events, setEvents] = useState<EventWithId[] | null>(null)
   const [currentUserId, setCurrentUserId] = useState(null)
-  const [open, setOpen] = useState(false)
-  const [joinedEvent, setjoinedEvent] = useState<JoinedEvent | null>(null)
+  const [openJoinPopup, setOpenJoinPopUp] = useState(false)
+  const [openLeavePopup, setOpenLeavePopUp] = useState(false)
+  const [event, setEvent] = useState<JoinedEvent | null>(null)
   const [confirmationMessage, setConfirmationMessage] = useState('')
   useEffect(() => {
     async function getEvents() {
@@ -31,18 +32,33 @@ function DisplayEvents() {
     getEvents()
   }, [])
   const openJoinEvent = (title: string, id: number) => {
-    setOpen(true)
-    setjoinedEvent((event) => ({ ...event, id, title }))
+    setOpenJoinPopUp(true)
+    setEvent((event) => ({ ...event, id, title }))
+  }
+  const openLeaveEvent = (title: string, id: number) => {
+    setOpenLeavePopUp(true)
+    setEvent((event) => ({ ...event, id, title }))
   }
   const joinEvent = async (title: string) => {
     try {
-      const response = await axios.post(`${setUrl.getURL()}/events/join`)
+      const response = await axios.post(`${setUrl.getURL()}/events/join`, {
+        eventId: event?.id
+      })
+      setConfirmationMessage(`${response.data.message}`)
+    } catch (error) {}
+  }
+  const leaveEvent = async (title: string) => {
+    try {
+      const response = await axios.post(`${setUrl.getURL()}/events/leave`, {
+        eventId: event?.id
+      })
       setConfirmationMessage(`${response.data.message}`)
     } catch (error) {}
   }
   const close = () => {
     setConfirmationMessage('')
-    setOpen(false)
+    setOpenJoinPopUp(false)
+    setOpenLeavePopUp(false)
   }
   return (
     <>
@@ -80,7 +96,7 @@ function DisplayEvents() {
                   <Button
                     name={`Leave ${event.title} Event`}
                     className="leavEvent"
-                    onClick={() => 0}
+                    onClick={() => openLeaveEvent(event.title, event.id)}
                   />
                 ) : (
                   <Button
@@ -93,24 +109,46 @@ function DisplayEvents() {
             </div>
           )
         })}
-        {open && (
+        {openJoinPopup && (
           <div>
             Join Event{' '}
             <Button
               name={'Yes'}
               className="joinEventYes"
               onClick={() => {
-                if (joinedEvent?.title) {
-                  joinEvent(joinedEvent.title)
+                if (event?.title) {
+                  joinEvent(event.title)
                 }
               }}
             />
             <Button name={'No'} className="joinEventNo" />
           </div>
         )}
-        {confirmationMessage && (
+        {openLeavePopup && (
           <div>
-            You joined to {joinedEvent?.title} Event
+            Join Event{' '}
+            <Button
+              name={'Yes'}
+              className="leavEventYes"
+              onClick={() => {
+                if (event?.title) {
+                  leaveEvent(event.title)
+                }
+              }}
+            />
+            <Button name={'No'} className="leavEventNo" />
+          </div>
+        )}
+        {confirmationMessage && openJoinPopup && (
+          <div>
+            You joined to {event?.title} Event
+            <Button name={'Close'} className="close" onClick={() => close()} />
+            <div>{confirmationMessage}</div>
+          </div>
+        )}
+        {confirmationMessage && openLeavePopup && (
+          <div>
+            You left {event?.title} Event
             <Button name={'Close'} className="close" onClick={() => close()} />
             <div>{confirmationMessage}</div>
           </div>

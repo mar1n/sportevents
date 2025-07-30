@@ -92,6 +92,7 @@ describe('Events', () => {
       expect(screen.getByText('Yes')).toBeInTheDocument()
       expect(screen.getByText('No')).toBeInTheDocument()
       await userEvent.click(screen.getByText('Yes'))
+      expect(screen.queryByText('You joined to Wimbledon Event')).toBeInTheDocument()
       expect(screen.getByText('Szymon joined to event'))
       await userEvent.click(screen.getByText('Close'))
       expect(screen.queryByText('You joined to Wimbledon Event')).not.toBeInTheDocument()
@@ -105,6 +106,35 @@ describe('Events', () => {
       await screen.findByText('Leave Wimbledon Event')
       expect(screen.getByText('Leave Wimbledon Event')).toBeInTheDocument()
     })
-    test('Leav Event', async() => {})
+    test('Leave Event', async () => {
+      server.use(
+        http.post(`${setUrl.mockSerever}/events/displayevents`, async ({ request }) => {
+          return eventsResponses.listOfEventsWithParticipants()
+        })
+      )
+      const { unmount } = render(<Displayevents />)
+      const joinEventButtons = await screen.findAllByRole('button')
+      joinEventButtons.forEach((button) => {
+        expect(button).toBeInTheDocument()
+      })
+
+      expect(screen.queryByText('Yes')).not.toBeInTheDocument()
+      expect(screen.queryByText('No')).not.toBeInTheDocument()
+      await userEvent.click(screen.getByText('Leave Wimbledon Event'))
+      expect(screen.getByText('Yes')).toBeInTheDocument()
+      expect(screen.getByText('No')).toBeInTheDocument()
+      await userEvent.click(screen.getByText('Yes'))
+      expect(screen.queryByText('You left Wimbledon Event')).toBeInTheDocument()
+      expect(screen.getByText('Szymon left Wimbledon event'))
+      server.use(
+        http.post(`${setUrl.mockSerever}/events/displayevents`, async ({ request }) => {
+          return eventsResponses.listOfEventsWithOutParticipants()
+        })
+      )
+      unmount()
+      render(<Displayevents />)
+      await screen.findByText('Join Wimbledon Event')
+      expect(screen.queryByText('Leave Wimbledon Event')).not.toBeInTheDocument()
+    })
   })
 })

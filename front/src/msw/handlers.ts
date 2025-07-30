@@ -75,4 +75,12 @@ export const handlers = [
       { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
     )
   }),
+  http.post(`${setUrl.mockSerever}/events/leave`, async ({ request }) => {
+    return HttpResponse.json(
+      {
+        message: `Szymon left Wimbledon event`,
+      },
+      { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
+    )
+  }),
 ]
