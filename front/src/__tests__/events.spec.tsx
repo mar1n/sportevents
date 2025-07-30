@@ -92,7 +92,7 @@ describe('Events', () => {
       expect(screen.getByText('Yes')).toBeInTheDocument()
       expect(screen.getByText('No')).toBeInTheDocument()
       await userEvent.click(screen.getByText('Yes'))
-      expect(screen.getByText('You joined to Wimbledon Event'))
+      expect(screen.getByText('Szymon joined to event'))
       await userEvent.click(screen.getByText('Close'))
       expect(screen.queryByText('You joined to Wimbledon Event')).not.toBeInTheDocument()
       server.use(

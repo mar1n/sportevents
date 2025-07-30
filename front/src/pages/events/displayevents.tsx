@@ -34,8 +34,11 @@ function DisplayEvents() {
     setOpen(true)
     setjoinedEvent((event) => ({ ...event, id, title }))
   }
-  const joinEvent = (title: string) => {
-    setConfirmationMessage(`You join to ${title} Event`)
+  const joinEvent = async (title: string) => {
+    try {
+      const response = await axios.post(`${setUrl.getURL()}/events/join`)
+      setConfirmationMessage(`${response.data.message}`)
+    } catch (error) {}
   }
   const close = () => {
     setConfirmationMessage('')
@@ -109,6 +112,7 @@ function DisplayEvents() {
           <div>
             You joined to {joinedEvent?.title} Event
             <Button name={'Close'} className="close" onClick={() => close()} />
+            <div>{confirmationMessage}</div>
           </div>
         )}
       </div>
