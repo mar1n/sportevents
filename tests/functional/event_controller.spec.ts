@@ -149,7 +149,6 @@ test.group('Events controller', (group) => {
     assert.empty(attendeesLeave)
   })
   test('Only display events belonging to user.', async ({ client }) => {
-    // setting up events for first user
     const cookie = await loginHelper(client)
     const event = {
       title: 'Even Title',
@@ -162,13 +161,13 @@ test.group('Events controller', (group) => {
     await client.post('/events').json(event).header('Cookie', cookie)
     await client.post('/auth/logout')
 
-    // setting up events for second user
     const newCookie = await loginHelper(client, 'Alfredo', 'cykcykacz@gmail.com')
-    const eventDisplayRoute = await client.post('/events/display').header('Cookie', newCookie)
+    const eventDisplayRoute = await client.post('/events/display/own').header('Cookie', newCookie)
     eventDisplayRoute.assertStatus(201)
-    eventDisplayRoute.assertBodyContains({
+    eventDisplayRoute.assertBody({
       message: 'Events of Alfredo',
       events: [],
+      currentUserId: 2,
     })
   })
   test('Create invalid Event with empty title field.', async ({ client }) => {

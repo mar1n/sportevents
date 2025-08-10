@@ -16,7 +16,7 @@ describe('Account', () => {
     render(<Account />)
     await screen.findByText('Name: Szymon Dawidowicz')
   })
-  test.only('User doesnt have access', async () => {
+  test('User doesnt have access', async () => {
     server.use(
       http.get(`${setUrl.mockSerever}/auth`, async ({ request }) => {
         throw HttpResponse.json(
@@ -30,4 +30,6 @@ describe('Account', () => {
     render(<Account />)
     screen.getByText('Please login to have access to page.')
   })
+  test('Display events own by User.', () => {})
+  test('Display events attend by User.', () => {})
 })

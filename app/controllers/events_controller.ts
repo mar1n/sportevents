@@ -27,6 +27,22 @@ export default class EventsController {
       currentUserId: auth.user?.id,
     })
   }
+  public async own({ auth, response }: HttpContext) {
+    const user = auth.user!.username
+    const events = await Events.query()
+      .whereHas('users', (userQuery) => {
+        userQuery.where('username', user)
+      })
+      .preload('users', (query) => {
+        query.select(['id', 'username', 'email']).pivotColumns(['status'])
+      })
+
+    return response.status(201).json({
+      message: `Events of ${user}`,
+      events: events,
+      currentUserId: auth.user?.id,
+    })
+  }
   public async join({ request, auth, response }: HttpContext) {
     const eventId = request.input('eventId')
     const userEmail = auth.user?.email
