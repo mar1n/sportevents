@@ -1,4 +1,7 @@
 import { render, screen } from '@testing-library/react'
+import { server } from '../msw/node'
+import { setUrl } from '../utils/helper'
+import { http, HttpResponse } from 'msw'
 import Account from '../pages/users/account'
 jest.mock('next/router', () => require('next-router-mock'))
 
@@ -13,9 +16,18 @@ describe('Account', () => {
     render(<Account />)
     await screen.findByText('Name: Szymon Dawidowicz')
   })
-  test('User doesnt have access', async () => {
+  test.only('User doesnt have access', async () => {
+    server.use(
+      http.get(`${setUrl.mockSerever}/auth`, async ({ request }) => {
+        throw HttpResponse.json(
+          {
+            message: 'Please login to have access to page.'
+          },
+          { status: 401 }
+        )
+      })
+    )
     render(<Account />)
-
-    await screen.findByText('Please login to have access to page.')
+    screen.getByText('Please login to have access to page.')
   })
 })
