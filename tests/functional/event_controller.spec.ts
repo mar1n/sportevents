@@ -170,6 +170,41 @@ test.group('Events controller', (group) => {
       currentUserId: 2,
     })
   })
+  test('Only display events attend by user', async ({ client }) => {
+    const cookie = await loginHelper(client)
+    const event = {
+      title: 'Even Title',
+      description: 'My discription of event...',
+      startEvent: '2025-02-15 01:00:00',
+      endEvent: '2025-02-16 01:00:00',
+      location: 'London',
+      address: 'Queen Elizabeth Road',
+    }
+    await client.post('/events').json(event).header('Cookie', cookie)
+    const eventId = await Events.findByOrFail('title', event.title)
+    const jointEvent = await client
+      .post('/events/join')
+      .json({ eventId: eventId.id })
+      .header('Cookie', cookie)
+    jointEvent.assertStatus(201)
+    jointEvent.assertBody({
+      message: 'Szymon Dawidowicz joined to event',
+    })
+    const eventsAttendByUser = await client.get('/events/display/attend').header('Cookie', cookie)
+    eventsAttendByUser.assertStatus(201)
+    eventsAttendByUser.assertBodyContains({
+      message: 'Events of Szymon Dawidowicz',
+      events: [
+        {
+          title: 'Even Title',
+          description: 'My discription of event...',
+          location: 'London',
+          address: 'Queen Elizabeth Road',
+          userName: 'Szymon Dawidowicz',
+        },
+      ],
+    })
+  })
   test('Create invalid Event with empty title field.', async ({ client }) => {
     const cookie = await loginHelper(client)
     const event = {

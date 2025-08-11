@@ -43,6 +43,26 @@ export default class EventsController {
       currentUserId: auth.user?.id,
     })
   }
+  public async attend({ auth, response }: HttpContext) {
+    const username = auth.user!.username
+    const events = await Events.query().preload('users', (query) => {
+      query.select(['id', 'username', 'email']).pivotColumns(['status'])
+    })
+
+    const eventsWithAttendance = events.map((event) => {
+      const attendee = event.users.find((user) => user.username === username)
+
+      return {
+        ...event.serialize(),
+        isAttending: !!attendee, // true if user is in attendees list
+        myStatus: attendee?.$extras?.pivot_status || null, // status from pivot
+      }
+    })
+    return response.status(201).json({
+      message: `Events of ${username}`,
+      events: eventsWithAttendance,
+    })
+  }
   public async join({ request, auth, response }: HttpContext) {
     const eventId = request.input('eventId')
     const userEmail = auth.user?.email
