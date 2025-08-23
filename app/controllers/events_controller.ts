@@ -90,4 +90,16 @@ export default class EventsController {
       message: `${userName} leave ${findEvent.title} event`,
     })
   }
+  public async update({ request, response }: HttpContext) {
+    const eventId = request.input('id')
+    const updateData = request.all()
+    const event = await Events.findByOrFail('id', eventId)
+    event.merge(updateData)
+
+    await event.save()
+
+    return response.status(201).json({
+      message: 'Event has been updated',
+    })
+  }
 }

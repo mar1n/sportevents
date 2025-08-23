@@ -205,6 +205,34 @@ test.group('Events controller', (group) => {
       ],
     })
   })
+  test('Update Event', async ({ client, assert }) => {
+    const cookie = await loginHelper(client)
+    const event = {
+      title: 'NBA Game',
+      description: 'My discription of event...',
+      startEvent: '2025-02-15 01:00:00',
+      endEvent: '2025-02-16 01:00:00',
+      location: 'London',
+      address: 'Queen Elizabeth Road',
+    }
+    await client.post('/events').json(event).header('Cookie', cookie)
+    const eventId = await Events.findByOrFail('title', event.title)
+
+    const updateEvent = {
+      id: eventId.id,
+      title: 'NBA Game Berlin',
+      location: 'Berlin',
+      address: 'Queen Elizabeth Road',
+    }
+    const update = await client.post('/events/update').json(updateEvent).header('Cookie', cookie)
+    update.assertStatus(201)
+    update.assertBodyContains({
+      message: 'Event has been updated',
+    })
+    const updatedEvent = await Events.findByOrFail('title', updateEvent.title)
+    assert.equal(updatedEvent.title, updateEvent.title)
+    assert.equal(updatedEvent.location, updateEvent.location)
+  })
   test('Create invalid Event with empty title field.', async ({ client }) => {
     const cookie = await loginHelper(client)
     const event = {
