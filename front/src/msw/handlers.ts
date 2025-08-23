@@ -25,7 +25,11 @@ export const handlers = [
   http.get(`${setUrl.mockSerever}/users/account`, async ({ request }) => {
     return HttpResponse.json(
       {
-        user: `Szymon Dawidowicz`,
+        user: {
+          id: 1,
+          username: 'Szymon',
+          email: 'szymondawidowicz@fastmail.com',
+        },
       },
       { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
     )
