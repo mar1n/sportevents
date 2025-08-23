@@ -13,10 +13,9 @@ const AccountController = () => import('#controllers/account_controller')
 const EventsController = () => import('#controllers/events_controller')
 import router from '@adonisjs/core/services/router'
 
-router.get('/users/:username', [UsersController, 'index'])
 router.post('/users/register', [UsersController, 'register'])
 router.post('/auth/login', [SessionController, 'store'])
-router.get('/account', [AccountController, 'show']).use(middleware.auth())
+router.get('/users/account', [AccountController, 'show']).use(middleware.auth())
 router.post('/events', [EventsController, 'createEvent']).use(middleware.auth())
 router.post('/events/display', [EventsController, 'display']).use(middleware.auth())
 router.post('/events/display/own', [EventsController, 'own']).use(middleware.auth())

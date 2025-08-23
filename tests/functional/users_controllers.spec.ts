@@ -23,19 +23,6 @@ async function register(
 }
 test.group('Users Controller', (group) => {
   group.each.setup(() => testUtils.db().truncate())
-  test('Get users.', async ({ client }) => {
-    const user = new User()
-    user.username = 'Szymon'
-    user.email = 'cykcykacz@gmail.com'
-    user.password = '666'
-    await user.save()
-    const response = await client.get(`/users/cykcykacz@gmail.com`)
-    response.assertStatus(200)
-    response.assertBody({
-      username: 'Szymon',
-      email: 'cykcykacz@gmail.com',
-    })
-  })
   test('Register user.', async ({ client, assert }) => {
     const { mails } = mail.fake()
 
@@ -104,16 +91,16 @@ test.group('Users Controller', (group) => {
 
     const cookies = response.headers()['set-cookie']
 
-    const protectedRoute = await client.get('/account').header('Cookie', cookies)
+    const protectedRoute = await client.get('/users/account').header('Cookie', cookies)
     protectedRoute.assertStatus(200)
 
     await client.post('/auth/logout').header('Cookie', cookies)
 
-    const protectedRouteNewRequest = await client.get('/account')
+    const protectedRouteNewRequest = await client.get('/users/account')
     protectedRouteNewRequest.assertStatus(401)
   })
   test('Non augthtenticate user cannot access protected resource.', async ({ client }) => {
-    const protectedRoute = await client.get('/account')
+    const protectedRoute = await client.get('/users/account')
     protectedRoute.assertStatus(401)
   })
 

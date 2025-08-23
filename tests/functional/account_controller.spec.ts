@@ -32,7 +32,7 @@ test.group('Account Controller', (group) => {
   group.each.setup(() => testUtils.db().truncate())
   test('Show user name', async ({ client }) => {
     const cookie = await loginHelper(client)
-    const accountRoute = await client.get('/account').header('Cookie', cookie)
+    const accountRoute = await client.get('/users/account').header('Cookie', cookie)
     accountRoute.assertStatus(200)
     accountRoute.assertBodyContains({
       message: 'User Account',
