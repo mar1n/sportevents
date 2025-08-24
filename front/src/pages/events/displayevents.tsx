@@ -24,7 +24,7 @@ function DisplayEvents() {
   useEffect(() => {
     async function getEvents() {
       try {
-        const respons = await axios.post(`${setUrl.getURL()}/events/displayevents`)
+        const respons = await axios.post(`${setUrl.getURL()}/events/display`, {}, { withCredentials: true })
         setEvents(respons.data.events)
         setCurrentUserId(respons.data.currentUserId)
       } catch (error) {}

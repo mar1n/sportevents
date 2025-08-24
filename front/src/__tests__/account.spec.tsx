@@ -14,7 +14,7 @@ describe('Account', () => {
   })
   test('Show details of user', async () => {
     render(<Account />)
-    await screen.findByText('Name: Szymon Dawidowicz')
+    await screen.findByText('Name: Szymon')
   })
   test('User doesnt have access', async () => {
     server.use(

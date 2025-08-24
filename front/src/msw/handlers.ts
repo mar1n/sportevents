@@ -42,7 +42,7 @@ export const handlers = [
       { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
     )
   }),
-  http.post(`${setUrl.mockSerever}/events/displayevents`, async ({ request }) => {
+  http.post(`${setUrl.mockSerever}/events/display`, async ({ request }) => {
     return HttpResponse.json(
       {
         message: `Events of Szymon Dawidowicz`,

@@ -97,7 +97,7 @@ describe('Events', () => {
       await userEvent.click(screen.getByText('Close'))
       expect(screen.queryByText('You joined to Wimbledon Event')).not.toBeInTheDocument()
       server.use(
-        http.post(`${setUrl.mockSerever}/events/displayevents`, async ({ request }) => {
+        http.post(`${setUrl.mockSerever}/events/display`, async ({ request }) => {
           return eventsResponses.listOfEventsWithParticipants()
         })
       )
@@ -108,7 +108,7 @@ describe('Events', () => {
     })
     test('Leave Event', async () => {
       server.use(
-        http.post(`${setUrl.mockSerever}/events/displayevents`, async ({ request }) => {
+        http.post(`${setUrl.mockSerever}/events/display`, async ({ request }) => {
           return eventsResponses.listOfEventsWithParticipants()
         })
       )
@@ -127,7 +127,7 @@ describe('Events', () => {
       expect(screen.queryByText('You left Wimbledon Event')).toBeInTheDocument()
       expect(screen.getByText('Szymon left Wimbledon event'))
       server.use(
-        http.post(`${setUrl.mockSerever}/events/displayevents`, async ({ request }) => {
+        http.post(`${setUrl.mockSerever}/events/display`, async ({ request }) => {
           return eventsResponses.listOfEventsWithOutParticipants()
         })
       )

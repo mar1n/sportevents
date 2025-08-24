@@ -42,14 +42,18 @@ function CreateEvent() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const respons = await axios.post(`${setUrl.getURL()}/events`, {
-        title,
-        description,
-        location,
-        address,
-        startEvent,
-        endEvent,
-      })
+      const respons = await axios.post(
+        `${setUrl.getURL()}/events`,
+        {
+          title,
+          description,
+          location,
+          address,
+          startEvent,
+          endEvent,
+        },
+        { withCredentials: true }
+      )
       setConfirmationMessage(respons.data.message)
     } catch (errors: any) {
       errors.response.data.errors.forEach((errorMessage: any) => {
