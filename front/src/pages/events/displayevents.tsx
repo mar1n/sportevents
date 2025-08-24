@@ -43,7 +43,7 @@ function DisplayEvents() {
     try {
       const response = await axios.post(`${setUrl.getURL()}/events/join`, {
         eventId: event?.id
-      })
+      }, { withCredentials: true })
       setConfirmationMessage(`${response.data.message}`)
     } catch (error) {}
   }
@@ -51,7 +51,7 @@ function DisplayEvents() {
     try {
       const response = await axios.post(`${setUrl.getURL()}/events/leave`, {
         eventId: event?.id
-      })
+      }, { withCredentials: true })
       setConfirmationMessage(`${response.data.message}`)
     } catch (error) {}
   }
@@ -126,7 +126,7 @@ function DisplayEvents() {
         )}
         {openLeavePopup && (
           <div>
-            Join Event{' '}
+            Leave Event{' '}
             <Button
               name={'Yes'}
               className="leavEventYes"
