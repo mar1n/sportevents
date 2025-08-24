@@ -27,7 +27,7 @@ export default class EventsController {
       currentUserId: auth.user?.id,
     })
   }
-  public async own({ auth, response }: HttpContext) {
+  public async userEvents({ auth, response }: HttpContext) {
     const user = auth.user!.username
     const events = await Events.query()
       .whereHas('users', (userQuery) => {

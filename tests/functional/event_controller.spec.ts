@@ -162,7 +162,9 @@ test.group('Events controller', (group) => {
     await client.post('/auth/logout')
 
     const newCookie = await loginHelper(client, 'Alfredo', 'cykcykacz@gmail.com')
-    const eventDisplayRoute = await client.post('/events/display/own').header('Cookie', newCookie)
+    const eventDisplayRoute = await client
+      .post('/events/display/userevents')
+      .header('Cookie', newCookie)
     eventDisplayRoute.assertStatus(201)
     eventDisplayRoute.assertBody({
       message: 'Events of Alfredo',
