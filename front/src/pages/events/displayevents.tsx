@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 import { setUrl } from '../../utils/helper'
 import PageWithAuth from '../../components/providers/pageWithAuth'
@@ -21,16 +21,16 @@ function DisplayEvents() {
   const [openLeavePopup, setOpenLeavePopUp] = useState(false)
   const [event, setEvent] = useState<JoinedEvent | null>(null)
   const [confirmationMessage, setConfirmationMessage] = useState('')
-  useEffect(() => {
-    async function getEvents() {
+  const getEvents = useCallback(async function getEvents() {
       try {
         const respons = await axios.post(`${setUrl.getURL()}/events/display`, {}, { withCredentials: true })
         setEvents(respons.data.events)
         setCurrentUserId(respons.data.currentUserId)
       } catch (error) {}
-    }
+    }, [])
+  useEffect(() => {
     getEvents()
-  }, [])
+  }, [getEvents])
   const openJoinEvent = (title: string, id: number) => {
     setOpenJoinPopUp(true)
     setEvent((event) => ({ ...event, id, title }))
@@ -55,10 +55,11 @@ function DisplayEvents() {
       setConfirmationMessage(`${response.data.message}`)
     } catch (error) {}
   }
-  const close = () => {
+  const close = async () => {
     setConfirmationMessage('')
     setOpenJoinPopUp(false)
     setOpenLeavePopUp(false)
+    await getEvents()
   }
   return (
     <>
