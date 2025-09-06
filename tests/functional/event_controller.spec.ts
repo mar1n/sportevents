@@ -145,8 +145,16 @@ test.group('Events controller', (group) => {
       .header('Cookie', cookie)
     leaveEvent.assertStatus(201)
     leaveEvent.assertBody({ message: 'Szymon Dawidowicz leave Prodigy event' })
-    const attendeesLeave = await Attendee.query().preload('user').preload('event')
-    assert.empty(attendeesLeave)
+    const attendeesLeave = await Attendee.query()
+      .where('user_id', 1)
+      .andWhere('events_id', 1)
+      .first()
+
+    if (!attendeesLeave) {
+      throw new Error('Attendee not found')
+    }
+
+    assert.equal(attendeesLeave.status, 'left')
   })
   test('Only display events belonging to user.', async ({ client }) => {
     const cookie = await loginHelper(client)
@@ -169,6 +177,36 @@ test.group('Events controller', (group) => {
     eventDisplayRoute.assertBody({
       message: 'Events of Alfredo',
       events: [],
+      currentUserId: 2,
+    })
+    const newEvent = {
+      title: 'NBA Berlin',
+      description: 'My discription of event...',
+      startEvent: '2025-03-15 01:00:00',
+      endEvent: '2025-03-16 01:00:00',
+      location: 'Berlin',
+      address: 'Queen Elizabeth Road',
+    }
+    await client.post('/events').json(newEvent).header('Cookie', newCookie)
+    const newEventDisplayRoute = await client
+      .post('/events/display/userevents')
+      .header('Cookie', newCookie)
+    newEventDisplayRoute.assertStatus(201)
+    newEventDisplayRoute.assertBodyContains({
+      message: 'Events of Alfredo',
+      events: [
+        {
+          id: 2,
+          title: 'NBA Berlin',
+          description: 'My discription of event...',
+          location: 'Berlin',
+          address: 'Queen Elizabeth Road',
+          userName: 'Alfredo',
+          startEvent: '2025-03-15T01:00:00.000+00:00',
+          endEvent: '2025-03-16T01:00:00.000+00:00',
+          users: [{ id: 2, username: 'Alfredo', email: 'cykcykacz@gmail.com' }],
+        },
+      ],
       currentUserId: 2,
     })
   })

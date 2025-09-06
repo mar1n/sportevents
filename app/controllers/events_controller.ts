@@ -9,14 +9,20 @@ export default class EventsController {
     const data = request.all()
     const user = auth.user
     const payload = await createEventValidator.validate({ userName: user?.username, ...data })
-    await Events.create(payload)
+    const event = await Events.create(payload)
 
+    await event.related('users').attach({
+      [user!.id]: {
+        status: 'creator',
+      },
+    })
     return response.status(201).json({
       message: 'Event created successfully',
     })
   }
   public async display({ auth, response }: HttpContext) {
     const user = auth.user?.username
+
     const events = await Events.query().preload('users', (query) => {
       query.select(['id', 'username', 'email']).pivotColumns(['status'])
     })
@@ -29,9 +35,11 @@ export default class EventsController {
   }
   public async userEvents({ auth, response }: HttpContext) {
     const user = auth.user!.username
+    const userId = auth.user!.id
+
     const events = await Events.query()
       .whereHas('users', (userQuery) => {
-        userQuery.where('username', user)
+        userQuery.wherePivot('user_id', userId)
       })
       .preload('users', (query) => {
         query.select(['id', 'username', 'email']).pivotColumns(['status'])
@@ -40,7 +48,7 @@ export default class EventsController {
     return response.status(201).json({
       message: `Events of ${user}`,
       events: events,
-      currentUserId: auth.user?.id,
+      currentUserId: userId,
     })
   }
   public async attend({ auth, response }: HttpContext) {
@@ -54,8 +62,8 @@ export default class EventsController {
 
       return {
         ...event.serialize(),
-        isAttending: !!attendee, // true if user is in attendees list
-        myStatus: attendee?.$extras?.pivot_status || null, // status from pivot
+        isAttending: !!attendee,
+        myStatus: attendee?.$extras?.pivot_status || null,
       }
     })
     return response.status(201).json({
@@ -65,26 +73,20 @@ export default class EventsController {
   }
   public async join({ request, auth, response }: HttpContext) {
     const eventId = request.input('eventId')
-    const userEmail = auth.user?.email
     const userName = auth.user?.username
 
-    const findUser = await User.findByOrFail('email', userEmail)
-    await findUser.related('attendees').create({
-      eventsId: eventId,
-    })
+    await Attendee.firstOrCreate({ userId: auth.user?.id, eventsId: eventId }, { status: 'going' })
+
     return response.status(201).json({
       message: `${userName} joined to event`,
     })
   }
   public async leave({ request, auth, response }: HttpContext) {
     const eventId = request.input('eventId')
-    const userEmail = auth.user?.email
     const userName = auth.user?.username
 
-    const findUser = await User.findByOrFail('email', userEmail)
     const findEvent = await Events.findByOrFail('id', eventId)
-    const attendee = await Attendee.findManyBy({ eventsId: eventId, userId: findUser.id })
-    await attendee[0].delete()
+    await Attendee.updateOrCreate({ userId: auth.user?.id, eventsId: eventId }, { status: 'left' })
 
     return response.status(201).json({
       message: `${userName} leave ${findEvent.title} event`,
