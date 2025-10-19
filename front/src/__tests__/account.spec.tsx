@@ -11,6 +11,8 @@ describe('Account', () => {
     await screen.findByText('Account Page')
     screen.getByText('CreateEvent')
     screen.getByText('DisplayEvents')
+    screen.getByText('MyEvents')
+    screen.getByText('AttendEvents')
   })
   test('Show details of user', async () => {
     render(<Account />)
@@ -30,6 +32,8 @@ describe('Account', () => {
     render(<Account />)
     screen.getByText('Please login to have access to page.')
   })
-  test('Display events own by User.', () => {})
-  test('Display events attend by User.', () => {})
+  describe("Events", () => {
+    test('Display events own by User.', () => {})
+    test('Display events attend by User.', () => {})
+  })
 })

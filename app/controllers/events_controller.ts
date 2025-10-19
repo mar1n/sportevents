@@ -1,7 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { createEventValidator } from '#validators/event'
 import Events from '#models/event'
-import User from '#models/user'
 import Attendee from '#models/attendee'
 
 export default class EventsController {

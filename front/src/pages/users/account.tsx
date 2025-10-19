@@ -26,6 +26,8 @@ const Account: NextPage =()=> {
       <div>
         <Link href="/events/createevent">CreateEvent</Link>
         <Link href="/events/displayevents">DisplayEvents</Link>
+        <Link href="/events/myevents">MyEvents</Link>
+        <Link href="/events/attendevents">AttendEvents</Link>
       </div>
     </>
   )
