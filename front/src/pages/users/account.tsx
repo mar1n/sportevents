@@ -1,5 +1,5 @@
 import axios from 'axios'
-import PageWithAuth from '../../components/providers/pageWithAuth'
+import PageWithAuth from '@/providers/pageWithAuth'
 import { useState, useEffect } from 'react'
 import { setUrl } from '../../utils/helper'
 import { NextPage } from 'next'

@@ -3,6 +3,7 @@ import { server } from '../msw/node'
 import { setUrl } from '../utils/helper'
 import { http, HttpResponse } from 'msw'
 import Account from '../pages/users/account'
+import MyEvents from '../pages/events/myevents'
 jest.mock('next/router', () => require('next-router-mock'))
 
 describe('Account', () => {
@@ -33,7 +34,12 @@ describe('Account', () => {
     screen.getByText('Please login to have access to page.')
   })
   describe("Events", () => {
-    test('Display events own by User.', () => {})
+    test('Display events own by User.', async () => {
+      render(<MyEvents />)
+      await screen.findByText('Title')
+      screen.getByText('Description')
+      screen.getByText('Location')
+    })
     test('Display events attend by User.', () => {})
   })
 })

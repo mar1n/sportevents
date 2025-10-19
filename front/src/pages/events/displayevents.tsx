@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 import { setUrl } from '../../utils/helper'
-import PageWithAuth from '../../components/providers/pageWithAuth'
+import PageWithAuth from '@/providers/pageWithAuth'
 import { Event } from './createevent'
 type User = {
   id: number

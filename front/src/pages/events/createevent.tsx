@@ -4,7 +4,7 @@ import Label from '@/components/label/label'
 import Input from '@/components/input/input'
 import Button from '@/components/button/button'
 import axios from 'axios'
-import PageWithAuth from '../../components/providers/pageWithAuth'
+import PageWithAuth from '@/providers/pageWithAuth'
 import { setUrl } from '../../utils/helper'
 export type Event = {
   title: string
