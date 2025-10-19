@@ -23,12 +23,12 @@ export default function Register() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const respons = await axios.post(`${setUrl.getURL()}/users/register`, {
+      const response = await axios.post(`${setUrl.getURL()}/users/register`, {
         username,
         email,
         password,
       })
-      setConfirmationMessage(respons.data.message)
+      setConfirmationMessage(response.data.message)
     } catch (errors: any) {
       errors.response.data.errors.forEach((errorMessage: any) => {
         setError((error) => ({

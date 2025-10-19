@@ -23,9 +23,9 @@ function DisplayEvents() {
   const [confirmationMessage, setConfirmationMessage] = useState('')
   const getEvents = useCallback(async function getEvents() {
       try {
-        const respons = await axios.post(`${setUrl.getURL()}/events/display`, {}, { withCredentials: true })
-        setEvents(respons.data.events)
-        setCurrentUserId(respons.data.currentUserId)
+        const response = await axios.post(`${setUrl.getURL()}/events/display`, {}, { withCredentials: true })
+        setEvents(response.data.events)
+        setCurrentUserId(response.data.currentUserId)
       } catch (error) {}
     }, [])
   useEffect(() => {

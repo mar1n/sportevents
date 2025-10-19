@@ -28,7 +28,7 @@ export default function Login() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const respons = await axios.post(
+      const response = await axios.post(
         `${setUrl.getURL()}/auth/login`,
         {
           email,

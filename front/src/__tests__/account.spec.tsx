@@ -39,6 +39,13 @@ describe('Account', () => {
       await screen.findByText('Title')
       screen.getByText('Description')
       screen.getByText('Location')
+
+      screen.getByText('NBA Game')
+      screen.getByText('Game between famous teams...')
+      screen.getByText('London')
+      screen.getByText('Champions League')
+      screen.getByText('Final of champions league in Germany...')
+      screen.getByText('Berlin')
     })
     test('Display events attend by User.', () => {})
   })

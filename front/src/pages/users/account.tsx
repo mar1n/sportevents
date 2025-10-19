@@ -11,9 +11,9 @@ const Account: NextPage =()=> {
   useEffect(() => {
     async function getUser() {
       try {
-        const respons = await axios.get(`${setUrl.getURL()}/users/account`, { withCredentials: true })
-        setUser(respons.data.user.username)
-      } catch (err) {}
+        const response = await axios.get(`${setUrl.getURL()}/users/account`, { withCredentials: true })
+        setUser(response.data.user.username)
+      } catch (error) {}
     }
     getUser()
   }, [])
