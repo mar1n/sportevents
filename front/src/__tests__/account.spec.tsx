@@ -36,9 +36,9 @@ describe('Account', () => {
   describe("Events", () => {
     test('Display events own by User.', async () => {
       render(<MyEvents />)
-      await screen.findByText('Title')
-      screen.getByText('Description')
-      screen.getByText('Location')
+      await screen.findAllByText('Title')
+      screen.getAllByText('Description')
+      screen.getAllByText('Location')
 
       screen.getByText('NBA Game')
       screen.getByText('Game between famous teams...')
