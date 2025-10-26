@@ -5,7 +5,11 @@ import { http, HttpResponse } from 'msw'
 import Account from '../pages/users/account'
 import MyEvents from '../pages/events/myevents'
 import AttendEvents from 'pages/events/attendevents'
-jest.mock('next/router', () => require('next-router-mock'))
+import UpdatEvent from 'pages/events/updatevent'
+
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}))
 
 describe('Account', () => {
   test('Account elements.', async () => {
@@ -25,7 +29,7 @@ describe('Account', () => {
       http.get(`${setUrl.mockSerever}/auth`, async ({ request }) => {
         throw HttpResponse.json(
           {
-            message: 'Please login to have access to page.'
+            message: 'Please login to have access to page.',
           },
           { status: 401 }
         )
@@ -34,7 +38,7 @@ describe('Account', () => {
     render(<Account />)
     screen.getByText('Please login to have access to page.')
   })
-  describe("Events", () => {
+  describe('Events', () => {
     test('Display events own by User.', async () => {
       render(<MyEvents />)
       await screen.findAllByText('Title')
@@ -48,8 +52,8 @@ describe('Account', () => {
       screen.getByText('Final of champions league in Germany...')
       screen.getByText('Berlin')
     })
-    test('Display events attend by User.', async() => {
-      render(<AttendEvents/>)
+    test('Display events attend by User.', async () => {
+      render(<AttendEvents />)
       await screen.findAllByText('Title')
       screen.getAllByText('Description')
       screen.getAllByText('Location')
@@ -60,6 +64,19 @@ describe('Account', () => {
       screen.getByText('Champions League')
       screen.getByText('Final of champions league in Germany...')
       screen.getByText('Berlin')
+    })
+    test('Update events own by User', async () => {
+      const { useRouter } = require('next/router')
+      useRouter.mockReturnValue({
+        query: { id: '123' },
+        push: jest.fn(),
+        prefetch: jest.fn(),
+      })
+      render(<UpdatEvent />)
+      await screen.findAllByText('Title')
+      screen.getAllByText('Description')
+      screen.getAllByText('Location')
+      screen.getByText('2')
     })
   })
 })
