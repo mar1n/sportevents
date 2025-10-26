@@ -4,6 +4,7 @@ import { setUrl } from '../utils/helper'
 import { http, HttpResponse } from 'msw'
 import Account from '../pages/users/account'
 import MyEvents from '../pages/events/myevents'
+import AttendEvents from 'pages/events/attendevents'
 jest.mock('next/router', () => require('next-router-mock'))
 
 describe('Account', () => {
@@ -47,6 +48,18 @@ describe('Account', () => {
       screen.getByText('Final of champions league in Germany...')
       screen.getByText('Berlin')
     })
-    test('Display events attend by User.', () => {})
+    test('Display events attend by User.', async() => {
+      render(<AttendEvents/>)
+      await screen.findAllByText('Title')
+      screen.getAllByText('Description')
+      screen.getAllByText('Location')
+
+      screen.getByText('NBA Game')
+      screen.getByText('Game between famous teams...')
+      screen.getByText('London')
+      screen.getByText('Champions League')
+      screen.getByText('Final of champions league in Germany...')
+      screen.getByText('Berlin')
+    })
   })
 })
