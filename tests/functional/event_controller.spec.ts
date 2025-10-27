@@ -62,6 +62,32 @@ test.group('Events controller', (group) => {
     const findEvent = await Events.findByOrFail('userName', 'Szymon Dawidowicz')
     assert.equal(findEvent.title, event.title)
   })
+  test('Find single event', async ({ client }) => {
+    const cookie = await loginHelper(client)
+
+    const event = {
+      title: 'Even Title',
+      description: 'My discription of event...',
+      startEvent: '2025-02-15 01:00:00',
+      endEvent: '2025-02-16 01:00:00',
+      location: 'London',
+      address: 'Queen Elizabeth Road',
+    }
+    await client.post('/events').json(event).header('Cookie', cookie)
+    const displayEvent = await client.get('/events/display/event/1')
+    displayEvent.assertStatus(200)
+    displayEvent.assertBodyContains({
+      message: '',
+      event: {
+        title: 'Even Title',
+        description: 'My discription of event...',
+        startEvent: '2025-02-15 01:00:00',
+        endEvent: '2025-02-16 01:00:00',
+        location: 'London',
+        address: 'Queen Elizabeth Road',
+      },
+    })
+  })
   test('Display Events for Login user.', async ({ client }) => {
     const cookie = await loginHelper(client)
     const event = {

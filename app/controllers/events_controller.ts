@@ -32,6 +32,7 @@ export default class EventsController {
       currentUserId: auth.user?.id,
     })
   }
+  public async displayEvent() {}
   public async userEvents({ auth, response }: HttpContext) {
     const user = auth.user!.username
     const userId = auth.user!.id
