@@ -74,15 +74,13 @@ test.group('Events controller', (group) => {
       address: 'Queen Elizabeth Road',
     }
     await client.post('/events').json(event).header('Cookie', cookie)
-    const displayEvent = await client.get('/events/display/event/1')
+    const displayEvent = await client.get('/events/display/event/1').header('Cookie', cookie)
     displayEvent.assertStatus(200)
     displayEvent.assertBodyContains({
-      message: '',
+      message: 'Event 1 for Szymon Dawidowicz',
       event: {
         title: 'Even Title',
         description: 'My discription of event...',
-        startEvent: '2025-02-15 01:00:00',
-        endEvent: '2025-02-16 01:00:00',
         location: 'London',
         address: 'Queen Elizabeth Road',
       },

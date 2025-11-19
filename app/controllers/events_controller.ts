@@ -32,7 +32,25 @@ export default class EventsController {
       currentUserId: auth.user?.id,
     })
   }
-  public async displayEvent() {}
+  public async displayEvent({ params, auth, response }: HttpContext) {
+    const userId = auth.user!.id
+    const eventId = params.id
+
+    const event = await Events.query()
+      .where('id', eventId)
+      .whereHas('users', (userQuery) => {
+        userQuery.wherePivot('user_id', userId)
+      })
+      .preload('users', (query) => {
+        query.select(['id', 'username', 'email']).pivotColumns(['status'])
+      })
+      .first()
+
+    return response.status(200).json({
+      message: `Event ${event?.id} for ${auth.user!.username}`,
+      event,
+    })
+  }
   public async userEvents({ auth, response }: HttpContext) {
     const user = auth.user!.username
     const userId = auth.user!.id

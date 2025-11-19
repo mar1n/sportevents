@@ -153,5 +153,4 @@ export const handlers = [
       { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
     )
   }),
-
 ]
