@@ -110,13 +110,28 @@ export default class EventsController {
       message: `${userName} leave ${findEvent.title} event`,
     })
   }
-  public async update({ request, response }: HttpContext) {
+  public async update({ request, auth, response }: HttpContext) {
+    const userId = auth.user!.id
     const eventId = request.input('id')
-    const updateData = request.all()
-    const event = await Events.findByOrFail('id', eventId)
-    event.merge(updateData)
 
-    await event.save()
+    const event = await Events.query()
+      .where('id', eventId)
+      .whereHas('users', (userQuery) => {
+        userQuery.wherePivot('user_id', userId)
+      })
+      .first()
+
+    const updateData = request.only([
+      'title',
+      'description',
+      'location',
+      'address',
+      'staerEvent',
+      'endEvent',
+    ])
+
+    event?.merge(updateData)
+    await event?.save()
 
     return response.status(201).json({
       message: 'Event has been updated',
