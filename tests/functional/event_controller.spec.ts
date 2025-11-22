@@ -292,6 +292,7 @@ test.group('Events controller', (group) => {
     update.assertStatus(201)
     update.assertBodyContains({
       message: 'Event has been updated',
+      event: { description: event.description, ...updateEvent },
     })
     const updatedEvent = await Events.findByOrFail('title', updateEvent.title)
     assert.equal(updatedEvent.title, updateEvent.title)

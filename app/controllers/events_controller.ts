@@ -135,6 +135,7 @@ export default class EventsController {
 
     return response.status(201).json({
       message: 'Event has been updated',
+      event: event,
     })
   }
 }
