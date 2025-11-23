@@ -76,7 +76,11 @@ describe('Account', () => {
       await screen.findAllByText('Title')
       screen.getAllByText('Description')
       screen.getAllByText('Location')
-      screen.getByText('2')
+      screen.getByText('123')
+
+      screen.getByText('NBA Game')
+      screen.getByText('Game between famous teams...')
+      screen.getByText('London')
     })
   })
 })

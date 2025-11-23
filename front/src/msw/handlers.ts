@@ -153,4 +153,25 @@ export const handlers = [
       { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
     )
   }),
+  http.get(`${setUrl.mockSerever}/events/display/event/:id`, async ({ request, params }) => {
+    const { id } = params
+
+    return HttpResponse.json(
+      {
+        message: `Event ${id} for Szymon`,
+        event: {
+          id: 2,
+          title: 'NBA Game',
+          description: 'Game between famous teams...',
+          location: 'London',
+          address: 'Queen Elizabeth Road',
+          userName: 'Alfredo',
+          startEvent: '2025-03-15T01:00:00.000+00:00',
+          endEvent: '2025-03-16T01:00:00.000+00:00',
+          users: [{ id: 2, username: 'Alfredo', email: 'cykcykacz@gmail.com' }],
+        },
+      },
+      { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
+    )
+  }),
 ]

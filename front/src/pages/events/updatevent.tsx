@@ -13,8 +13,8 @@ const UpdatEvent = () => {
   useEffect(() => {
     async function getUserEvents() {
       try {
-        const response = await axios.post(`${setUrl.getURL()}/events/display/userevents`)
-        setEvent(response.data.events)
+        const response = await axios.get(`${setUrl.getURL()}/events/display/event/${id}`)
+        setEvent([response.data.event])
       } catch (error) {}
     }
     getUserEvents()
