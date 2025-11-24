@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { server } from '../msw/node'
 import { setUrl } from '../utils/helper'
 import { http, HttpResponse } from 'msw'
@@ -6,6 +6,7 @@ import Account from '../pages/users/account'
 import MyEvents from '../pages/events/myevents'
 import AttendEvents from 'pages/events/attendevents'
 import UpdatEvent from 'pages/events/updatevent'
+import userEvent from '@testing-library/user-event'
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn(),
@@ -78,9 +79,16 @@ describe('Account', () => {
       screen.getAllByText('Location')
       screen.getByText('123')
 
-      screen.getByText('NBA Game')
-      screen.getByText('Game between famous teams...')
-      screen.getByText('London')
+      const title = screen.getByPlaceholderText('Title')
+      expect(title).toBeInTheDocument()
+      const titleInput = await screen.findByDisplayValue('NBA Game')
+      expect(titleInput).toBeInTheDocument()
+      expect(screen.getByPlaceholderText('Location')).toHaveValue('Berlin')
+      await userEvent.type(screen.getByPlaceholderText('location'), 'Berlin')
+      await userEvent.click(screen.getByRole('button'))
+      await waitFor(() => {
+        expect(screen.getByText('Berlin'))
+      })
     })
   })
 })
