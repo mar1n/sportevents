@@ -48,7 +48,7 @@ const UpdatEvent = () => {
     e.preventDefault()
     try {
       const response = await axios.post(
-        `${setUrl.getURL()}/events`,
+        `${setUrl.getURL()}/events/update`,
         {
           title,
           description,
@@ -59,6 +59,7 @@ const UpdatEvent = () => {
         },
         { withCredentials: true }
       )
+      setEvent(response.data.event)
       setConfirmationMessage(response.data.message)
     } catch (errors: any) {
       errors.response.data.errors.forEach((errorMessage: any) => {

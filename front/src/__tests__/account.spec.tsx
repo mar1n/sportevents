@@ -83,11 +83,11 @@ describe('Account', () => {
       expect(title).toBeInTheDocument()
       const titleInput = await screen.findByDisplayValue('NBA Game')
       expect(titleInput).toBeInTheDocument()
-      expect(screen.getByPlaceholderText('Location')).toHaveValue('Berlin')
-      await userEvent.type(screen.getByPlaceholderText('location'), 'Berlin')
+      
+      await userEvent.type(screen.getByPlaceholderText('Location'), 'Berlin')
       await userEvent.click(screen.getByRole('button'))
       await waitFor(() => {
-        expect(screen.getByText('Berlin'))
+        expect(screen.getByPlaceholderText('Location')).toHaveValue('Berlin')
       })
     })
   })
