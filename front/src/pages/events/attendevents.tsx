@@ -17,7 +17,7 @@ const AttendEvents = () => {
       }
     }
     getAttendEvents()
-  })
+  },[])
   return (
     <>
       {event &&

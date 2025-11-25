@@ -12,12 +12,10 @@ const MyEvents = () => {
       try {
         const response = await axios.post(`${setUrl.getURL()}/events/display/userevents`)
         setEvent(response.data.events)
-        
-      } catch (error) {
-      }
+      } catch (error) {}
     }
     getUserEvents()
-  })
+  }, [])
   return (
     <>
       {event &&
