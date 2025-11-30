@@ -10,7 +10,13 @@ const MyEvents = () => {
   useEffect(() => {
     async function getUserEvents() {
       try {
-        const response = await axios.post(`${setUrl.getURL()}/events/display/userevents`)
+        const response = await axios.post(
+          `${setUrl.getURL()}/events/display/userevents`,
+          {},
+          {
+            withCredentials: true,
+          }
+        )
         setEvent(response.data.events)
       } catch (error) {}
     }

@@ -10,14 +10,14 @@ const AttendEvents = () => {
   useEffect(() => {
     async function getAttendEvents() {
       try {
-        const response = await axios.get(`${setUrl.getURL()}/events/display/attend`)
+        const response = await axios.get(`${setUrl.getURL()}/events/display/attend`, {
+          withCredentials: true,
+        })
         setEvent(response.data.events)
-        
-      } catch (error) {
-      }
+      } catch (error) {}
     }
     getAttendEvents()
-  },[])
+  }, [])
   return (
     <>
       {event &&
