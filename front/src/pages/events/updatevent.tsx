@@ -73,7 +73,11 @@ const UpdatEvent = () => {
   const { title, description, location, address, startEvent, endEvent } = event
   return (
     <>
-      <div>{id}</div>
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h1 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+          Update Event
+        </h1>
+      </div>
       {event && (
         <div key={event.title}>
           <Form formName="Event Form" className="eventForm" onSubmit={(e) => onSubmit(e)}>

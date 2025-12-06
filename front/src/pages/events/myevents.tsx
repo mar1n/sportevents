@@ -24,6 +24,11 @@ const MyEvents = () => {
   }, [])
   return (
     <>
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h1 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+          My Events
+        </h1>
+      </div>
       {event &&
         event?.map((event) => {
           return (

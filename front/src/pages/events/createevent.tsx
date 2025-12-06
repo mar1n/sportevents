@@ -66,8 +66,8 @@ function CreateEvent() {
   }
   return (
     <>
-      <div>
-        <h1>Create Event</h1>
+      <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
+        <h1 className='mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900'>Create Event</h1>
       </div>
       {confimationMessage ? (
         <div>{confimationMessage}</div>
