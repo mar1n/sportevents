@@ -66,22 +66,28 @@ function CreateEvent() {
   }
   return (
     <>
-      <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-        <h1 className='mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900'>Create Event</h1>
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h1 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+          Create Event
+        </h1>
       </div>
       {confimationMessage ? (
         <div>{confimationMessage}</div>
       ) : (
-        <div>
-          <Form formName="Event Form" className="eventForm" onSubmit={(e) => onSubmit(e)}>
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <Form formName="Event Form" className="eventForm space-y-6" onSubmit={(e) => onSubmit(e)}>
             <>
               <div>
-                <Label name="Title" title="Title" className="eventLabel" />
+                <Label
+                  name="Title"
+                  title="Title"
+                  className="eventLabel block text-sm/6 font-medium text-gray-900"
+                />
               </div>
               <div>
                 <Input
                   name="title"
-                  className="eventTitle"
+                  className="eventTitle block w-full border border-gray-300 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   placeholder="Title"
                   value={title}
                   onChange={(e) => handleChange(e)}
@@ -89,12 +95,16 @@ function CreateEvent() {
               </div>
               <span>{error.title}</span>
               <div>
-                <Label name="Description" title="Description" className="descriptionLabel" />
+                <Label
+                  name="Description"
+                  title="Description"
+                  className="descriptionLabel block text-sm/6 font-medium text-gray-900"
+                />
               </div>
               <div>
                 <Input
                   name="description"
-                  className="eventDescription"
+                  className="eventDescription block w-full border border-gray-300 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   placeholder="Description"
                   value={description}
                   onChange={(e) => handleChange(e)}
@@ -102,12 +112,16 @@ function CreateEvent() {
               </div>
               <span>{error.description}</span>
               <div>
-                <Label name="Location" title="Location" className="locationLabel" />
+                <Label
+                  name="Location"
+                  title="Location"
+                  className="locationLabel block text-sm/6 font-medium text-gray-900"
+                />
               </div>
               <div>
                 <Input
                   name="location"
-                  className="eventLocation"
+                  className="eventLocation block w-full border border-gray-300 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   placeholder="Location"
                   value={location}
                   onChange={(e) => handleChange(e)}
@@ -115,12 +129,16 @@ function CreateEvent() {
               </div>
               <span>{error.location}</span>
               <div>
-                <Label name="Address" title="Address" className="addressLabel" />
+                <Label
+                  name="Address"
+                  title="Address"
+                  className="addressLabel block text-sm/6 font-medium text-gray-900"
+                />
               </div>
               <div>
                 <Input
                   name="address"
-                  className="eventAddress"
+                  className="eventAddress block w-full border border-gray-300 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   placeholder="Address"
                   value={address}
                   onChange={(e) => handleChange(e)}
@@ -128,12 +146,16 @@ function CreateEvent() {
               </div>
               <span>{error.address}</span>
               <div>
-                <Label name="StartEvent" title="StartEvent" className="startEventLabel" />
+                <Label
+                  name="StartEvent"
+                  title="StartEvent"
+                  className="startEventLabel block text-sm/6 font-medium text-gray-900"
+                />
               </div>
               <div>
                 <Input
                   name="startEvent"
-                  className="eventStartEvent"
+                  className="eventStartEvent block w-full border border-gray-300 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   placeholder="StartEvent"
                   value={startEvent}
                   onChange={(e) => handleChange(e)}
@@ -141,19 +163,27 @@ function CreateEvent() {
               </div>
               <span>{error.startEvent}</span>
               <div>
-                <Label name="EndEvent" title="EndEvent" className="endEventLabel" />
+                <Label
+                  name="EndEvent"
+                  title="EndEvent"
+                  className="endEventLabel block text-sm/6 font-medium text-gray-900"
+                />
               </div>
               <div>
                 <Input
                   name="endEvent"
-                  className="eventEndEvent"
+                  className="eventEndEvent block w-full border border-gray-300 rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   placeholder="EndEvent"
                   value={endEvent}
                   onChange={(e) => handleChange(e)}
                 />
               </div>
               <span>{error.endEvent}</span>
-              <Button name="Create event" className="eventButton" disabled={false} />
+              <Button
+                name="Create event "
+                className="eventButton flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                disabled={false}
+              />
             </>
           </Form>
         </div>
