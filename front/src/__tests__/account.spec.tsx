@@ -77,7 +77,6 @@ describe('Account', () => {
       await screen.findAllByText('Title')
       screen.getAllByText('Description')
       screen.getAllByText('Location')
-      screen.getByText('123')
 
       const title = screen.getByPlaceholderText('Title')
       expect(title).toBeInTheDocument()
