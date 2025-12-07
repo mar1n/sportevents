@@ -29,19 +29,27 @@ const MyEvents = () => {
           My Events
         </h1>
       </div>
-      {event &&
-        event?.map((event) => {
-          return (
-            <div key={event.title}>
-              <div>Title</div>
-              <div>{event.title}</div>
-              <div>Description</div>
-              <div>{event.description}</div>
-              <div>Location</div>
-              <div>{event.location}</div>
-            </div>
-          )
-        })}
+      <div className="mt-10 sm:mx-auto sm:w-full  sm:max-w-sm">
+        {event &&
+          event?.map((event) => {
+            return (
+              <div className="space-y-6" key={event.title}>
+                <div>
+                  <h3 className="mt-10 text-left text-3xl font-bold text-heading">Title</h3>
+                  <p className="mb-3 text-body">{event.title}</p>
+                </div>
+                <div>
+                  <h3 className="mt-10 text-left text-3xl font-bold text-heading">Description</h3>
+                  <p className="mb-3 text-body">{event.description}</p>
+                </div>
+                <div>
+                  <h3 className="mt-10 text-left text-3xl font-bold text-heading">Location</h3>
+                  <p className="mb-3 text-body">{event.location}</p>
+                </div>
+              </div>
+            )
+          })}
+      </div>
     </>
   )
 }

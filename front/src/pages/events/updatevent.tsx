@@ -79,11 +79,15 @@ const UpdatEvent = () => {
         </h1>
       </div>
       {event && (
-        <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm' key={event.title}>
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm" key={event.title}>
           <Form formName="Event Form" className="eventForm space-y-6" onSubmit={(e) => onSubmit(e)}>
             <>
               <div>
-                <Label name="Title" title="Title" className="eventLabel text-sm/6 font-medium text-gray-900" />
+                <Label
+                  name="Title"
+                  title="Title"
+                  className="eventLabel text-sm/6 font-medium text-gray-900"
+                />
               </div>
               <div>
                 <Input
@@ -96,7 +100,11 @@ const UpdatEvent = () => {
               </div>
               <span>{error.title}</span>
               <div>
-                <Label name="Description" title="Description" className="descriptionLabel text-sm/6 font-medium text-gray-900" />
+                <Label
+                  name="Description"
+                  title="Description"
+                  className="descriptionLabel text-sm/6 font-medium text-gray-900"
+                />
               </div>
               <div>
                 <Input
@@ -109,7 +117,11 @@ const UpdatEvent = () => {
               </div>
               <span>{error.description}</span>
               <div>
-                <Label name="Location" title="Location" className="locationLabel text-sm/6 font-medium text-gray-900" />
+                <Label
+                  name="Location"
+                  title="Location"
+                  className="locationLabel text-sm/6 font-medium text-gray-900"
+                />
               </div>
               <div>
                 <Input
@@ -122,7 +134,11 @@ const UpdatEvent = () => {
               </div>
               <span>{error.location}</span>
               <div>
-                <Label name="Address" title="Address" className="addressLabel text-sm/6 font-medium text-gray-900" />
+                <Label
+                  name="Address"
+                  title="Address"
+                  className="addressLabel text-sm/6 font-medium text-gray-900"
+                />
               </div>
               <div>
                 <Input
@@ -135,7 +151,11 @@ const UpdatEvent = () => {
               </div>
               <span>{error.address}</span>
               <div>
-                <Label name="StartEvent" title="StartEvent" className="startEventLabel text-sm/6 font-medium text-gray-900" />
+                <Label
+                  name="StartEvent"
+                  title="StartEvent"
+                  className="startEventLabel text-sm/6 font-medium text-gray-900"
+                />
               </div>
               <div>
                 <Input
@@ -148,7 +168,11 @@ const UpdatEvent = () => {
               </div>
               <span>{error.startEvent}</span>
               <div>
-                <Label name="EndEvent" title="EndEvent" className="endEventLabel text-sm/6 font-medium text-gray-900" />
+                <Label
+                  name="EndEvent"
+                  title="EndEvent"
+                  className="endEventLabel text-sm/6 font-medium text-gray-900"
+                />
               </div>
               <div>
                 <Input
@@ -160,7 +184,11 @@ const UpdatEvent = () => {
                 />
               </div>
               <span>{error.endEvent}</span>
-              <Button name="Update event" className="eventButton flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" disabled={false} />
+              <Button
+                name="Update event"
+                className="eventButton flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                disabled={false}
+              />
             </>
           </Form>
         </div>
