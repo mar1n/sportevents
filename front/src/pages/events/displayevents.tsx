@@ -113,7 +113,7 @@ function DisplayEvents() {
           )
         })}
         {openJoinPopup && (
-          <div>
+          <div className='fixed inset-0 bg-black flex justify-center items-center bg-opacity-20 backdrop-blur-sm'>
             Join Event{' '}
             <Button
               name={'Yes'}
@@ -143,7 +143,7 @@ function DisplayEvents() {
           </div>
         )}
         {confirmationMessage && openJoinPopup && (
-          <div>
+          <div className='fixed inset-0 bg-black flex justify-center items-center bg-opacity-20 backdrop-blur-sm'>
             You joined to {event?.title} Event
             <Button name={'Close'} className="close" onClick={() => close()} />
             <div>{confirmationMessage}</div>
