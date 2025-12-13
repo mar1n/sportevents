@@ -22,12 +22,16 @@ function DisplayEvents() {
   const [event, setEvent] = useState<JoinedEvent | null>(null)
   const [confirmationMessage, setConfirmationMessage] = useState('')
   const getEvents = useCallback(async function getEvents() {
-      try {
-        const response = await axios.post(`${setUrl.getURL()}/events/display`, {}, { withCredentials: true })
-        setEvents(response.data.events)
-        setCurrentUserId(response.data.currentUserId)
-      } catch (error) {}
-    }, [])
+    try {
+      const response = await axios.post(
+        `${setUrl.getURL()}/events/display`,
+        {},
+        { withCredentials: true }
+      )
+      setEvents(response.data.events)
+      setCurrentUserId(response.data.currentUserId)
+    } catch (error) {}
+  }, [])
   useEffect(() => {
     getEvents()
   }, [getEvents])
@@ -41,17 +45,26 @@ function DisplayEvents() {
   }
   const joinEvent = async (title: string) => {
     try {
-      const response = await axios.post(`${setUrl.getURL()}/events/join`, {
-        eventId: event?.id
-      }, { withCredentials: true })
+      const response = await axios.post(
+        `${setUrl.getURL()}/events/join`,
+        {
+          eventId: event?.id,
+        },
+        { withCredentials: true }
+      )
       setConfirmationMessage(`${response.data.message}`)
+      setOpenJoinPopUp(false)
     } catch (error) {}
   }
   const leaveEvent = async (title: string) => {
     try {
-      const response = await axios.post(`${setUrl.getURL()}/events/leave`, {
-        eventId: event?.id
-      }, { withCredentials: true })
+      const response = await axios.post(
+        `${setUrl.getURL()}/events/leave`,
+        {
+          eventId: event?.id,
+        },
+        { withCredentials: true }
+      )
       setConfirmationMessage(`${response.data.message}`)
     } catch (error) {}
   }
@@ -63,35 +76,37 @@ function DisplayEvents() {
   }
   return (
     <>
-      <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-        <h1 className='mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900'>Events</h1>
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h1 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+          Events
+        </h1>
       </div>
       <div className="mt-10 sm:mx-auto sm:w-full  sm:max-w-sm">
         {events?.map((event, index) => {
           return (
-            <div className='space-y-6' key={index}>
+            <div className="space-y-6" key={index}>
               <div>
-                <h3 className='mt-10 text-left text-3xl font-bold text-heading'>Title</h3>
-                <p className='mb-3 text-body'>{event.title}</p>
+                <h3 className="mt-10 text-left text-3xl font-bold text-heading">Title</h3>
+                <p className="mb-3 text-body">{event.title}</p>
               </div>
               <div>
-                <h3 className='mt-10 text-left text-3xl font-bold text-heading'>Description</h3>
-                <p className='mb-3 text-body'>{event.description}</p>
+                <h3 className="mt-10 text-left text-3xl font-bold text-heading">Description</h3>
+                <p className="mb-3 text-body">{event.description}</p>
               </div>
               <div>
-                <h3 className='mt-10 text-left text-3xl font-bold text-heading'>Address</h3>
+                <h3 className="mt-10 text-left text-3xl font-bold text-heading">Address</h3>
                 <p>{event.address}</p>
               </div>
               <div>
-                <h3 className='mt-10 text-left text-3xl font-bold text-heading'>Location</h3>
+                <h3 className="mt-10 text-left text-3xl font-bold text-heading">Location</h3>
                 <p>{event.location}</p>
               </div>
               <div>
-                <h3 className='mt-10 text-left text-3xl font-bold text-heading'>Start Event</h3>
+                <h3 className="mt-10 text-left text-3xl font-bold text-heading">Start Event</h3>
                 <p>{event.startEvent}</p>
               </div>
               <div>
-                <h3 className='mt-10 text-left text-3xl font-bold text-heading'>End Event</h3>
+                <h3 className="mt-10 text-left text-3xl font-bold text-heading">End Event</h3>
                 <p>{event.endEvent}</p>
               </div>
               <div>
@@ -113,47 +128,62 @@ function DisplayEvents() {
           )
         })}
         {openJoinPopup && (
-          <div className='fixed inset-0 bg-black flex justify-center items-center bg-opacity-20 backdrop-blur-sm'>
-            Join Event{' '}
-            <Button
-              name={'Yes'}
-              className="joinEventYes flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              onClick={() => {
-                if (event?.title) {
-                  joinEvent(event.title)
-                }
-              }}
-            />
-            <Button name={'No'} className="joinEventNo flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" />
+          <div className="fixed flex justify-center items-center  inset-0 bg-black bg-opacity-20 backdrop-blur-sm">
+            <div className="sm:mx-auto sm:w-full  sm:max-w-sm flex flex-col gap-y-2 justify-center items-center">
+              Join Event{' '}
+              <Button
+                name={'Yes'}
+                className="joinEventYes flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={() => {
+                  if (event?.title) {
+                    joinEvent(event.title)
+                  }
+                }}
+              />
+              <Button
+                name={'No'}
+                className="joinEventNo flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={() => setOpenJoinPopUp(false)}
+              />
+            </div>
           </div>
         )}
         {openLeavePopup && (
-          <div>
-            Leave Event{' '}
-            <Button
-              name={'Yes'}
-              className="leavEventYes flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              onClick={() => {
-                if (event?.title) {
-                  leaveEvent(event.title)
-                }
-              }}
-            />
-            <Button name={'No'} className="leavEventNo flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" />
+          <div className="fixed flex justify-center items-center  inset-0 bg-black bg-opacity-20 backdrop-blur-sm">
+            <div className="sm:mx-auto sm:w-full  sm:max-w-sm flex flex-col gap-y-2 justify-center items-center">
+              Leave Event{' '}
+              <Button
+                name={'Yes'}
+                className="leavEventYes flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={() => {
+                  if (event?.title) {
+                    leaveEvent(event.title)
+                  }
+                }}
+              />
+              <Button
+                name={'No'}
+                className="leavEventNo flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              />
+            </div>
           </div>
         )}
-        {confirmationMessage && openJoinPopup && (
-          <div className='fixed inset-0 bg-black flex justify-center items-center bg-opacity-20 backdrop-blur-sm'>
-            You joined to {event?.title} Event
-            <Button name={'Close'} className="close" onClick={() => close()} />
-            <div>{confirmationMessage}</div>
+        {confirmationMessage && !openJoinPopup && (
+          <div className="fixed flex justify-center items-center  inset-0 bg-black bg-opacity-20 backdrop-blur-sm">
+            <div className="sm:mx-auto sm:w-full  sm:max-w-sm flex flex-col gap-y-2 justify-center items-center">
+              You joined to {event?.title} Event
+              <Button name={'Close'} className="close" onClick={() => close()} />
+              <div>{confirmationMessage}</div>
+            </div>
           </div>
         )}
         {confirmationMessage && openLeavePopup && (
-          <div>
-            You left {event?.title} Event
-            <Button name={'Close'} className="close" onClick={() => close()} />
-            <div>{confirmationMessage}</div>
+          <div className="fixed flex justify-center items-center  inset-0 bg-black bg-opacity-20 backdrop-blur-sm">
+            <div className="sm:mx-auto sm:w-full  sm:max-w-sm flex flex-col gap-y-2 justify-center items-center">
+              You left {event?.title} Event
+              <Button name={'Close'} className="close" onClick={() => close()} />
+              <div>{confirmationMessage}</div>
+            </div>
           </div>
         )}
       </div>
