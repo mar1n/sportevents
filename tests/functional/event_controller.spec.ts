@@ -131,7 +131,7 @@ test.group('Events controller', (group) => {
       .header('Cookie', cookie)
     jointEvent.assertStatus(201)
     jointEvent.assertBody({
-      message: 'Szymon Dawidowicz joined to event',
+      message: 'Szymon Dawidowicz joined Prodigy event',
     })
 
     const attendees = await Attendee.query().preload('user').preload('event')

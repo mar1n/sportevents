@@ -92,8 +92,7 @@ describe('Events', () => {
       expect(screen.getByText('Yes')).toBeInTheDocument()
       expect(screen.getByText('No')).toBeInTheDocument()
       await userEvent.click(screen.getByText('Yes'))
-      expect(screen.queryByText('You joined to Wimbledon Event')).toBeInTheDocument()
-      expect(screen.getByText('Szymon joined to event'))
+      expect(screen.getByText('Szymon joined Wimbledon event'))
       await userEvent.click(screen.getByText('Close'))
       expect(screen.queryByText('You joined to Wimbledon Event')).not.toBeInTheDocument()
       server.use(
@@ -124,8 +123,7 @@ describe('Events', () => {
       expect(screen.getByText('Yes')).toBeInTheDocument()
       expect(screen.getByText('No')).toBeInTheDocument()
       await userEvent.click(screen.getByText('Yes'))
-      expect(screen.queryByText('You left Wimbledon Event')).toBeInTheDocument()
-      expect(screen.getByText('Szymon left Wimbledon event'))
+      expect(screen.getByText('Szymon left NBA Game event'))
       server.use(
         http.post(`${setUrl.mockSerever}/events/display`, async ({ request }) => {
           return eventsResponses.listOfEventsWithOutParticipants()

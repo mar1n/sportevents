@@ -93,10 +93,11 @@ export default class EventsController {
     const eventId = request.input('eventId')
     const userName = auth.user?.username
 
+    const findEvent = await Events.findByOrFail('id', eventId)
     await Attendee.firstOrCreate({ userId: auth.user?.id, eventsId: eventId }, { status: 'going' })
 
     return response.status(201).json({
-      message: `${userName} joined to event`,
+      message: `${userName} joined ${findEvent.title} event`,
     })
   }
   public async leave({ request, auth, response }: HttpContext) {

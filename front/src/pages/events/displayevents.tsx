@@ -66,6 +66,7 @@ function DisplayEvents() {
         { withCredentials: true }
       )
       setConfirmationMessage(`${response.data.message}`)
+      setOpenLeavePopUp(false)
     } catch (error) {}
   }
   const close = async () => {
@@ -164,23 +165,14 @@ function DisplayEvents() {
               <Button
                 name={'No'}
                 className="leavEventNo flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={() => setOpenLeavePopUp(false)}
               />
             </div>
           </div>
         )}
-        {confirmationMessage && !openJoinPopup && (
+        {confirmationMessage && !openLeavePopup && (
           <div className="fixed flex justify-center items-center  inset-0 bg-black bg-opacity-20 backdrop-blur-sm">
             <div className="sm:mx-auto sm:w-full  sm:max-w-sm flex flex-col gap-y-2 justify-center items-center">
-              You joined to {event?.title} Event
-              <Button name={'Close'} className="close" onClick={() => close()} />
-              <div>{confirmationMessage}</div>
-            </div>
-          </div>
-        )}
-        {confirmationMessage && openLeavePopup && (
-          <div className="fixed flex justify-center items-center  inset-0 bg-black bg-opacity-20 backdrop-blur-sm">
-            <div className="sm:mx-auto sm:w-full  sm:max-w-sm flex flex-col gap-y-2 justify-center items-center">
-              You left {event?.title} Event
               <Button name={'Close'} className="close" onClick={() => close()} />
               <div>{confirmationMessage}</div>
             </div>

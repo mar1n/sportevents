@@ -48,13 +48,15 @@ export const handlers = [
         message: `Events of Szymon Dawidowicz`,
         events: [
           {
-            title: 'Even Title',
+            title: 'NBA Game',
             description: 'My discription of event...',
             location: 'London',
             address: 'Queen Elizabeth Road',
             startEvent: '2025-02-15 01:00:00',
             endEvent: '2025-02-16 01:00:00',
-            users: [],
+            users: [
+              { id: 1, username: 'Szymon Dawidowicz', email: 'szymondawidowicz@fastmail.com' },
+            ],
           },
           {
             title: 'Wimbledon',
@@ -74,7 +76,7 @@ export const handlers = [
   http.post(`${setUrl.mockSerever}/events/join`, async ({ request }) => {
     return HttpResponse.json(
       {
-        message: `Szymon joined to event`,
+        message: `Szymon joined Wimbledon event`,
       },
       { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
     )
@@ -82,7 +84,7 @@ export const handlers = [
   http.post(`${setUrl.mockSerever}/events/leave`, async ({ request }) => {
     return HttpResponse.json(
       {
-        message: `Szymon left Wimbledon event`,
+        message: `Szymon left NBA Game event`,
       },
       { status: 200, headers: { 'Set-Cookie': 'isAuthenticated=abc-123' } }
     )
