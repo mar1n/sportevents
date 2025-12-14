@@ -252,7 +252,7 @@ test.group('Events controller', (group) => {
       .header('Cookie', cookie)
     jointEvent.assertStatus(201)
     jointEvent.assertBody({
-      message: 'Szymon Dawidowicz joined to event',
+      message: 'Szymon Dawidowicz joined Even Title event',
     })
     const eventsAttendByUser = await client.get('/events/display/attend').header('Cookie', cookie)
     eventsAttendByUser.assertStatus(201)
