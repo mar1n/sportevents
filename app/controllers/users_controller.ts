@@ -24,8 +24,9 @@ export default class UsersController {
       })
     }
     const user = await User.create(payload)
+    const token = await User.accessTokens.create(user)
 
-    await mail.send(new VerifyEmail(payload))
+    await mail.send(new VerifyEmail(payload, token))
 
     return response.status(201).json({
       message: 'We send you email, please read.',
