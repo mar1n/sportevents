@@ -28,8 +28,12 @@ test.group('Users Controller', (group) => {
 
     const response = await register(client)
     mails.assertSent(VerifyEmail, ({ message }) => {
+      const activationUrl =
+        message.nodeMailerMessage.html?.toString()?.includes('/activtion/') ?? false
       return (
-        message.hasTo('szymondawidowicz@fastmail.com') && message.hasSubject('Verify your email')
+        message.hasTo('szymondawidowicz@fastmail.com') &&
+        message.hasSubject('Verify your email') &&
+        activationUrl
       )
     })
     response.assertStatus(201)
