@@ -29,7 +29,7 @@ test.group('Users Controller', (group) => {
     const response = await register(client)
     mails.assertSent(VerifyEmail, ({ message }) => {
       const activationUrl =
-        message.nodeMailerMessage.html?.toString()?.includes('/activtion/') ?? false
+        message.nodeMailerMessage.html?.toString()?.includes('/activation/') ?? false
       return (
         message.hasTo('szymondawidowicz@fastmail.com') &&
         message.hasSubject('Verify your email') &&
@@ -74,6 +74,18 @@ test.group('Users Controller', (group) => {
     response.assertBodyContains({
       errors: [{ message: 'The email field must be a valid email address' }],
     })
+  })
+  test('Account Activation', async ({ client }) => {
+    const userDetails = {
+      email: 'szymondawidowicz@fastmail.com',
+      username: 'Szymon Dawidowicz',
+      password: 'qwertyuio',
+    }
+    const user = await User.create(userDetails)
+    const token = await User.accessTokens.create(user)
+    const response = await client.get(`/users/activation/${token.value}`)
+    response.assertStatus(201)
+    response.assertBody({ message: 'Account activated.' })
   })
   test('Login in authenticated user and logout.', async ({ client }) => {
     const { mails } = mail.fake()
